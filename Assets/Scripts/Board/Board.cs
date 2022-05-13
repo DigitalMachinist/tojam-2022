@@ -10,17 +10,12 @@ namespace Board
         public Tile BlackTilePrefab;
         public int Rows = 8;
         public int Cols = 8;
-        public float rowOffset = 0.5f;
-        public float rowSpacing = 1.0f;
-        public float colOffset = 0.5f;
-        public float colSpacing = 1.0f;
+        public float RowOffset = 0.5f;
+        public float RowSpacing = 1.0f;
+        public float ColOffset = 0.5f;
+        public float ColSpacing = 1.0f;
 
         public Tile[] Tiles;
-
-        void Start()
-        {
-            Build();
-        }
 
         public void Destroy()
         {
@@ -38,10 +33,10 @@ namespace Board
 
             for (var row = 0; row < Rows; row++)
             {
-                float rowPosition = rowOffset + row * rowSpacing;
+                float rowPosition = RowOffset + row * RowSpacing;
                 for (var col = 0; col < Cols; col++)
                 {
-                    float colPosition = colOffset + col * colSpacing;
+                    float colPosition = ColOffset + col * ColSpacing;
                     Vector3 localPosition = new Vector3(colPosition, 0, rowPosition);
                     Vector3 worldPosition = transform.TransformPoint(localPosition);
 
@@ -52,6 +47,9 @@ namespace Board
                     
                     Tile tileInstance = Instantiate(tilePrefab, worldPosition, Quaternion.identity, transform);
                     tileInstance.name = $"Tile {Convert.ToChar(col + 65)}{row + 1}";
+                    tileInstance.Board = this;
+                    tileInstance.Row = row;
+                    tileInstance.Col = col;
 
                     Tiles[Rows * row + col] = tileInstance;
                 }
@@ -72,6 +70,11 @@ namespace Board
                 .Where(hit => hit.transform.GetComponent<Tile>() != null)
                 .OrderBy(hit => hit.distance)
                 .FirstOrDefault();
+
+            if (nearestTileHit.transform == null)
+            {
+                return null;
+            }
 
             return nearestTileHit.transform.GetComponent<Tile>();
         }
