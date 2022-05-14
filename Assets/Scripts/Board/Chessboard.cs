@@ -57,8 +57,8 @@ namespace Board
                     Tile tileInstance = Instantiate(tilePrefab, worldPosition, Quaternion.identity, transform);
                     tileInstance.name = $"Tile {Convert.ToChar(col + 65)}{row + 1}";
                     tileInstance.Board = this;
-                    tileInstance.Row = row;
-                    tileInstance.Col = col;
+                    tileInstance.Row = row +1;
+                    tileInstance.Col = col +1;
 
                     Tiles[Rows * row + col] = tileInstance;
                 }
