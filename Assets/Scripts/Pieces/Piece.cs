@@ -19,6 +19,8 @@ namespace Pieces
         public GameObject ContentPrefabBlack;
         public GameObject ContentPrefabWhite;
 
+        public event Action<Piece> FinishedMove;
+
         public virtual void Place(Player player, Tile tile, bool ignoreTurn = false)
         {
             ValidatePlace(player, tile, ignoreTurn, true);
@@ -198,6 +200,8 @@ namespace Pieces
             // By default, if something has moved this turn it can't move again.
             // Checkers pieces (for example) will require more complicated logic here.
             IsFinishedMoving = true;
+
+            FinishedMove?.Invoke(this);
         }
     }
 }

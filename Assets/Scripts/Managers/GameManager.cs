@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Board;
 using Players;
+using States;
 using UnityEngine;
 
 namespace Managers
@@ -21,6 +22,8 @@ namespace Managers
         public Chessboard Board;
         public List<Tile> TilesToDestroy;
 
+        public StateMachine StateMachine;
+
         public int PlayerTurnNumber => Mathf.Max(PlayerBlack.TurnNumber, PlayerWhite.TurnNumber);
 
         void Start()
@@ -35,8 +38,17 @@ namespace Managers
             PlayerTurn = PlayerColour.White;
             PlayerWhite.AdvanceTurn();
 
+            // TODO: Revisit this. This manager is likely to be the arbiter or turn advancement so it might not need to listen.
             PlayerBlack.TurnAdvanced += OnPlayerTurnAdvanced;
             PlayerWhite.TurnAdvanced += OnPlayerTurnAdvanced;
+            
+            StateMachine = new StateMachine();
+            StateMachine.ChangeState(StateType.BeginTurn);
+        }
+
+        void Update()
+        {
+            StateMachine?.Update();
         }
 
         private void OnPlayerTurnAdvanced()
