@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Players;
 
 public enum CardType
 {
@@ -21,9 +22,15 @@ public class Card : MonoBehaviour
     public TextMeshProUGUI Title;
     public Image _Image;
     public TextMeshProUGUI Description;
+    public Image Background;
 
     public GameObject PlayButton;
-    public GameObject ReplaceButton;
+    public GameObject BackButton;
+
+    public Image WhiteUnit;
+    public Image WhiteEffect;
+    public Image BlackUnit;
+    public Image BlackEffect;
 
     private bool hasCardBeenPlayed = false;
 
@@ -39,6 +46,7 @@ public class Card : MonoBehaviour
     private Sprite image;
     private CardType cardType;
     private string description;
+    private PlayerColour playerColour;
 
     private CanvasGroup cg;
     private Hand ourHand;
@@ -63,6 +71,7 @@ public class Card : MonoBehaviour
         image = cardSO.image;
         cardType = cardSO.cardType;
         description = cardSO.description;
+        playerColour = cardSO.playerColour;
 
         hasCardBeenPlayed = false;
     }
@@ -72,6 +81,23 @@ public class Card : MonoBehaviour
         Title.text = title;
         _Image.sprite = image;
         Description.text = description;
+
+        if( playerColour == PlayerColour.Black && cardType == CardType.Effect )
+        {
+            Background.sprite = BlackEffect.sprite;
+        }
+        else if ( playerColour == PlayerColour.Black && cardType == CardType.Unit )
+        {
+            Background.sprite = BlackUnit.sprite;
+        }
+        else if ( playerColour == PlayerColour.White && cardType == CardType.Effect )
+        {
+            Background.sprite = WhiteEffect.sprite;
+        }
+        else if ( playerColour == PlayerColour.White && cardType == CardType.Unit )
+        {
+            Background.sprite = WhiteUnit.sprite;
+        }
 
         if (HasCardBeenPlayed)
         {
@@ -102,13 +128,13 @@ public class Card : MonoBehaviour
         ourHand.RefreshHandCards();
     }
 
-    public void ReplaceWithDrawnCard()
-    {
-        PopulateCardFields(ourHand.DrawnCard._cardSO);
-        DisplayCard();
-        ourHand.HideReplaceButtons();
-        ourHand.DrawnCard.Hide();
-    }
+    //public void ReplaceWithDrawnCard()
+    //{
+    //    PopulateCardFields(ourHand.DrawnCard._cardSO);
+    //    DisplayCard();
+    //    ourHand.HideReplaceButtons();
+    //    ourHand.DrawnCard.Hide();
+    //}
 
     //// Start is called before the first frame update
     //void Start()

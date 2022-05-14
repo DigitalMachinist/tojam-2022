@@ -23,7 +23,7 @@ public class Hand : MonoBehaviour
     {
         //playerHand = new Card[maxHandCards];
         DrawnCard.PlayButton.SetActive(false);
-        DrawnCard.ReplaceButton.SetActive(false);
+        DrawnCard.BackButton.SetActive(false);
         DrawnCard.Hide();
 
         InitHand();
@@ -32,23 +32,23 @@ public class Hand : MonoBehaviour
 
     private void InitHand()
     {
-        HideReplaceButtons();
+        HideBackButtons();
         PopulateHand();
     }
 
-    public void ShowReplaceButtons()
+    public void ShowBackButtons()
     {
         for (int i = 0; i < playerHand.Length; i++)
         {
-            playerHand[i].ReplaceButton.SetActive(true);
+            playerHand[i].BackButton.SetActive(true);
         }
     }
 
-    public void HideReplaceButtons()
+    public void HideBackButtons()
     {
         for (int i = 0; i < playerHand.Length; i++)
         {
-            playerHand[i].ReplaceButton.SetActive(false);
+            playerHand[i].BackButton.SetActive(false);
         }
     }
 
@@ -74,7 +74,7 @@ public class Hand : MonoBehaviour
         {
             DrawnCard.PopulateCardFields(Deck.instance.DrawCard());
             DrawnCard.Show();
-            ShowReplaceButtons();
+            ShowBackButtons();
         }
 
         RefreshHandCards();
