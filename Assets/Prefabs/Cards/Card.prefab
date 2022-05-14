@@ -145,17 +145,18 @@ MonoBehaviour:
   m_text: 'Description: Hearts of the stars globular star cluster preserve and cherish
     that pale blue dot made in the interiors of collapsing stars Cambrian explosion
     the sky calls to us. From which we spring the only home we''ve ever known a mote
-    of dust suspended in...'
+    of dust suspended in...Cambrian explosion the sky calls to us. From which we
+    spring the only home we''ve ever known a mote of dust...'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 3613f21a70ae5684e9c16397bfeb1d2d, type: 2}
+  m_sharedMaterial: {fileID: -1339447317880094178, guid: 3613f21a70ae5684e9c16397bfeb1d2d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4282661661
+  m_fontColor: {r: 0.1137255, g: 0.23137257, b: 0.26666668, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -477,8 +478,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Title
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 52edb84843f86ee4f89bd7963df4cad7, type: 2}
+  m_sharedMaterial: {fileID: 2963696710291966389, guid: 52edb84843f86ee4f89bd7963df4cad7, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -502,8 +503,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 14
-  m_fontSizeBase: 14
+  m_fontSize: 13
+  m_fontSizeBase: 13
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -562,7 +563,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5827577255990336131
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1042,7 +1043,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &424574821595696490
 RectTransform:
   m_ObjectHideFlags: 0
