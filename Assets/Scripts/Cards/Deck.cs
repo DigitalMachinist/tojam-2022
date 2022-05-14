@@ -8,7 +8,7 @@ public class Deck : MonoBehaviour
 
     public int deckSize;
     public CardScriptableObject[] possibleCards;
-    private List<Card> deckCards;
+    private List<CardScriptableObject> deckCards;
 
     private void Awake()
     {
@@ -28,9 +28,9 @@ public class Deck : MonoBehaviour
 
     }
 
-    private List<Card> GenerateCards(int numberOfCardsToGenerate)
+    private List<CardScriptableObject> GenerateCards(int numberOfCardsToGenerate)
     {
-        List<Card> tempNewCards = new List<Card>();
+        List<CardScriptableObject> tempNewCards = new List<CardScriptableObject>();
 
         for (int i = 0; i < numberOfCardsToGenerate; i++)
         {
@@ -41,20 +41,20 @@ public class Deck : MonoBehaviour
                 tempCard = possibleCards[Random.Range(0, possibleCards.Length)];
             } while (tempCard.probability < Random.Range(0f, 1f - Mathf.Epsilon));
 
-            tempNewCards.Add(new Card(tempCard));
+            tempNewCards.Add(tempCard);
         }
 
         return tempNewCards;
     }
 
 
-    public List<Card> DrawCards(int count)
+    public List<CardScriptableObject> DrawCards(int count)
     {
-        List<Card> tempCards = new List<Card>();
+        List<CardScriptableObject> tempCards = new List<CardScriptableObject>();
 
         for (int i = 0; i < count; i++)
         {
-            Card tempCard = DrawCard();
+            CardScriptableObject tempCard = DrawCard();
 
             if (tempCard == null)
             {
@@ -68,9 +68,9 @@ public class Deck : MonoBehaviour
         return tempCards;
     }
 
-    public Card DrawCard()
+    public CardScriptableObject DrawCard()
     {
-        Card drawnCard = null;
+        CardScriptableObject drawnCard = null;
 
         if (deckCards.Count > 0)
         {
