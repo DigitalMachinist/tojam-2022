@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ab81c5912e3cfdc47a9f899294cfd2b2, type: 3}
-  m_Name: BishopWhite
+  m_Name: Bishop
   m_EditorClassIdentifier: 
   title: Bishop
-  image: {fileID: 21300000, guid: 3248d94a0cc89f14d9da61903790eeae, type: 3}
+  image: {fileID: 21300000, guid: f6fda20221a51774ba6e7b3739331f69, type: 3}
   cardType: 0
   description: Definitely not the pope.
-  playerColour: 0
+  playerColour: 1
   probability: 0.4

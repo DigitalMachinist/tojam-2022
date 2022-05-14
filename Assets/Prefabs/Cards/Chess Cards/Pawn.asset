@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ab81c5912e3cfdc47a9f899294cfd2b2, type: 3}
-  m_Name: Rock
+  m_Name: Pawn
   m_EditorClassIdentifier: 
-  title: Rock
-  image: {fileID: 21300000, guid: 0c585c70fdb78df4d9918b94b69dd697, type: 3}
+  title: Pawn
+  image: {fileID: 21300000, guid: 5ca50198eee0e864bac852b87ce82f4b, type: 3}
   cardType: 0
-  description: Its just a plain old rock....or so it would seem.
-  probability: 0.555
+  description: Just a pawn.
+  playerColour: 1
+  probability: 0.6

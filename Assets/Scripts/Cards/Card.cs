@@ -64,14 +64,22 @@ public class Card : MonoBehaviour
     //    PopulateCardFields(cardSO);
     //}
 
-    public void PopulateCardFields(CardScriptableObject cardSO)
+    public void PopulateCardFields( CardScriptableObject cardSO )
     {
         _cardSO = cardSO;
         title = cardSO.title;
-        image = cardSO.image;
         cardType = cardSO.cardType;
         description = cardSO.description;
         playerColour = cardSO.playerColour;
+
+        if ( playerColour == PlayerColour.Black )
+        {
+            image = cardSO.blackImage;
+        }
+        else
+        {
+            image = cardSO.whiteImage;
+        }
 
         hasCardBeenPlayed = false;
     }

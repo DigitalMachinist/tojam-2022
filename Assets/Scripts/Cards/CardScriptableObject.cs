@@ -7,7 +7,8 @@ using Players;
 public class CardScriptableObject : ScriptableObject
 {
     public string title;
-    public Sprite image;
+    public Sprite blackImage;
+    public Sprite whiteImage;
     public CardType cardType;
     public string description;
     public PlayerColour playerColour;
