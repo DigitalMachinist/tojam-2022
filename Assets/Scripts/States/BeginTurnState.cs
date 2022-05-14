@@ -19,12 +19,12 @@ namespace States
                 
                 manager.StateMachine.ChangeState(StateType.GameOver);
             }
-            else if (manager.TurnNumber < manager.TurnShowCards)
+            else if (manager.TurnNumber < manager.TurnPhase2)
             {
                 // Go straight to piece selection in the early game.
-                // manager.Deck.SetActive(false);
-                // manager.PlayerHandBlack.gameObject.SetActive(false);
-                // manager.PlayerHandWhite.gameObject.SetActive(false);
+                manager.Deck.SetActive(false);
+                manager.PlayerHandBlack.gameObject.SetActive(false);
+                manager.PlayerHandWhite.gameObject.SetActive(false);
                 
                 manager.StateMachine.ChangeState(StateType.SelectPiece);
             }

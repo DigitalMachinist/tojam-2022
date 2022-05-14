@@ -27,7 +27,7 @@ namespace Pieces
                     
                     return false;
                 }
-                else if (distance > 1)
+                else if (player.TurnNumber > 1 && distance > 1)
                 {
                     if (throwExceptions)
                     {
@@ -62,7 +62,7 @@ namespace Pieces
                     
                     return false;
                 }
-                else if (endTile.Piece != null)
+                else if (endTile.Piece == null)
                 {
                     if (throwExceptions)
                     {

@@ -11,6 +11,7 @@ public class CardScriptableObject : ScriptableObject
     public CardType cardType;
     public string description;
     public PlayerColour playerColour;
+    public GameObject prefab;
 
     [Range(0.0f, 1.0f)]
     public float probability = .5f;
