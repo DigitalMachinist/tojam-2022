@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Pieces;
 using UnityEngine;
 
 namespace Board
@@ -56,11 +57,6 @@ namespace Board
             }
         }
 
-        public Tile GetTile(int row, int col)
-        {
-            return Tiles[Rows * row + col];
-        }
-
         public Tile MouseSelectTile()
         {
             Vector3 origin = Camera.main.transform.position;
@@ -77,6 +73,154 @@ namespace Board
             }
 
             return nearestTileHit.transform.GetComponent<Tile>();
+        }
+
+        public Tile GetTile(Tile tile, Direction direction = Direction.None, int distance = 0)
+        {
+            return GetTile(tile.Row, tile.Col, direction, distance);
+        }
+        public Tile GetTile(int row, int col, Direction direction = Direction.None, int distance = 0)
+        {
+            switch (direction)
+            {
+                case Direction.N:
+                    row += distance;
+                    break;
+                
+                case Direction.NE:
+                    row += distance;
+                    col += distance;
+                    break;
+                
+                case Direction.E:
+                    col += distance;
+                    break;
+                
+                case Direction.SE:
+                    row -= distance;
+                    col += distance;
+                    break;
+                
+                case Direction.S:
+                    row -= distance;
+                    break;
+                
+                case Direction.SW:
+                    row -= distance;
+                    col -= distance;
+                    break;
+                
+                case Direction.W:
+                    col -= distance;
+                    break;
+                
+                case Direction.NW:
+                    row += distance;
+                    col -= distance;
+                    break;
+                
+                case Direction.None:
+                    break;
+                
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
+            }
+
+            // Since this ias actually a 1D array, we need to check this based on rows/columns because its possible
+            // that bad row/col coordinates could still give us a valid 1D array index.
+            if (row < 0 || row >= Rows || col < 0 || col >= Cols)
+            {
+                throw new IndexOutOfRangeException("Off the edge of the board.");
+            }
+            
+            return Tiles[Rows * (row - 1) + (col - 1)];
+        }
+
+        public Direction GetDirection(Tile start, Tile end)
+        {
+            if (end.Row == start.Row)
+            {
+                if (end.Col < start.Col)
+                {
+                    return Direction.W;
+                }
+                else if (end.Col > start.Col)
+                {
+                    return Direction.E;
+                }
+                else
+                {
+                    return Direction.None;
+                }
+            }
+            
+            if (end.Col == start.Col)
+            {
+                if (end.Row < start.Row)
+                {
+                    return Direction.S;
+                }
+                else if (end.Row > start.Row)
+                {
+                    return Direction.N;
+                }
+                else
+                {
+                    return Direction.None;
+                }
+            }
+
+            var rowDiff = end.Row - start.Row;
+            var colDiff = end.Col - start.Col;
+            if (Mathf.Abs(rowDiff) == Mathf.Abs(colDiff))
+            {
+                if (rowDiff > 0)
+                {
+                    if (colDiff > 0)
+                    {
+                        return Direction.NE;
+                    }
+                    else
+                    {
+                        return Direction.NW;
+                    }
+                }
+                else
+                {
+                    if (colDiff > 0)
+                    {
+                        return Direction.SE;
+                    }
+                    else
+                    {
+                        return Direction.SW;
+                    }
+                }
+            }
+
+            return Direction.None;
+        }
+
+        public int GetDistance(Tile start, Tile end)
+        {
+            if (end.Row == start.Row)
+            {
+                return Mathf.Abs(end.Col - start.Col);
+            }
+            
+            if (end.Col == start.Col)
+            {
+                return Mathf.Abs(end.Row - start.Row);
+            }
+            
+            var rowDiff = end.Row - start.Row;
+            var colDiff = end.Col - start.Col;
+            if (Mathf.Abs(rowDiff) == Mathf.Abs(colDiff))
+            {
+                return rowDiff;
+            }
+
+            return 0;
         }
     }
 }

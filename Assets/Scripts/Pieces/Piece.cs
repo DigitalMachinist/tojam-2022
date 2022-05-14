@@ -1,5 +1,5 @@
+using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using Board;
 using Exceptions;
 using Players;
@@ -22,8 +22,50 @@ namespace Pieces
             IsFinishedMoving = true;
         }
 
-        public virtual bool ValidateMove(Player player, Direction direction, Tile tile, bool throwExceptions = false)
+        public virtual List<Piece> Move(Player player, Tile endTile)
         {
+            var direction = Tile.Board.GetDirection(Tile, endTile);
+            var distance = Tile.Board.GetDistance(Tile, endTile);
+            Debug.Log($"Direction: {direction}");
+            Debug.Log($"Distance: {distance}");
+            ValidateMove(player, Tile, endTile, direction, distance, true);
+
+            // Keep track of pieces to return as taken.
+            var pieces = new List<Piece>();
+            if (endTile.Piece != null)
+            {
+                pieces.Add(endTile.Piece);
+            }
+
+            Tile.Piece = null;
+            Tile = endTile;
+            Tile.Piece = this;
+            HasMovedThisTurn = true;
+            
+            // TODO: Tween this instead?
+            transform.position = Tile.transform.position;
+            
+            CalculateIsFinishedMoving();
+
+            return pieces;
+        }
+        
+        public virtual bool ValidateMove(Player player, Tile startTile, Tile endTile, Direction direction, int distance, bool throwExceptions = false)
+        {
+            try
+            {
+                startTile.Board.GetTile(startTile, direction, distance);
+            }
+            catch (IndexOutOfRangeException e)
+            {
+                if (throwExceptions)
+                {
+                    throw new MovementException("Can't move off the edge of the board.");
+                }
+
+                return false;
+            }
+            
             if (IsTaken)
             {
                 if (throwExceptions)
@@ -54,7 +96,7 @@ namespace Pieces
                 return false;
             }
 
-            if (tile.IsDestroyed)
+            if (endTile.IsDestroyed)
             {
                 if (throwExceptions)
                 {
@@ -64,11 +106,11 @@ namespace Pieces
                 return false;
             }
 
-            if (tile.Piece != null && tile.Piece.Player.Colour == Player.Colour)
+            if (endTile.Piece != null && endTile.Piece.Player == Player)
             {
                 if (throwExceptions)
                 {
-                    throw new MovementException("Can't move into the same tile as a piece of your own colour.");
+                    throw new MovementException("Can't move into the same tile as one of your own pieces.");
                 }
 
                 return false;
@@ -76,29 +118,18 @@ namespace Pieces
 
             return true;
         }
-        
-        public virtual void Move(Player player, Direction direction, Tile tile)
+
+        public virtual void Place(Player player, Tile tile)
         {
-            ValidateMove(player, direction, tile, true);
-
-            if (tile.Piece != null)
-            {
-                tile.Piece.Take();
-            }
-
-            var startTile = Tile;
+            ValidatePlace(player, tile, true);
+            
+            Player = player;
             Tile = tile;
             Tile.Piece = this;
-            HasMovedThisTurn = true;
+            IsTaken = false;
+            HasMovedThisTurn = false;
+            IsFinishedMoving = false;
             transform.position = Tile.transform.position;
-
-            CalculateIsFinishedMoving();
-            AfterMove(player, direction, startTile, Tile);
-        }
-
-        public virtual void AfterMove(Player player, Direction direction, Tile startTile, Tile endTile)
-        {
-             // TODO
         }
 
         public virtual bool ValidatePlace(Player player, Tile tile, bool throwExceptions = false)
@@ -126,25 +157,13 @@ namespace Pieces
             return true;
         }
         
-        public virtual void Place(Player player, Tile tile)
-        {
-            ValidatePlace(player, tile, true);
-            
-            Player = player;
-            Tile = tile;
-            Tile.Piece = this;
-            IsTaken = false;
-            HasMovedThisTurn = true;
-            IsFinishedMoving = true;
-            transform.position = Tile.transform.position;
-        }
-
         public void Take()
         {
             Tile = null;
             IsTaken = true;
             
             // TODO: Animate the piece being destroyed somehow?
+            transform.position = Vector3.zero;
         }
         
         public void NextTurn()
