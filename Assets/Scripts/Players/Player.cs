@@ -8,13 +8,30 @@ namespace Players
 {
     public class Player : MonoBehaviour
     {
+        public event Action TurnAdvanced;
+        
         public PlayerColour Colour;
         public List<Piece> Pieces;
         public List<Piece> TakenPieces;
         public int TurnNumber = 1;
 
-        public event Action TurnAdvanced;
+        public bool HasLost => !HasPieces || !CanMove();
 
+        public bool HasPieces => Pieces.Count != 0;
+
+        public bool CanMove()
+        {
+            foreach (var piece in Pieces)
+            {
+                if (piece.GetValidMoves().Count > 0)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+        
         public void PlacePiece(Piece piece, Tile tile, bool ignoreTurn = false)
         {
             Pieces.Add(piece);

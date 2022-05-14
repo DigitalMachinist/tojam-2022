@@ -74,8 +74,8 @@ namespace Pieces
         
         public virtual List<Piece> Move(Player player, Tile endTile)
         {
-            var direction = Tile.chessboard.GetDirection(Tile, endTile);
-            var distance = Tile.chessboard.GetDistance(Tile, endTile);
+            var direction = Tile.Board.GetDirection(Tile, endTile);
+            var distance = Tile.Board.GetDistance(Tile, endTile);
             Debug.Log($"Direction: {direction}");
             Debug.Log($"Distance: {distance}");
             ValidateMove(player, Tile, endTile, direction, distance, true);
@@ -114,7 +114,7 @@ namespace Pieces
             
             try
             {
-                startTile.chessboard.GetTile(startTile, direction, distance);
+                startTile.Board.GetTile(startTile, direction, distance);
             }
             catch (IndexOutOfRangeException e)
             {
@@ -202,6 +202,22 @@ namespace Pieces
             IsFinishedMoving = true;
 
             FinishedMove?.Invoke(this);
+        }
+
+        public virtual List<Tile> GetValidMoves()
+        {
+            var tiles = new List<Tile>();
+            foreach (var endTile in Tile.Board.Tiles)
+            {
+                var direction = Tile.Board.GetDirection(Tile, endTile);
+                var distance = Tile.Board.GetDistance(Tile, endTile);
+                if (ValidateMove(Player, Tile, endTile, direction, distance))
+                {
+                    tiles.Add(endTile);
+                }
+            }
+
+            return tiles;
         }
     }
 }

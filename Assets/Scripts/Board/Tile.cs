@@ -7,7 +7,7 @@ namespace Board
 {
     public class Tile : MonoBehaviour
     {
-        public Chessboard chessboard;
+        public Chessboard Board;
         public int Row;
         public int Col;
         public Piece Piece;

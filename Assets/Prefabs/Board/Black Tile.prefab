@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 4870374314172942891}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 0.2, z: 1}
+  m_LocalScale: {x: 1, y: 0.4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2446904898107971432}
@@ -130,7 +130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccc36cdb208e4f158bf476ac742ca34e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chessboard: {fileID: 0}
+  Board: {fileID: 0}
   Row: 0
   Col: 0
   Piece: {fileID: 0}

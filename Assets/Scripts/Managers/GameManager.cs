@@ -12,6 +12,10 @@ namespace Managers
         public BoardFactory BoardFactory;
         public Player PlayerBlack;
         public Player PlayerWhite;
+        public GameObject Deck;
+        public Hand PlayerHandBlack;
+        public Hand PlayerHandWhite;
+        public int TurnShowCards = 3;
         public float TileBreakStep = 0.1f;
         public float TileBreakForceMin = 0.1f;
         public float TileBreakForceMax = 0.5f;
@@ -19,6 +23,7 @@ namespace Managers
         public PlayerColour PlayerTurn;
         public int TurnNumber;
         public int BattleRoyaleProgress = 0;
+        public Player Winner;
         public Chessboard Board;
         public List<Tile> TilesToDestroy;
 
@@ -26,6 +31,18 @@ namespace Managers
 
         public int PlayerTurnNumber => Mathf.Max(PlayerBlack.TurnNumber, PlayerWhite.TurnNumber);
 
+        public Player CurrentPlayer => GetPlayer(PlayerTurn);
+        
+        public Player GetPlayer(PlayerColour colour)
+        {
+            return colour == PlayerColour.Black ? PlayerBlack : PlayerWhite;
+        }
+        
+        public Player GetOtherPlayer(PlayerColour colour)
+        {
+            return colour == PlayerColour.Black ? PlayerWhite : PlayerBlack;
+        }
+        
         void Start()
         {
             TilesToDestroy.Clear();

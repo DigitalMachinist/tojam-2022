@@ -28,7 +28,7 @@ namespace Pieces
             // Queens can't move through other pieces.
             for (var d = 1; d < distance; d++)
             {
-                var tile = Tile.chessboard.GetTile(startTile, direction, d);
+                var tile = Tile.Board.GetTile(startTile, direction, d);
                 if (tile.Piece != null)
                 {
                     if (throwExceptions)

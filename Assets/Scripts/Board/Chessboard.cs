@@ -15,8 +15,17 @@ namespace Board
         public float RowSpacing = 1.0f;
         public float ColOffset = 0.5f;
         public float ColSpacing = 1.0f;
+        public bool AutoBuild = false;
         public Tile[] Tiles;
 
+        void Start()
+        {
+            if (AutoBuild)
+            {
+                Build();
+            }
+        }
+        
         public void Destroy()
         {
             foreach (var tile in Tiles)
@@ -47,7 +56,7 @@ namespace Board
                     
                     Tile tileInstance = Instantiate(tilePrefab, worldPosition, Quaternion.identity, transform);
                     tileInstance.name = $"Tile {Convert.ToChar(col + 65)}{row + 1}";
-                    tileInstance.chessboard = this;
+                    tileInstance.Board = this;
                     tileInstance.Row = row;
                     tileInstance.Col = col;
 

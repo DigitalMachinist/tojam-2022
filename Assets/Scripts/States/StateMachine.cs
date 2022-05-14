@@ -1,9 +1,11 @@
 using System;
+using Managers;
 
 namespace States
 {
     public class StateMachine
     {
+        public GameManager GameManager;
         public StateType CurrentStateType;
         public State State;
         
@@ -19,6 +21,9 @@ namespace States
 
         public StateMachine()
         {
+            CurrentStateType = StateType.None;
+            State = null;
+            
             BeginTurn = new BeginTurnState();
             SelectCard = new SelectCardState();
             ConfirmCard = new ConfirmCardState();
@@ -28,9 +33,6 @@ namespace States
             Event = new EventState();
             EndTurn = new EndTurnState();
             GameOver = new GameOverState();
-
-            CurrentStateType = StateType.None;
-            State = null;
         }
 
         public void Update()
@@ -43,7 +45,7 @@ namespace States
             State newState = type switch
             {
                 StateType.BeginTurn   => BeginTurn,
-                StateType.PlayCards   => PlaceCard,
+                StateType.SelectCard  => SelectCard,
                 StateType.ConfirmCard => ConfirmCard,
                 StateType.PlaceCard   => PlaceCard,
                 StateType.SelectPiece => SelectPiece,

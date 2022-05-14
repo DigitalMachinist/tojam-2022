@@ -4,7 +4,7 @@ namespace States
     {
         None,
         BeginTurn,
-        PlayCards,
+        SelectCard,
         ConfirmCard,
         PlaceCard,
         SelectPiece,
