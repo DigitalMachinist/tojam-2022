@@ -17,4 +17,4 @@ MonoBehaviour:
   cardType: 0
   description: Whoa, cool, a horse.
   playerColour: 1
-  probability: 0.4
+  probability: 0.3
