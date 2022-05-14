@@ -7,7 +7,7 @@ namespace Board
 {
     public class BoardTest : MonoBehaviour
     {
-        public Board Board;
+        public Chessboard chessboard;
         public Piece PieceBlack1;
         public Piece PieceBlack2;
         public Piece PieceWhite1;
@@ -18,18 +18,18 @@ namespace Board
 
         void Start()
         {
-            if (Board == null)
+            if (chessboard == null)
             {
-                Board = GetComponentInChildren<Board>();
+                chessboard = GetComponentInChildren<Chessboard>();
             }
 
-            Board.Build();
+            chessboard.Build();
 
-            PlayerBlack.PlacePiece(PieceBlack1, Board.GetTile(2, 3));
-            PlayerBlack.PlacePiece(PieceBlack2, Board.GetTile(3, 2));
+            PlayerBlack.PlacePiece(PieceBlack1, chessboard.GetTile(2, 3));
+            PlayerBlack.PlacePiece(PieceBlack2, chessboard.GetTile(3, 2));
             
-            PlayerWhite.PlacePiece(PieceWhite1, Board.GetTile(6, 7));
-            PlayerWhite.PlacePiece(PieceWhite2, Board.GetTile(7, 6));
+            PlayerWhite.PlacePiece(PieceWhite1, chessboard.GetTile(6, 7));
+            PlayerWhite.PlacePiece(PieceWhite2, chessboard.GetTile(7, 6));
         }
 
         void Update()
@@ -38,7 +38,7 @@ namespace Board
             {
                 if (SelectedPiece == null)
                 {
-                    Tile tile = Board.MouseSelectTile();
+                    Tile tile = chessboard.MouseSelectTile();
                     if (tile != null)
                     {
                         Debug.Log(tile.name);
@@ -55,12 +55,12 @@ namespace Board
                 }
                 else
                 {
-                    Tile tile = Board.MouseSelectTile();
+                    Tile tile = chessboard.MouseSelectTile();
                     if (tile != null)
                     {
                         Debug.Log(tile.name);
                         PlayerBlack.MovePiece(SelectedPiece, tile);
-                        PlayerBlack.NextTurn();
+                        PlayerBlack.AdvanceTurn();
                         SelectedPiece = null;
                     }
                 }

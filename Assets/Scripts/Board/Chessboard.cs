@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Board
 {
-    public class Board : MonoBehaviour
+    public class Chessboard : MonoBehaviour
     {
         public Tile WhiteTilePrefab;
         public Tile BlackTilePrefab;
@@ -15,7 +15,6 @@ namespace Board
         public float RowSpacing = 1.0f;
         public float ColOffset = 0.5f;
         public float ColSpacing = 1.0f;
-
         public Tile[] Tiles;
 
         public void Destroy()
@@ -48,7 +47,7 @@ namespace Board
                     
                     Tile tileInstance = Instantiate(tilePrefab, worldPosition, Quaternion.identity, transform);
                     tileInstance.name = $"Tile {Convert.ToChar(col + 65)}{row + 1}";
-                    tileInstance.Board = this;
+                    tileInstance.chessboard = this;
                     tileInstance.Row = row;
                     tileInstance.Col = col;
 
@@ -61,8 +60,9 @@ namespace Board
         {
             Vector3 origin = Camera.main.transform.position;
             Vector3 direction = Camera.main.ScreenPointToRay(Input.mousePosition).direction;
+            int layerMask = LayerMask.GetMask("Tiles");
             RaycastHit nearestTileHit = Physics
-                .RaycastAll(origin, direction)
+                .RaycastAll(origin, direction, layerMask)
                 .Where(hit => hit.transform.GetComponent<Tile>() != null)
                 .OrderBy(hit => hit.distance)
                 .FirstOrDefault();
@@ -126,9 +126,9 @@ namespace Board
                     throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
             }
 
-            // Since this ias actually a 1D array, we need to check this based on rows/columns because its possible
+            // Since this is actually a 1D array, we need to check this based on rows/columns because its possible
             // that bad row/col coordinates could still give us a valid 1D array index.
-            if (row < 0 || row >= Rows || col < 0 || col >= Cols)
+            if (row < 1 || row > Rows || col < 1 || col > Cols)
             {
                 throw new IndexOutOfRangeException("Off the edge of the board.");
             }
@@ -217,7 +217,7 @@ namespace Board
             var colDiff = end.Col - start.Col;
             if (Mathf.Abs(rowDiff) == Mathf.Abs(colDiff))
             {
-                return rowDiff;
+                return Mathf.Abs(rowDiff);
             }
 
             return 0;
