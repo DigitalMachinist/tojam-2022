@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Pawn
   m_EditorClassIdentifier: 
   title: Pawn
-  image: {fileID: 21300000, guid: 5ca50198eee0e864bac852b87ce82f4b, type: 3}
+  blackImage: {fileID: 21300000, guid: 5ca50198eee0e864bac852b87ce82f4b, type: 3}
+  whiteImage: {fileID: 21300000, guid: d14a3a819175eb34592e53c81bc3dff6, type: 3}
   cardType: 0
   description: Just a pawn.
   playerColour: 1
