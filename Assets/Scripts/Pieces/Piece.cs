@@ -26,6 +26,8 @@ namespace Pieces
             ValidateSelect(player, ignoreTurn, true);
             
             GameManager.Get().SelectedPiece = this;
+
+            GameManager.Get().Audio_PieceSelect.Play();
         }
         
         public virtual bool ValidateSelect(Player player, bool ignoreTurn = false, bool throwExceptions = false)
@@ -97,6 +99,8 @@ namespace Pieces
             Content = (player.Colour == PlayerColour.Black)
                 ? Instantiate(ContentPrefabBlack, transform, false)
                 : Instantiate(ContentPrefabWhite, transform, false);
+
+            GameManager.Get().Audio_PieceSelect.Play();
         }
 
         public virtual bool ValidatePlace(Player player, Tile tile, bool ignoreTurn = false, bool throwExceptions = false)
@@ -168,6 +172,8 @@ namespace Pieces
             transform.position = Tile.transform.position;
             
             CalculateIsFinishedMoving();
+
+            GameManager.Get().Audio_PieceSelect.Play();
 
             return pieces;
         }
