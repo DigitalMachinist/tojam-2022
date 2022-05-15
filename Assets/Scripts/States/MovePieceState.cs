@@ -22,32 +22,64 @@ namespace States
             manager.InstructionText.text = "Make a move";
             manager.CancelMoveButton.gameObject.SetActive(true);
             manager.CancelMoveButton.onClick.AddListener(OnCancelClicked);
+            
+            // Clear all hover and selection states.
+            foreach (var tile in manager.Board.Tiles)
+            {
+                tile.IsHovering = false;
+                tile.SelectionState = Tile.SelectionStateTypes.None;
+            }
+
+            // Highlight the selected piece.
+            manager.SelectedPiece.Tile.SelectionState = Tile.SelectionStateTypes.Selected;
+            
+            // Highlight the tiles the piece can move to.
+            foreach (var tile in manager.SelectedPiece.GetValidMoves())
+            {
+                tile.SelectionState = tile.Piece == null
+                    ? Tile.SelectionStateTypes.Available
+                    : Tile.SelectionStateTypes.Danger;
+            }
         }
         
         public override void Update()
         {
             base.Update();
+
+            if (Input.GetKeyUp(KeyCode.Escape))
+            {
+                OnCancelClicked();
+            }
             
             var manager = GameManager.Get();
-            Tile tile = manager.Board.MouseSelectTile();
-            if (tile == null)
+            
+            // Clear all hover states.
+            foreach (var tile in manager.Board.Tiles)
+            {
+                tile.IsHovering = false;
+            }
+
+            Tile hoveredTile = manager.Board.MouseSelectTile();
+            if (hoveredTile == null)
             {
                 return;
             }
             
-            // TODO: Highlight tiles that the piece can move to.
             // TODO: Hover state on tiles that are valid moves.
+            var direction = manager.Board.GetDirection(manager.SelectedPiece.Tile, hoveredTile);
+            var distance = manager.Board.GetDistance(manager.SelectedPiece.Tile, hoveredTile);
+            hoveredTile.IsHovering = manager.SelectedPiece.ValidateMove(manager.CurrentPlayer, manager.SelectedPiece.Tile, hoveredTile, direction, distance);
 
             if (!Input.GetMouseButtonUp(0))
             {
                 return;
             }
 
-            Debug.Log(tile.name);
+            Debug.Log(hoveredTile.name);
             Debug.Log(manager.SelectedPiece);
             try
             {
-                manager.CurrentPlayer.MovePiece(manager.SelectedPiece, tile);
+                manager.CurrentPlayer.MovePiece(manager.SelectedPiece, hoveredTile);
             }
             catch (MovementException e)
             {
@@ -67,6 +99,13 @@ namespace States
             var manager = GameManager.Get();
             manager.CancelMoveButton.gameObject.SetActive(false);
             manager.CancelMoveButton.onClick.RemoveListener(OnCancelClicked);
+            
+            // Clear all hover and selection states.
+            foreach (var tile in manager.Board.Tiles)
+            {
+                tile.IsHovering = false;
+                tile.SelectionState = Tile.SelectionStateTypes.None;
+            }
         }
     }
 }

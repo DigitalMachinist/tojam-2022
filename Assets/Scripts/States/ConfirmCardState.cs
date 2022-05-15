@@ -50,8 +50,8 @@ namespace States
 
             var manager = GameManager.Get();
             manager.ConfirmCardDialog.SetActive(false);
-            manager.ConfirmCardButton.gameObject.SetActive(true);
-            manager.CancelCardButton.gameObject.SetActive(true);
+            manager.ConfirmCardButton.gameObject.SetActive(false);
+            manager.CancelCardButton.gameObject.SetActive(false);
             manager.ConfirmCardButton.onClick.RemoveListener(OnConfirmClicked);
             manager.CancelCardButton.onClick.RemoveListener(OnCancelClicked);
         }

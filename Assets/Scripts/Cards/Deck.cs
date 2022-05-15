@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Managers;
 
 public class Deck : MonoBehaviour
 {
@@ -7,8 +8,10 @@ public class Deck : MonoBehaviour
 
     public Transform Normal;
     public Transform Apocalypse;
-    public Transform NormalTwistyCard;
-    public Transform ApocalypseTwistyCard;
+    public Transform NormalWhiteTwistyCard;
+    public Transform ApocalypseWhiteTwistyCard;
+    public Transform NormalBlackTwistyCard;
+    public Transform ApocalypseBlackTwistyCard;
     public float TwistyDegrees = 15;
     public int deckSize;
     public CardScriptableObject[] possibleCards;
@@ -28,14 +31,54 @@ public class Deck : MonoBehaviour
     
     public void RenderReset()
     {
-        NormalTwistyCard.transform.localEulerAngles = new Vector3(90, 0, 0);
-        ApocalypseTwistyCard.transform.localEulerAngles = new Vector3(90, 0, 0);
+        NormalWhiteTwistyCard.gameObject.SetActive( false );
+        ApocalypseWhiteTwistyCard.gameObject.SetActive( false );
+        NormalBlackTwistyCard.gameObject.SetActive( false );
+        ApocalypseBlackTwistyCard.gameObject.SetActive( false );
+
+        NormalWhiteTwistyCard.transform.localEulerAngles = new Vector3(90, 0, 0);
+        ApocalypseWhiteTwistyCard.transform.localEulerAngles = new Vector3(90, 0, 0);
+        NormalBlackTwistyCard.transform.localEulerAngles = new Vector3( 90, 0, 0 );
+        ApocalypseBlackTwistyCard.transform.localEulerAngles = new Vector3( 90, 0, 0 );
     }
-    
+
+    public void RenderPlayer()
+    {
+        RenderReset();
+
+        if ( GameManager.Get().PlayerTurn == Players.PlayerColour.White )
+        {
+            NormalWhiteTwistyCard.gameObject.SetActive( true );
+            ApocalypseWhiteTwistyCard.gameObject.SetActive( true );
+        }
+        else
+        {
+            NormalBlackTwistyCard.gameObject.SetActive( true );
+            ApocalypseBlackTwistyCard.gameObject.SetActive( true );
+        }
+    }
     public void RenderHovered()
     {
-        NormalTwistyCard.transform.localEulerAngles = new Vector3(90, TwistyDegrees, 0);
-        ApocalypseTwistyCard.transform.localEulerAngles = new Vector3(90, TwistyDegrees, 0);
+        NormalWhiteTwistyCard.gameObject.SetActive( false );
+        ApocalypseWhiteTwistyCard.gameObject.SetActive( false );
+        NormalBlackTwistyCard.gameObject.SetActive( false );
+        ApocalypseBlackTwistyCard.gameObject.SetActive( false );
+
+        NormalWhiteTwistyCard.transform.localEulerAngles = new Vector3(90, TwistyDegrees, 0);
+        ApocalypseWhiteTwistyCard.transform.localEulerAngles = new Vector3(90, TwistyDegrees, 0);
+        NormalBlackTwistyCard.transform.localEulerAngles = new Vector3( 90, TwistyDegrees, 0 );
+        ApocalypseBlackTwistyCard.transform.localEulerAngles = new Vector3( 90, TwistyDegrees, 0 );
+
+        if ( GameManager.Get().PlayerTurn == Players.PlayerColour.White )
+        {
+            NormalWhiteTwistyCard.gameObject.SetActive( true );
+            ApocalypseWhiteTwistyCard.gameObject.SetActive( true );
+        }
+        else
+        {
+            NormalBlackTwistyCard.gameObject.SetActive( true );
+            ApocalypseBlackTwistyCard.gameObject.SetActive( true );
+        }
     }
     
     public bool IsHoveringDeck()

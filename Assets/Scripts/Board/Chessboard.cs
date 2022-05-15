@@ -25,7 +25,7 @@ namespace Board
                 Build();
             }
         }
-        
+            
         public void Destroy()
         {
             foreach (var tile in Tiles)
@@ -38,6 +38,7 @@ namespace Board
 
         public void Build()
         {
+            Destroy();
             Tiles = new Tile[Rows * Cols];
 
             for (var row = 0; row < Rows; row++)

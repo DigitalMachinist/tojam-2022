@@ -42,7 +42,7 @@ namespace States
             }
             else
             {
-                manager.Deck.RenderReset();
+                manager.Deck.RenderPlayer();
             }
         }
         

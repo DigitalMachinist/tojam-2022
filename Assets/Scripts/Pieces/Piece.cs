@@ -26,6 +26,8 @@ namespace Pieces
             ValidateSelect(player, ignoreTurn, true);
             
             GameManager.Get().SelectedPiece = this;
+
+            GameManager.Get().Audio_PieceSelect.Play();
         }
         
         public virtual bool ValidateSelect(Player player, bool ignoreTurn = false, bool throwExceptions = false)
@@ -97,6 +99,8 @@ namespace Pieces
             Content = (player.Colour == PlayerColour.Black)
                 ? Instantiate(ContentPrefabBlack, transform, false)
                 : Instantiate(ContentPrefabWhite, transform, false);
+
+            GameManager.Get().Audio_PieceSelect.Play();
         }
 
         public virtual bool ValidatePlace(Player player, Tile tile, bool ignoreTurn = false, bool throwExceptions = false)
@@ -106,6 +110,16 @@ namespace Pieces
                 if (throwExceptions)
                 {
                     throw new PlacementException("Can't place a piece when it isn't your turn.");
+                }
+
+                return false;
+            }
+
+            if (player.Colour == PlayerColour.White && tile.Row > 4 || player.Colour == PlayerColour.Black && tile.Row < 5)
+            {
+                if (throwExceptions)
+                {
+                    throw new PlacementException("Can't place into the other player's board area.");
                 }
 
                 return false;
@@ -158,6 +172,8 @@ namespace Pieces
             transform.position = Tile.transform.position;
             
             CalculateIsFinishedMoving();
+
+            GameManager.Get().Audio_PieceSelect.Play();
 
             return pieces;
         }
@@ -246,6 +262,8 @@ namespace Pieces
             Tile.Piece = null;
             Tile = null;
             IsTaken = true;
+
+            Player.Pieces.Remove(this);
             
             // TODO: Animate the piece being destroyed somehow?
             // transform.position = Vector3.zero;
@@ -273,7 +291,7 @@ namespace Pieces
             foreach (var endTile in Tile.Board.Tiles)
             {
                 var direction = Tile.Board.GetDirection(Tile, endTile);
-                var distance = Tile.Board.GetDistance(Tile, endTile);
+                    var distance = Tile.Board.GetDistance(Tile, endTile);
                 if (ValidateMove(Player, Tile, endTile, direction, distance))
                 {
                     tiles.Add(endTile);

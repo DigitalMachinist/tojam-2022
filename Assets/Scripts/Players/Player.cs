@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Board;
 using Pieces;
 using UnityEngine;
+using Managers;
 
 namespace Players
 {
@@ -66,7 +67,8 @@ namespace Players
         {
             TakenPieces.Add(piece);
             piece.Take();
-            
+
+            GameManager.Get().Audio_PieceDestroy.Play();
             // TODO: Move the piece to some kind of graveyard area?
         }
 
