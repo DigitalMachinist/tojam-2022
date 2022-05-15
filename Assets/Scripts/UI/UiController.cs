@@ -23,8 +23,19 @@ namespace UI
 		[SerializeField] private CanvasGroup buttonGroup;
 		[SerializeField] private float logoDelay; 
 		[SerializeField] private float buttonDelay; 
-		[SerializeField] private Image logo; 
-		
+		[SerializeField] private Image logo;
+
+		[Header( "Timmy Logo" )]
+		[SerializeField] private CanvasGroup timmyScreen;
+		[SerializeField] private float timmyLogoDelay;
+		[SerializeField] private Image logoTimmy;
+		[SerializeField] private Image logoSensible;
+
+		[Header( "Timmy Logo" )]
+		[SerializeField] private CanvasGroup apocScreen;
+		[SerializeField] private float apocLogoDelay;
+		[SerializeField] private Image logoArmageddon;
+
 		[Header("GameOver")]
 		[SerializeField] private Button playAgainButton;
 		[SerializeField] private Button endExitButton;
