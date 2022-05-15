@@ -1,11 +1,15 @@
 using Board;
 using Managers;
+using Pieces;
 using UnityEngine;
+using UnityEngine.Timeline;
 
 namespace States
 {
     public class PlaceCardState : State
     {
+        private Piece tempPiece;
+        
         private void OnCancelClicked()
         {
             var manager = GameManager.Get();
@@ -27,6 +31,18 @@ namespace States
             manager.CancelCardButton.gameObject.SetActive(false);
             manager.CancelPlaceButton.gameObject.SetActive(true);
             manager.CancelPlaceButton.onClick.AddListener(OnCancelClicked);
+            
+            var go = GameObject.Instantiate(manager.SelectedCard._cardSO.prefab, new Vector3(1000, 0, 0), Quaternion.identity);
+            tempPiece = go.GetComponent<Piece>();
+            
+            // Clear all hover and selection states AND signal where the piece can be placed.
+            foreach (var tile in manager.Board.Tiles)
+            {
+                tile.IsHovering = false;
+                tile.SelectionState = tempPiece.ValidatePlace(manager.CurrentPlayer, tile)
+                    ? Tile.SelectionStateTypes.Available
+                    : Tile.SelectionStateTypes.None;
+            }
         }
         
         public override void Update()
@@ -39,11 +55,20 @@ namespace States
             }
             
             var manager = GameManager.Get();
-            Tile tile = manager.Board.MouseSelectTile();
-            if (tile == null)
+            
+            // Clear all hover states.
+            foreach (var tile in manager.Board.Tiles)
+            {
+                tile.IsHovering = false;
+            }
+
+            Tile hoveredTile = manager.Board.MouseSelectTile();
+            if (hoveredTile == null)
             {
                 return;
             }
+
+            hoveredTile.IsHovering = tempPiece.ValidatePlace(manager.CurrentPlayer, hoveredTile);
             
             // TODO: Enable tile hover state
             
@@ -52,9 +77,9 @@ namespace States
                 return;
             }
             
-            Debug.Log($"Play {manager.SelectedCard.Title} at {tile.name}");
+            Debug.Log($"Play {manager.SelectedCard.Title} at {hoveredTile.name}");
             manager.SelectedCard.Play();
-            manager.CurrentPlayer.PlaceCard(manager.SelectedCard._cardSO, tile);
+            manager.CurrentPlayer.PlaceCard(manager.SelectedCard._cardSO, hoveredTile);
             manager.ClearSelectedCard();
             manager.StateMachine.ChangeState(StateType.SelectPiece);
         }
@@ -70,6 +95,15 @@ namespace States
             manager.CancelCardButton.gameObject.SetActive(false);
             manager.CancelPlaceButton.gameObject.SetActive(false);
             manager.CancelPlaceButton.onClick.RemoveListener(OnCancelClicked);
+            
+            // Clear all selection states.
+            foreach (var tile in manager.Board.Tiles)
+            {
+                tile.IsHovering = false;
+                tile.SelectionState = Tile.SelectionStateTypes.None;
+            }
+            
+            GameObject.Destroy(tempPiece.gameObject);
         }
     }
 }

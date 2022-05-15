@@ -45,6 +45,11 @@ namespace States
         public override void Update()
         {
             base.Update();
+
+            if (Input.GetKeyUp(KeyCode.Escape))
+            {
+                OnCancelClicked();
+            }
             
             var manager = GameManager.Get();
             
