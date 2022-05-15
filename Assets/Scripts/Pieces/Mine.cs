@@ -9,8 +9,10 @@ using UnityEngine;
 public class Mine : Piece
 {
 
-    private void Start()
+
+    public override void Place(Player player, Tile tile, bool ignoreTurn = false)
     {
+        base.Place(player, tile, ignoreTurn);
         Player.TurnAdvanced += OnPlayerTurnAdvanced;
     }
 
@@ -73,12 +75,24 @@ public class Mine : Piece
         catch
         {
         }
+
+        Player.TurnAdvanced -= OnPlayerTurnAdvanced;
         this.Take();
     }
 
     public override List<Piece> Move(Player player, Tile endTile)
     {
         return base.Move(player, endTile);
+    }
+
+    public override bool ValidateSelect(Player player, bool ignoreTurn = false, bool throwExceptions = false)
+    {
+        if (throwExceptions)
+        {
+            throw new SelectionException("Mines cannot move");
+        }
+
+        return false;
     }
 
     public override bool ValidateMove(Player player, Tile startTile, Tile endTile, Direction direction, int distance, bool ignoreTurn = false, bool throwExceptions = false)
