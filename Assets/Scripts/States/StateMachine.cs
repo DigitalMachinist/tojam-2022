@@ -16,6 +16,7 @@ namespace States
         public SelectPieceState SelectPiece;
         public MovePieceState MovePiece;
         public EventState Event;
+        public DrawCardState DrawCard;
         public EndTurnState EndTurn;
         public GameOverState GameOver;
 
@@ -31,6 +32,7 @@ namespace States
             SelectPiece = new SelectPieceState();
             MovePiece = new MovePieceState();
             Event = new EventState();
+            DrawCard = new DrawCardState();
             EndTurn = new EndTurnState();
             GameOver = new GameOverState();
         }
@@ -51,6 +53,7 @@ namespace States
                 StateType.SelectPiece => SelectPiece,
                 StateType.MovePiece   => MovePiece,
                 StateType.Event       => Event,
+                StateType.DrawCard    => DrawCard,
                 StateType.EndTurn     => EndTurn,
                 StateType.GameOver    => GameOver,
                 StateType.None        => null,

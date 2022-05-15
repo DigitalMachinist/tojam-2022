@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Players;
 using UnityEngine;
 
 public class Deck : MonoBehaviour
@@ -48,13 +49,13 @@ public class Deck : MonoBehaviour
     }
 
 
-    public List<CardScriptableObject> DrawCards(int count)
+    public List<CardScriptableObject> DrawCards(int count, PlayerColour colour)
     {
         List<CardScriptableObject> tempCards = new List<CardScriptableObject>();
 
         for (int i = 0; i < count; i++)
         {
-            CardScriptableObject tempCard = DrawCard();
+            CardScriptableObject tempCard = DrawCard(colour);
 
             if (tempCard == null)
             {
@@ -68,19 +69,17 @@ public class Deck : MonoBehaviour
         return tempCards;
     }
 
-    public CardScriptableObject DrawCard()
+    public CardScriptableObject DrawCard(PlayerColour colour)
     {
         CardScriptableObject drawnCard = null;
 
-        if (deckCards.Count > 0)
+        if (deckCards.Count == 0)
         {
-            drawnCard = deckCards[0];
-            deckCards.RemoveAt(0);
+            deckCards = GenerateCards(deckSize);
         }
-        else
-        {
-            Debug.LogError("No cards to remove, deck empty!");
-        }
+
+        drawnCard = deckCards[0];
+        deckCards.RemoveAt(0);
 
         return drawnCard;
     }

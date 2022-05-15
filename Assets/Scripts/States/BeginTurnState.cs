@@ -13,27 +13,25 @@ namespace States
             {
                 // Detect lose condition and switch to the game over state.
                 manager.Winner = manager.GetOtherPlayer(manager.CurrentPlayer.Colour);
-                manager.Deck.SetActive(false);
-                manager.PlayerHandBlack.gameObject.SetActive(false);
-                manager.PlayerHandWhite.gameObject.SetActive(false);
                 
                 manager.StateMachine.ChangeState(StateType.GameOver);
             }
-            else if (manager.TurnNumber < manager.TurnShowCards)
+            else if (manager.TurnNumber < manager.TurnPhase2)
             {
                 // Go straight to piece selection in the early game.
-                // manager.Deck.SetActive(false);
-                // manager.PlayerHandBlack.gameObject.SetActive(false);
-                // manager.PlayerHandWhite.gameObject.SetActive(false);
+                manager.PlayerHandBlackCanvas.SetActive(false);
+                manager.PlayerHandWhiteCanvas.SetActive(false);
+                manager.Deck.SetActive(false);
                 
                 manager.StateMachine.ChangeState(StateType.SelectPiece);
             }
             else
             {
                 // Once cards are in the game, go to card select next.
+                manager.CurrentPlayerHand.InitHand(manager.CurrentPlayer.Colour);
+                manager.PlayerHandBlackCanvas.SetActive(true);
+                manager.PlayerHandWhiteCanvas.SetActive(true);
                 manager.Deck.SetActive(true);
-                manager.PlayerHandBlack.gameObject.SetActive(true);
-                manager.PlayerHandWhite.gameObject.SetActive(true);
                 
                 manager.StateMachine.ChangeState(StateType.SelectCard);
             }

@@ -32,6 +32,18 @@ namespace Players
             return false;
         }
         
+        public void PlaceCard(CardScriptableObject cardObj, Tile tile, bool ignoreTurn = false)
+        {
+            var instance = Instantiate(cardObj.prefab, tile.transform, false);
+            var piece = instance.GetComponent<Piece>();
+            if (instance.GetComponent<Piece>())
+            {
+                PlacePiece(piece, tile, ignoreTurn);
+            }
+            
+            // TODO: Handle board effect cards.
+        }
+
         public void PlacePiece(Piece piece, Tile tile, bool ignoreTurn = false)
         {
             Pieces.Add(piece);

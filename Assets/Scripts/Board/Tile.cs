@@ -1,6 +1,5 @@
 using Exceptions;
 using Pieces;
-using Players;
 using UnityEngine;
 
 namespace Board
@@ -12,21 +11,30 @@ namespace Board
         public int Col;
         public Piece Piece;
         public bool IsDestroyed;
-        public int TurnsUntilDestroyed;
 
-        // public Piece SelectPiece(Player player)
-        // {
-        //     if (Piece == null)
-        //     {
-        //         throw new SelectionException("There are no pieces on this tile.");
-        //     }
-        //     
-        //     if (player.Colour != Piece.Player.Colour)
-        //     {
-        //         throw new SelectionException("Cannot select a piece that is not yours.");
-        //     }
-        //
-        //     return Piece;
-        // }
+        public void RenderReset()
+        {
+            Debug.Log("TODO: Return tile to normal render mode.");
+        }
+        
+        public void RenderMovable()
+        {
+            Debug.Log("TODO: Render the tile highlighted as a valid move.");
+        }
+        
+        public void RenderPlaceable()
+        {
+            Debug.Log("TODO: Render the tile as a valid placement.");
+        }
+        
+        public void RenderSelectable()
+        {
+            Debug.Log("TODO: Render the tile as selectable.");
+        }
+        
+        public void RenderSelected()
+        {
+            Debug.Log("TODO: Render the tile as currently selected.");
+        }
     }
 }

@@ -1,7 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Players;
 
@@ -14,11 +14,14 @@ public enum CardType
 //this class will probably be used to create game objects later
 
                     //not sure this needs to be a monobevaviour? We can add it back in no prob if so
-public class Card : MonoBehaviour
+public class Card : MonoBehaviour, IPointerClickHandler
 {
+    public event Action<Card> Clicked;
+    public event Action<Card> Hovered;
+    public event Action<Card> Unhovered;
+        
     public CardScriptableObject _cardSO;
-
-
+    
     public TextMeshProUGUI Title;
     public Image _Image;
     public TextMeshProUGUI Description;
@@ -51,6 +54,7 @@ public class Card : MonoBehaviour
     private CanvasGroup cg;
     private Hand ourHand;
 
+    private EventTrigger eventTrigger;
 
     private void Awake()
     {
@@ -58,20 +62,32 @@ public class Card : MonoBehaviour
         ourHand = GetComponentInParent<Hand>();
     }
 
+    // private void Start()
+    // {
+    //     eventTrigger = GetComponent<EventTrigger>();
+    // }
 
     //public Card(CardScriptableObject cardSO)
     //{
     //    PopulateCardFields(cardSO);
     //}
 
-    public void PopulateCardFields(CardScriptableObject cardSO)
+    public void PopulateCardFields( CardScriptableObject cardSO )
     {
         _cardSO = cardSO;
         title = cardSO.title;
-        image = cardSO.image;
         cardType = cardSO.cardType;
         description = cardSO.description;
         playerColour = cardSO.playerColour;
+
+        if ( playerColour == PlayerColour.Black )
+        {
+            image = cardSO.blackImage;
+        }
+        else
+        {
+            image = cardSO.whiteImage;
+        }
 
         hasCardBeenPlayed = false;
     }
@@ -136,14 +152,18 @@ public class Card : MonoBehaviour
     //    ourHand.DrawnCard.Hide();
     //}
 
-    //// Start is called before the first frame update
-    //void Start()
-    //{
-    //}
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        Clicked?.Invoke(this);
+    }
 
-    //// Update is called once per frame
-    //void Update()
-    //{
-        
-    //}
+    // public void OnPointerEnter(PointerEventData eventData)
+    // {
+    //     Hovered?.Invoke(this);
+    // }
+    //
+    // public void OnPointerExit(PointerEventData eventData)
+    // {
+    //     Unhovered?.Invoke(this);
+    // }
 }
