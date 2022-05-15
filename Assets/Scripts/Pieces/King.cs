@@ -13,7 +13,18 @@ namespace Pieces
             {
                 return false;
             }
-            
+
+            // King can move cardinally or diagonally.
+            if (direction == Direction.None)
+            {
+                if (throwExceptions)
+                {
+                    throw new MovementException("King can only move cardinally or diagonally.");
+                }
+
+                return false;
+            }
+
             // Kings can move only 1 tile at a time.
             if (distance > 1)
             {

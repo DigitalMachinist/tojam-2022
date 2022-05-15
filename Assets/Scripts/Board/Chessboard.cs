@@ -57,8 +57,8 @@ namespace Board
                     Tile tileInstance = Instantiate(tilePrefab, worldPosition, Quaternion.identity, transform);
                     tileInstance.name = $"Tile {Convert.ToChar(col + 65)}{row + 1}";
                     tileInstance.Board = this;
-                    tileInstance.Row = row;
-                    tileInstance.Col = col;
+                    tileInstance.Row = row + 1;
+                    tileInstance.Col = col + 1;
 
                     Tiles[Rows * row + col] = tileInstance;
                 }
@@ -67,9 +67,20 @@ namespace Board
 
         public Tile MouseSelectTile()
         {
-            Vector3 origin = Camera.main.transform.position;
-            Vector3 direction = Camera.main.ScreenPointToRay(Input.mousePosition).direction;
             int layerMask = LayerMask.GetMask("Tiles");
+            Vector3 origin = Vector3.zero;
+            Vector3 direction = Vector3.zero;
+            if (Camera.main.orthographic)
+            {
+                origin = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0f));
+                direction = Camera.main.transform.forward;
+            }
+            else
+            {
+                origin = Camera.main.transform.position;
+                direction = Camera.main.ScreenPointToRay(Input.mousePosition).direction;
+            }
+            
             RaycastHit nearestTileHit = Physics
                 .RaycastAll(origin, direction, layerMask)
                 .Where(hit => hit.transform.GetComponent<Tile>() != null)

@@ -45,4 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Colour: 0
+  Pieces: []
   TakenPieces: []
+  TurnNumber: 0

@@ -21,7 +21,7 @@ namespace States
             manager.InstructionText.text = "Choose a space";
             // TODO: Make this display the current card.
             manager.PlaceCardDisplay.SetActive(true);
-            manager.CancelCardButton.clicked += OnCancelClicked;
+            manager.CancelCardButton.onClick.AddListener(OnCancelClicked);
         }
         
         public override void Update()
@@ -60,7 +60,7 @@ namespace States
             var manager = GameManager.Get();
             manager.PlaceCardDisplay.SetActive(false);
             manager.SelectedPiece = null;
-            manager.CancelCardButton.clicked -= OnCancelClicked;
+            manager.CancelCardButton.onClick.RemoveListener(OnCancelClicked);
         }
     }
 }
