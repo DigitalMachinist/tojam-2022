@@ -25,7 +25,7 @@ namespace Pieces
             Tile newTile = null;
             Tile oldNewTile = null;
 
-            for (int i = 1; i < 100; i++)
+            for (int i = 1; i < 9; i++)
             {
                 bool bob = false;
                 try
