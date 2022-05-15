@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab81c5912e3cfdc47a9f899294cfd2b2, type: 3}
+  m_Name: Dino
+  m_EditorClassIdentifier: 
+  title: Rubber T-Rex
+  blackImage: {fileID: 21300000, guid: 4964cf0bed671b24baa6021433ac7e9e, type: 3}
+  whiteImage: {fileID: 21300000, guid: f2db7924eb0375b42a0eac0e3720fbd2, type: 3}
+  cardType: 0
+  description: Can move up to 3 spaces in any direction and can move over other pieces.
+    When T-rex attacks a piece, it stomps the ground, killing all pieces in a 1 square
+    radius
+  playerColour: 0
+  prefab: {fileID: 6619129110703224253, guid: e7f8dbd6375abc841b7e9d5375ee08e8, type: 3}
+  probability: 0.575

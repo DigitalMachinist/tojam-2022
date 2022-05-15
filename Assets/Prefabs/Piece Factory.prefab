@@ -53,3 +53,4 @@ MonoBehaviour:
   PrefabGoat: {fileID: -7088971313646236451, guid: c5096808492d20e4d81cc8498c7f197b, type: 3}
   PrefabCar: {fileID: -8916551422739685552, guid: 07cbad06bb3550147a1a9597c3951dfa, type: 3}
   PrefabMine: {fileID: 2384647875208672497, guid: f661792106cefb0488a59a3eb50f3333, type: 3}
+  PrefabDino: {fileID: -7300116849439370830, guid: e7f8dbd6375abc841b7e9d5375ee08e8, type: 3}

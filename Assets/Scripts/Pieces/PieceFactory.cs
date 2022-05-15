@@ -14,6 +14,7 @@ namespace Pieces
         public Goat PrefabGoat; 
         public Car PrefabCar; 
         public Mine PrefabMine; 
+        public Dino PrefabDino; 
 
         public Pawn Pawn(Player player)
         {
@@ -58,6 +59,11 @@ namespace Pieces
         public Mine Mine(Player player)
         {
             return Instantiate(PrefabMine, Vector3.zero, Quaternion.identity, player.transform);
+        }
+
+        public Dino Dino(Player player)
+        {
+            return Instantiate(PrefabDino, Vector3.zero, Quaternion.identity, player.transform);
         }
     }
 }
