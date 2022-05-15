@@ -154,7 +154,7 @@ namespace Pieces
             var distance = Tile.Board.GetDistance(Tile, endTile);
             Debug.Log($"Direction: {direction}");
             Debug.Log($"Distance: {distance}");
-            ValidateMove(player, Tile, endTile, direction, distance, true);
+            ValidateMove(player, Tile, endTile, direction, distance, false, true);
 
             // Keep track of pieces to return as taken.
             var pieces = new List<Piece>();
@@ -178,9 +178,9 @@ namespace Pieces
             return pieces;
         }
         
-        public virtual bool ValidateMove(Player player, Tile startTile, Tile endTile, Direction direction, int distance, bool throwExceptions = false)
+        public virtual bool ValidateMove(Player player, Tile startTile, Tile endTile, Direction direction, int distance, bool ignoreTurn = false, bool throwExceptions = false)
         {
-            if (GameManager.Get().PlayerTurn != player.Colour)
+            if (!ignoreTurn && GameManager.Get().PlayerTurn != player.Colour)
             {
                 if (throwExceptions)
                 {
@@ -224,7 +224,7 @@ namespace Pieces
                 return false;
             }
 
-            if (IsFinishedMoving)
+            if (!ignoreTurn && IsFinishedMoving)
             {
                 if (throwExceptions)
                 {
@@ -285,14 +285,14 @@ namespace Pieces
             FinishedMove?.Invoke(this);
         }
 
-        public virtual List<Tile> GetValidMoves()
+        public virtual List<Tile> GetValidMoves(bool ignoreTurn = false)
         {
             var tiles = new List<Tile>();
             foreach (var endTile in Tile.Board.Tiles)
             {
                 var direction = Tile.Board.GetDirection(Tile, endTile);
-                    var distance = Tile.Board.GetDistance(Tile, endTile);
-                if (ValidateMove(Player, Tile, endTile, direction, distance))
+                var distance = Tile.Board.GetDistance(Tile, endTile);
+                if (ValidateMove(Player, Tile, endTile, direction, distance, ignoreTurn))
                 {
                     tiles.Add(endTile);
                 }

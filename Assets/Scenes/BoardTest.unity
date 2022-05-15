@@ -554,9 +554,9 @@ MonoBehaviour:
   Audio_PieceDestroy: {fileID: 1083158915}
   Audio_BoardCrumble: {fileID: 309174612}
   UiController: {fileID: 1888691190}
-  TurnPhase2: 2
-  TurnPhase3: 3
-  ApocalypseTurnStep: 1
+  TurnPhase2: 3
+  TurnPhase3: 6
+  ApocalypseTurnStep: 3
   TileBreakStep: 0.06
   TileBreakForceMin: 2
   TileBreakForceMax: 8

@@ -81,7 +81,7 @@ public class Mine : Piece
         return base.Move(player, endTile);
     }
 
-    public override bool ValidateMove(Player player, Tile startTile, Tile endTile, Direction direction, int distance, bool throwExceptions = false)
+    public override bool ValidateMove(Player player, Tile startTile, Tile endTile, Direction direction, int distance, bool ignoreTurn = false, bool throwExceptions = false)
     {
         if (throwExceptions)
         {
