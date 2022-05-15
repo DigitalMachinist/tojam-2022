@@ -11,6 +11,7 @@ namespace Pieces
         public Bishop PrefabBishop;
         public Queen PrefabQueen;
         public King PrefabKing;
+        public Goat PrefabGoat; 
 
         public Pawn Pawn(Player player)
         {
@@ -40,6 +41,11 @@ namespace Pieces
         public King King(Player player)
         {
             return Instantiate(PrefabKing, Vector3.zero, Quaternion.identity, player.transform);
+        }
+
+        public Goat Goat(Player player)
+        {
+            return Instantiate(PrefabGoat, Vector3.zero, Quaternion.identity, player.transform);
         }
     }
 }
