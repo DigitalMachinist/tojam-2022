@@ -116,7 +116,6 @@ namespace UI
 			}
 			else if ( GameManager.Get().CurrentPhase == 3 )
 			{
-
 				Vector3 apocTransform = logoArmageddon.transform.localPosition;
 				//Do Armageddon Tween
 				apocScreen.alpha = 1;
