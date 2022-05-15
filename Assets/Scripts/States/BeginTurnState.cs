@@ -9,14 +9,12 @@ namespace States
             base.Enter();
 
             var manager = GameManager.Get();
-            if (manager.CurrentPlayer.HasLost)
+            if (manager.CheckGameOverCondition())
             {
-                // Detect lose condition and switch to the game over state.
-                manager.Winner = manager.GetOtherPlayer(manager.CurrentPlayer.Colour);
-                
-                manager.StateMachine.ChangeState(StateType.GameOver);
+                return;
             }
-            else if (manager.TurnNumber < manager.TurnPhase2)
+            
+            if (manager.TurnNumber < manager.TurnPhase2)
             {
                 // Go straight to piece selection in the early game.
                 manager.PlayerHandBlackCanvas.SetActive(false);

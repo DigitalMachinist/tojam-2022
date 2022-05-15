@@ -8,7 +8,8 @@ using States;
 using TMPro;
 using UI;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.UIElements;
+using Button = UnityEngine.UI.Button;
 
 namespace Managers
 {
@@ -90,21 +91,12 @@ namespace Managers
         {
             StateMachine = new StateMachine();
             Board = GetComponentInChildren<Chessboard>();
-            RestartGameButton.onClick.AddListener(Init);
+            RestartGameButton.onClick.AddListener(ResetGame);
             Init();
         }
 
         public void Init()
         {
-            PlayerBlack.Reset();
-            PlayerWhite.Reset();
-            
-            ApocalypseTiles.Clear();
-            ApocalypseProgress = 0;
-            TurnNumber = 0;
-            
-            BoardFactory.ConfigureInitialBoard(Board, PlayerBlack, PlayerWhite);
-
             PlayerHandBlackCanvas.gameObject.SetActive(false);
             PlayerHandWhiteCanvas.gameObject.SetActive(false);
             Deck.gameObject.SetActive(false);
@@ -116,6 +108,15 @@ namespace Managers
             CancelMoveButton.gameObject.SetActive(false);
             DrawCardButton.gameObject.SetActive(false);
             
+            PlayerBlack.Reset();
+            PlayerWhite.Reset();
+            
+            ApocalypseTiles.Clear();
+            ApocalypseProgress = 0;
+            TurnNumber = 0;
+            
+            BoardFactory.ConfigureInitialBoard(Board, PlayerBlack, PlayerWhite);
+
             PlayerHandBlack.InitHand();
             PlayerHandBlack.RefreshHandCards();
             PlayerHandWhite.InitHand();
@@ -142,6 +143,12 @@ namespace Managers
         public void StartGame()
         {
             StateMachine.ChangeState(StateType.BeginTurn);
+        }
+
+        public void ResetGame()
+        {
+            Init();
+            StartGame();
         }
 
         void Update()
@@ -202,10 +209,12 @@ namespace Managers
             foreach (var tile in ApocalypseTiles)
             {
                 tile.TileState = Tile.TileStateTypes.Crumbling;
-                tile.CrumblingState = (Tile.CrumblingStateTypes) ApocalypseTurnsLeft;
+                tile.CrumblingState = (Tile.CrumblingStateTypes) Mathf.Max(0, 3 - ApocalypseTurnsLeft);
                 
                 yield return new WaitForSeconds(TileBreakStep);
             }
+
+            CheckGameOverCondition();
             
             IsPlayingApocalypseEvent = false;
         }
@@ -233,6 +242,35 @@ namespace Managers
             {
                 ApocalypseTiles.Add(Board.GetTile(rowLowerBound, col));
             }
+        }
+
+        public bool CheckGameOverCondition()
+        {
+            var hasBlackLost = PlayerBlack.HasLost;
+            var hasWhiteLost = PlayerWhite.HasLost;
+            if (hasBlackLost && hasWhiteLost)
+            {
+                Winner = null;
+                StateMachine.ChangeState(StateType.GameOver);
+                UiController.ShowGameOverScreen("The apocalypse swallows all!");
+                return true;
+            }
+            else if (hasBlackLost)
+            {
+                Winner = PlayerWhite;
+                StateMachine.ChangeState(StateType.GameOver);
+                UiController.ShowGameOverScreen("Pink wins!");
+                return true;
+            }
+            else if (hasWhiteLost)
+            {
+                Winner = PlayerBlack;
+                StateMachine.ChangeState(StateType.GameOver);
+                UiController.ShowGameOverScreen("Green wins!");
+                return true;
+            }
+
+            return false;
         }
 
         public void BeginOtherPlayerTurn()

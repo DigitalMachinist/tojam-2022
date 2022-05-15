@@ -20,9 +20,9 @@ namespace Pieces
 
 
         }
-        public override bool ValidateMove(Player player, Tile startTile, Tile endTile, Direction direction, int distance, bool throwExceptions = false)
+        public override bool ValidateMove(Player player, Tile startTile, Tile endTile, Direction direction, int distance, bool ignoreTurn = false, bool throwExceptions = false)
         {
-            var baseResult = base.ValidateMove(player, startTile, endTile, direction, distance, throwExceptions);
+            var baseResult = base.ValidateMove(player, startTile, endTile, direction, distance, ignoreTurn, throwExceptions);
             if (!baseResult)
             {
                 return false;

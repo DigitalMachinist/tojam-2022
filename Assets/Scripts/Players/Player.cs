@@ -16,15 +16,15 @@ namespace Players
         public List<Piece> TakenPieces;
         public int TurnNumber = 0;
 
-        public bool HasLost => !HasPieces || !CanMove();
+        public bool HasLost => !HasPieces || !CanMove(true);
 
         public bool HasPieces => Pieces.Count != 0;
 
-        public bool CanMove()
+        public bool CanMove(bool ignoreTurn = true)
         {
             foreach (var piece in Pieces)
             {
-                if (piece.GetValidMoves().Count > 0)
+                if (piece.GetValidMoves(ignoreTurn).Count > 0)
                 {
                     return true;
                 }

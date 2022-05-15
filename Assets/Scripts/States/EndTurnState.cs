@@ -1,5 +1,6 @@
 using Board;
 using Managers;
+using UnityEngine;
 
 namespace States
 {
@@ -27,6 +28,7 @@ namespace States
                     if (manager.ApocalypseTurnsLeft <= 0)
                     {
                         manager.DoApocalypseEvent();
+                        return;
                     }
                     
                     // Clear the entire board's tile state.
@@ -41,7 +43,7 @@ namespace States
                     foreach (var tile in manager.ApocalypseTiles)
                     {
                         tile.TileState = Tile.TileStateTypes.Crumbling;
-                        tile.CrumblingState = (Tile.CrumblingStateTypes) manager.ApocalypseTurnsLeft;
+                        tile.CrumblingState = (Tile.CrumblingStateTypes) Mathf.Max(0, 3 - manager.ApocalypseTurnsLeft);
                     }
                     
                     manager.ApocalypseTurnsLeft--;
