@@ -6,6 +6,7 @@ using Pieces;
 using Players;
 using States;
 using TMPro;
+using UI;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -36,6 +37,10 @@ namespace Managers
         public TextMeshProUGUI PlayerTurnText;
         public TextMeshProUGUI TurnNumberText;
         public TextMeshProUGUI InstructionText;
+        public AudioSource Audio_PieceSelect;
+        public AudioSource Audio_PieceDestroy;
+        public AudioSource Audio_BoardCrumble;
+        public UiController UiController;
         public int TurnPhase2 = 3;
         public int TurnPhase3 = 10;
         public int ApocalypseTurnStep = 3;
@@ -56,10 +61,6 @@ namespace Managers
         public List<Tile> ApocalypseTiles;
 
         public StateMachine StateMachine;
-
-        public AudioSource Audio_PieceSelect;
-        public AudioSource Audio_PieceDestroy;
-        public AudioSource Audio_BoardCrumble;
 
         public Player CurrentPlayer => GetPlayer(PlayerTurn);
         
@@ -93,7 +94,7 @@ namespace Managers
             Init();
         }
 
-        void Init()
+        public void Init()
         {
             PlayerBlack.Reset();
             PlayerWhite.Reset();
@@ -129,8 +130,6 @@ namespace Managers
             BeginApocalypseEventCountdown();
             ComputeTilesToDestroy();
 
-            StateMachine.ChangeState(StateType.BeginTurn);
-
             // For testing battle royale
             // foreach (var tile in ApocalypseTiles)
             // {
@@ -138,6 +137,11 @@ namespace Managers
             //     tile.CrumblingState = Tile.CrumblingStateTypes.Level1;
             // }
             // DoApocalypseEvent();
+        }
+
+        public void StartGame()
+        {
+            StateMachine.ChangeState(StateType.BeginTurn);
         }
 
         void Update()
