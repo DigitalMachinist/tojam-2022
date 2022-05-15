@@ -345,6 +345,7 @@ MonoBehaviour:
   phase1Music: {fileID: 4615223221348648366}
   phase2Music: {fileID: 4615223221621175587}
   phase3Music: {fileID: 4615223220379559721}
+  phase3Music_loopable: {fileID: 7604690404867261023}
 --- !u!1 &4615223220511417777
 GameObject:
   m_ObjectHideFlags: 0

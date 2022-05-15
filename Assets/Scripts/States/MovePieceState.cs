@@ -36,7 +36,9 @@ namespace States
             // Highlight the tiles the piece can move to.
             foreach (var tile in manager.SelectedPiece.GetValidMoves())
             {
-                tile.SelectionState = Tile.SelectionStateTypes.Available;
+                tile.SelectionState = tile.Piece == null
+                    ? Tile.SelectionStateTypes.Available
+                    : Tile.SelectionStateTypes.Danger;
             }
         }
         
