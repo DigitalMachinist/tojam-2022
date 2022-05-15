@@ -19,7 +19,7 @@ namespace States
             
             var manager = GameManager.Get();
             manager.InstructionText.text = "Choose a space";
-            manager.PlaceCardDisplayCard.PopulateCardFields(manager.SelectedCard._cardSO);
+            manager.PlaceCardDisplayCard.PopulateCardFields(manager.SelectedCard._cardSO, manager.CurrentPlayer.Colour);
             manager.PlaceCardDisplayCard.DisplayCard();
             manager.PlaceCardDisplayCard.Show();
             manager.PlaceCardDisplay.SetActive(true);

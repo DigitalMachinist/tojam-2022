@@ -103,9 +103,9 @@ namespace Managers
             CancelMoveButton.gameObject.SetActive(false);
             DrawCardButton.gameObject.SetActive(false);
             
-            PlayerHandBlack.InitHand(PlayerBlack.Colour);
+            PlayerHandBlack.InitHand();
             PlayerHandBlack.RefreshHandCards();
-            PlayerHandWhite.InitHand(PlayerWhite.Colour);
+            PlayerHandWhite.InitHand();
             PlayerHandWhite.RefreshHandCards();
             
             // TODO: Revisit this. This manager is likely to be the arbiter or turn advancement so it might not need to listen.
