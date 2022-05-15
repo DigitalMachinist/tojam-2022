@@ -52,10 +52,24 @@ namespace Pieces
             //Debug.Log("newDistance " + newDistance);
             endTile = oldNewTile;
 
-            ValidateMove(player, Tile, endTile, direction, newDistance, true);
+            ValidateMove(player, Tile, endTile, direction, newDistance, false, true);
 
+            
             // Keep track of pieces to return as taken.
             var pieces = new List<Piece>();
+
+            for (var d = 1; d < newDistance; d++)
+            {
+                var tile = Tile.Board.GetTile(Tile, direction, d);
+                //Debug.Log("tile " + tile.name);
+                if (tile.Piece != null)
+                {
+                    //Debug.Log("Take piece " + tile.Piece + " on " + tile.name);
+                    
+                    player.TakePiece(tile.Piece);
+                }
+            }
+
             if (endTile.Piece != null)
             {
                 pieces.Add(endTile.Piece);
@@ -70,8 +84,10 @@ namespace Pieces
             transform.position = Tile.transform.position;
 
             this.Take();
+
             CalculateIsFinishedMoving();
 
+            //Tile.Piece = null;
             return pieces;
         }
         
@@ -156,18 +172,7 @@ namespace Pieces
                 return false;
             }
 
-            Debug.Log("Pre delete");
 
-            for (var d = 1; d < distance; d++)
-            {
-                var tile = Tile.Board.GetTile(startTile, direction, d);
-                Debug.Log("tile " + tile.name);
-                if (tile.Piece != null)
-                {
-                    Debug.Log("Take piece "+tile.Piece+" on " +tile.name);
-                    player.TakePiece(tile.Piece); 
-                }
-            }
             //player.TakePiece(this);
             return true;
         }
