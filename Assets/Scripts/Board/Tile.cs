@@ -155,30 +155,30 @@ namespace Board
             SelectionState = debug_selection;
         }
 
-        public void RenderReset()
-        {
-            Debug.Log("TODO: Return tile to normal render mode.");
-        }
-        
-        public void RenderMovable()
-        {
-            Debug.Log("TODO: Render the tile highlighted as a valid move.");
-        }
-        
-        public void RenderPlaceable()
-        {
-            Debug.Log("TODO: Render the tile as a valid placement.");
-        }
-        
-        public void RenderSelectable()
-        {
-            Debug.Log("TODO: Render the tile as selectable.");
-        }
-        
-        public void RenderSelected()
-        {
-            Debug.Log("TODO: Render the tile as currently selected.");
-        }
+        // public void RenderReset()
+        // {
+        //     Debug.Log("TODO: Return tile to normal render mode.");
+        // }
+        //
+        // public void RenderMovable()
+        // {
+        //     Debug.Log("TODO: Render the tile highlighted as a valid move.");
+        // }
+        //
+        // public void RenderPlaceable()
+        // {
+        //     Debug.Log("TODO: Render the tile as a valid placement.");
+        // }
+        //
+        // public void RenderSelectable()
+        // {
+        //     Debug.Log("TODO: Render the tile as selectable.");
+        // }
+        //
+        // public void RenderSelected()
+        // {
+        //     Debug.Log("TODO: Render the tile as currently selected.");
+        // }
 
         public enum SelectionStateTypes
         {
