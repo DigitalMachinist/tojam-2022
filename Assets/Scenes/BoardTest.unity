@@ -553,6 +553,8 @@ MonoBehaviour:
   Audio_PieceSelect: {fileID: 169718890}
   Audio_PieceDestroy: {fileID: 1083158915}
   Audio_BoardCrumble: {fileID: 309174612}
+  Audio_TimmyYess: {fileID: 1790687008}
+  Audio_TimmyLaugh: {fileID: 1332136525}
   UiController: {fileID: 1888691190}
   TurnPhase2: 3
   TurnPhase3: 6
@@ -882,6 +884,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31bc938defcf97f4b8bc70594ccc2cde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!82 &1332136525 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 4688927087868876541, guid: 830e288e408bee04eb6098a0d5c5016b, type: 3}
+  m_PrefabInstance: {fileID: 1757161432}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1371458193
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1691,6 +1698,11 @@ PrefabInstance:
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5507496730003965234, guid: c71394de1c57f93408b378c790493311, type: 3}
   m_PrefabInstance: {fileID: 1770655234}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &1790687008 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 8505087909153014798, guid: 830e288e408bee04eb6098a0d5c5016b, type: 3}
+  m_PrefabInstance: {fileID: 1757161432}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1872801424 stripped
 Transform:

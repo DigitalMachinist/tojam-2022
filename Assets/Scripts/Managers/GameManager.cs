@@ -41,6 +41,8 @@ namespace Managers
         public AudioSource Audio_PieceSelect;
         public AudioSource Audio_PieceDestroy;
         public AudioSource Audio_BoardCrumble;
+        public AudioSource Audio_TimmyYess;
+        public AudioSource Audio_TimmyLaugh;
         public UiController UiController;
         public int TurnPhase2 = 3;
         public int TurnPhase3 = 10;
@@ -181,6 +183,7 @@ namespace Managers
 
         private IEnumerator CoApocalypseEvent()
         {
+            Audio_TimmyYess.Play();
             IsPlayingApocalypseEvent = true;
             foreach (var tile in ApocalypseTiles)
             {
@@ -307,9 +310,15 @@ namespace Managers
         public void BeginPhase(int number)
         {
             CurrentPhase = number;
+            if ( CurrentPhase == 2 )
+            {
+                BeginApocalypseEventCountdown();
+                Audio_TimmyYess.Play();
+            }
             if (CurrentPhase == 3)
             {
                 BeginApocalypseEventCountdown();
+                Audio_TimmyLaugh.Play();
             }
             PhaseChanged?.Invoke( number );
         }
