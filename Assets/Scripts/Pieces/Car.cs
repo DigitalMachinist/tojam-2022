@@ -20,12 +20,12 @@ namespace Pieces
             Debug.Log($"Distance: {distance}");
 
 
-
+            //I am SO SORRY for this code.... I was very tired, but it works
             int newDistance = 0;
             Tile newTile = null;
             Tile oldNewTile = null;
 
-            for (int i = 1; i < 100; i++)
+            for (int i = 1; i < 9; i++)
             {
                 bool bob = false;
                 try
