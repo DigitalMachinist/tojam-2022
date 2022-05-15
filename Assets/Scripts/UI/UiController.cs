@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using Utilities;
+using Managers;
 
 namespace UI
 {
@@ -84,7 +85,59 @@ namespace UI
 		{
 			gameOverScreen.gameObject.SetActive(false);
 			titleScreen.gameObject.SetActive(false);
-			SetState(TitleScreen);
+			SetState( TitleScreen );
+
+			GameManager.Get().PlayerBlack.TurnAdvanced += ChangeLogo;
+			GameManager.Get().PlayerWhite.TurnAdvanced += ChangeLogo;			
+		}
+
+		private void OnDestroy()
+		{
+			GameManager.Get().PlayerBlack.TurnAdvanced -= ChangeLogo;
+			GameManager.Get().PlayerWhite.TurnAdvanced -= ChangeLogo;
+		}
+
+		void ChangeLogo()
+        {
+			if ( GameManager.Get().CurrentPhase == 2 )
+			{
+				Debug.Log( "Phase 2:" + logoTimmy.transform.localPosition );
+				Vector3 timmyTransform = logoTimmy.transform.localPosition;
+				//Do Timmy Tween
+				timmyScreen.alpha = 1;
+				LeanTween.value( 980f, -120f, 1f )
+					.setEaseInOutCubic()
+					.setOnUpdate( ( value ) => {
+					timmyTransform.y = value;
+					logoTimmy.transform.localPosition = timmyTransform;
+				} )
+					.setOnComplete( ( value ) => {
+						StartCoroutine( OnComplete( timmyScreen ) );
+					} );
+			}
+			else if ( GameManager.Get().CurrentPhase == 3 )
+			{
+				Debug.Log( "Phase 3:" + logoArmageddon.transform.localPosition );
+				Vector3 apocTransform = logoArmageddon.transform.localPosition;
+				//Do Armageddon Tween
+				apocScreen.alpha = 1;
+				LeanTween.value( 760f, 0f, 1f )
+					.setEaseInOutCubic()
+					.setOnUpdate( ( value ) => {
+					apocTransform.y = value;
+					logoArmageddon.transform.localPosition = apocTransform;
+				} )
+					.setOnComplete( ( value ) => {
+						StartCoroutine( OnComplete( apocScreen ) );
+				} );
+			}
+		}
+
+		IEnumerator OnComplete( CanvasGroup cg)
+        {
+			yield return new WaitForSeconds( 3f );
+			cg.alpha = 0f;
+			cg.gameObject.SetActive( false );
 		}
 
 		IEnumerator TitleScreen()

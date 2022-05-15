@@ -90,7 +90,13 @@ namespace Board
 			GameManager.Get().PlayerWhite.TurnAdvanced += ChangeBackground;
 		}
 
-		private void Update()
+        private void OnDestroy()
+        {
+			GameManager.Get().PlayerBlack.TurnAdvanced -= ChangeBackground;
+			GameManager.Get().PlayerWhite.TurnAdvanced -= ChangeBackground;
+		}
+
+        private void Update()
 		{
 			if (!debug) return;
 
