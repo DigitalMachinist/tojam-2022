@@ -21,6 +21,68 @@ namespace Pieces
 
         public event Action<Piece> FinishedMove;
 
+        public virtual void Select(Player player, bool ignoreTurn = false)
+        {
+            ValidateSelect(player, ignoreTurn, true);
+            
+            GameManager.Get().SelectedPiece = this;
+        }
+        
+        public virtual bool ValidateSelect(Player player, bool ignoreTurn = false, bool throwExceptions = false)
+        {
+            if (!ignoreTurn && GameManager.Get().PlayerTurn != player.Colour)
+            {
+                if (throwExceptions)
+                {
+                    throw new SelectionException("Can't select a piece when it isn't your turn.");
+                }
+
+                return false;
+            }
+            
+            if (GameManager.Get().SelectedPiece != null)
+            {
+                if (throwExceptions)
+                {
+                    throw new SelectionException("Can't select a piece when there is already a selected piece.");
+                }
+
+                return false;
+            }
+            
+            if (IsTaken)
+            {
+                if (throwExceptions)
+                {
+                    throw new SelectionException("Can't select a taken piece.");
+                }
+                
+                return false;
+            }
+
+            if (player != Player)
+            {
+                if (throwExceptions)
+                {
+                    throw new SelectionException("Can't select a piece that isn't yours.");
+                }
+
+                return false;
+            }
+
+            if (IsFinishedMoving)
+            {
+                if (throwExceptions)
+                {
+                    throw new SelectionException("Can't select this piece again until next turn.");
+                }
+
+                return false;
+            }
+
+            return true;
+        }
+        
         public virtual void Place(Player player, Tile tile, bool ignoreTurn = false)
         {
             ValidatePlace(player, tile, ignoreTurn, true);

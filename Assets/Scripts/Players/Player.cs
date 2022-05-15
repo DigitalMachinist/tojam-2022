@@ -58,6 +58,8 @@ namespace Players
                 // Debug.Log(takenPiece);
                 TakePiece(takenPiece);
             }
+
+            tile.Piece = piece;
         }
         
         public void TakePiece(Piece piece)

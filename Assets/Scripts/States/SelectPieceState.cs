@@ -43,14 +43,15 @@ namespace States
             Debug.Log(tile.Piece);
             try
             {
-                manager.SelectedPiece = tile.Piece;
-                manager.StateMachine.ChangeState(StateType.MovePiece);
+                tile.Piece.Select(manager.CurrentPlayer);
             }
             catch (SelectionException e)
             {
                 Debug.LogException(e);
                 return;
             }
+            
+            manager.StateMachine.ChangeState(StateType.MovePiece);
         }
         
         public override void Exit()
