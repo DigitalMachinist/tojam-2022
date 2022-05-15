@@ -2175,6 +2175,13 @@ MonoBehaviour:
   logoDelay: 1
   buttonDelay: 1
   logo: {fileID: 5846128446381178311}
+  timmyScreen: {fileID: 6015204036040553797}
+  timmyLogoDelay: 0.5
+  logoTimmy: {fileID: 5664099986895489827}
+  logoSensible: {fileID: 8036605628693785474}
+  apocScreen: {fileID: 4755277276858341642}
+  apocLogoDelay: 0.5
+  logoArmageddon: {fileID: 3765514245560462527}
   playAgainButton: {fileID: 5846128447268137802}
   endExitButton: {fileID: 5846128447933516164}
   gameOverScreen: {fileID: 5846128447941837566}
