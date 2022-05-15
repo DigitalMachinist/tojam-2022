@@ -10,7 +10,7 @@ namespace States
         private void OnCancelClicked()
         {
             var manager = GameManager.Get();
-            manager.SelectedPiece = null;
+            manager.ClearSelectedPiece();
             manager.StateMachine.ChangeState(StateType.SelectPiece);
         }
         
@@ -28,7 +28,6 @@ namespace States
         {
             base.Update();
             
-            Debug.Log("a");
             var manager = GameManager.Get();
             Tile tile = manager.Board.MouseSelectTile();
             if (tile == null)
@@ -36,8 +35,6 @@ namespace States
                 return;
             }
             
-            Debug.Log("b");
-
             // TODO: Highlight tiles that the piece can move to.
             // TODO: Hover state on tiles that are valid moves.
 
@@ -58,7 +55,7 @@ namespace States
                 return;
             }
             
-            manager.SelectedPiece = null;
+            manager.ClearSelectedPiece();
             manager.CancelMoveButton.gameObject.SetActive(true);
             // TODO: Check for if the piece stopped on a hidden event. If it did, go to the event state.
             manager.StateMachine.ChangeState(StateType.DrawCard);

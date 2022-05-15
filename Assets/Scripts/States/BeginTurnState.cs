@@ -28,7 +28,6 @@ namespace States
             else
             {
                 // Once cards are in the game, go to card select next.
-                manager.CurrentPlayerHand.InitHand(manager.CurrentPlayer.Colour);
                 manager.PlayerHandBlackCanvas.SetActive(true);
                 manager.PlayerHandWhiteCanvas.SetActive(true);
                 manager.Deck.SetActive(true);
