@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Board;
@@ -12,6 +13,8 @@ namespace Managers
 {
     public class GameManager : MonoBehaviour
     {
+        public event Action<int> PhaseChanged;
+
         public BoardFactory BoardFactory;
         public Player PlayerBlack;
         public Player PlayerWhite;
@@ -34,6 +37,7 @@ namespace Managers
         public TextMeshProUGUI TurnNumberText;
         public TextMeshProUGUI InstructionText;
         public int TurnPhase2 = 3;
+        public int TurnPhase3 = 10;
         public float TileBreakStep = 0.1f;
         public float TileBreakForceMin = 1f;
         public float TileBreakForceMax = 5f;
@@ -43,6 +47,7 @@ namespace Managers
         public int BattleRoyaleProgress = 0;
         public Piece SelectedPiece;
         public Card SelectedCard;
+        public int CurrentPhase = 1;
         public Player Winner;
         public Chessboard Board;
         public List<Tile> TilesToDestroy;
@@ -111,7 +116,8 @@ namespace Managers
             // TODO: Revisit this. This manager is likely to be the arbiter or turn advancement so it might not need to listen.
             PlayerBlack.TurnAdvanced += OnPlayerTurnAdvanced;
             PlayerWhite.TurnAdvanced += OnPlayerTurnAdvanced;
-            
+
+            BeginPhase( 1 );
             // To start on White's turn, we begin from Black and advance to the opposite player.
             PlayerTurn = PlayerColour.Black;
             BeginOtherPlayerTurn();
@@ -174,7 +180,7 @@ namespace Managers
                     tile.Piece.Take();
                 }
                 
-                var force = Random.Range(TileBreakForceMin, TileBreakForceMax) * Vector3.up;
+                var force = UnityEngine.Random.Range(TileBreakForceMin, TileBreakForceMax) * Vector3.up;
                 var rigidbody = tile.GetComponent<Rigidbody>();
                 rigidbody.AddForce(force, ForceMode.Impulse);
                 rigidbody.useGravity = true;
@@ -239,6 +245,12 @@ namespace Managers
         public void ClearSelectedPiece()
         {
             SelectedPiece = null;
+        }
+
+        public void BeginPhase(int number)
+        {
+            CurrentPhase = number;
+            PhaseChanged?.Invoke( number );
         }
 
         // This is the crappiest possible singleton because this has to exist in the scene already for it to work. lol
