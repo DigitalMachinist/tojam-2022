@@ -19,4 +19,4 @@ MonoBehaviour:
   description: Obviously the G.O.A.T.
   playerColour: 0
   prefab: {fileID: 6619129110703224253, guid: c5096808492d20e4d81cc8498c7f197b, type: 3}
-  probability: 0.103
+  probability: 0.477
