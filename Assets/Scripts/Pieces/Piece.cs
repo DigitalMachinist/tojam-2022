@@ -181,6 +181,7 @@ namespace Pieces
 
         public void Take()
         {
+            Tile.Piece = null;
             Tile = null;
             IsTaken = true;
             

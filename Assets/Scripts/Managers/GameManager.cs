@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using Board;
+using Pieces;
 using Players;
 using States;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace Managers
 {
@@ -12,17 +15,30 @@ namespace Managers
         public BoardFactory BoardFactory;
         public Player PlayerBlack;
         public Player PlayerWhite;
-        public GameObject Deck;
         public Hand PlayerHandBlack;
         public Hand PlayerHandWhite;
-        public int TurnShowCards = 3;
+        public GameObject PlayerHandBlackCanvas;
+        public GameObject PlayerHandWhiteCanvas;
+        public GameObject Deck;
+        public GameObject PlaceCardDisplay;
+        public GameObject ConfirmCardDialog;
+        public Button ConfirmCardButton;
+        public Button CancelCardButton;
+        public Button CancelMoveButton;
+        public Button DrawCardButton;
+        public TextMeshProUGUI PlayerTurnText;
+        public TextMeshProUGUI TurnNumberText;
+        public TextMeshProUGUI InstructionText;
+        public int TurnPhase2 = 3;
         public float TileBreakStep = 0.1f;
-        public float TileBreakForceMin = 0.1f;
-        public float TileBreakForceMax = 0.5f;
+        public float TileBreakForceMin = 1f;
+        public float TileBreakForceMax = 5f;
         
         public PlayerColour PlayerTurn;
         public int TurnNumber;
         public int BattleRoyaleProgress = 0;
+        public Piece SelectedPiece;
+        public Card SelectedCard;
         public Player Winner;
         public Chessboard Board;
         public List<Tile> TilesToDestroy;
@@ -33,6 +49,13 @@ namespace Managers
 
         public Player CurrentPlayer => GetPlayer(PlayerTurn);
         
+        public Hand CurrentPlayerHand => GetPlayerHand(PlayerTurn);
+        
+        public PlayerColour GetOtherColour()
+        {
+            return PlayerTurn == PlayerColour.Black ? PlayerColour.White : PlayerColour.Black;
+        }
+        
         public Player GetPlayer(PlayerColour colour)
         {
             return colour == PlayerColour.Black ? PlayerBlack : PlayerWhite;
@@ -41,6 +64,11 @@ namespace Managers
         public Player GetOtherPlayer(PlayerColour colour)
         {
             return colour == PlayerColour.Black ? PlayerWhite : PlayerBlack;
+        }
+        
+        public Hand GetPlayerHand(PlayerColour colour)
+        {
+            return colour == PlayerColour.Black ? PlayerHandBlack : PlayerHandWhite;
         }
         
         void Start()
@@ -157,6 +185,16 @@ namespace Managers
             {
                 TilesToDestroy.Add(Board.GetTile(row, (Board.Rows - BattleRoyaleProgress)));
             }
+        }
+
+        public void BeginOtherPlayerTurn()
+        {
+            PlayerTurn = GetOtherColour();
+            CurrentPlayer.AdvanceTurn();
+            TurnNumberText.text = TurnNumber.ToString();
+            PlayerTurnText.text = PlayerTurn == PlayerColour.Black
+                ? "Green's Turn"
+                : "Pink's Turn";
         }
 
         // This is the crappiest possible singleton because this has to exist in the scene already for it to work. lol

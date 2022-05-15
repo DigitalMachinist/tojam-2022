@@ -10,6 +10,7 @@ namespace States
         SelectPiece,
         MovePiece,
         Event,
+        DrawCard,
         EndTurn,
         GameOver
     }
