@@ -4,6 +4,7 @@ using Board;
 using Pieces;
 using Players;
 using States;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -14,17 +15,24 @@ namespace Managers
         public BoardFactory BoardFactory;
         public Player PlayerBlack;
         public Player PlayerWhite;
-        public GameObject Deck;
         public Hand PlayerHandBlack;
         public Hand PlayerHandWhite;
+        public GameObject PlayerHandBlackCanvas;
+        public GameObject PlayerHandWhiteCanvas;
+        public GameObject Deck;
+        public GameObject PlaceCardDisplay;
         public GameObject ConfirmCardDialog;
         public Button ConfirmCardButton;
         public Button CancelCardButton;
-        public GameObject PlaceCardDisplay;
+        public Button CancelMoveButton;
+        public Button DrawCardButton;
+        public TextMeshProUGUI PlayerTurnText;
+        public TextMeshProUGUI TurnNumberText;
+        public TextMeshProUGUI InstructionText;
         public int TurnPhase2 = 3;
         public float TileBreakStep = 0.1f;
-        public float TileBreakForceMin = 0.1f;
-        public float TileBreakForceMax = 0.5f;
+        public float TileBreakForceMin = 1f;
+        public float TileBreakForceMax = 5f;
         
         public PlayerColour PlayerTurn;
         public int TurnNumber;
@@ -183,6 +191,10 @@ namespace Managers
         {
             PlayerTurn = GetOtherColour();
             CurrentPlayer.AdvanceTurn();
+            TurnNumberText.text = TurnNumber.ToString();
+            PlayerTurnText.text = PlayerTurn == PlayerColour.Black
+                ? "Green's Turn"
+                : "Pink's Turn";
         }
 
         // This is the crappiest possible singleton because this has to exist in the scene already for it to work. lol

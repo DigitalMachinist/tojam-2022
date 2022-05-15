@@ -7,10 +7,20 @@ namespace States
 {
     public class MovePieceState : State
     {
+        private void OnCancelClicked()
+        {
+            var manager = GameManager.Get();
+            manager.SelectedPiece = null;
+            manager.StateMachine.ChangeState(StateType.SelectPiece);
+        }
+        
         public override void Enter()
         {
             base.Enter();
             
+            var manager = GameManager.Get();
+            manager.InstructionText.text = "Make a move";
+            manager.CancelMoveButton.clicked += OnCancelClicked;
         }
         
         public override void Update()
@@ -39,7 +49,7 @@ namespace States
                 manager.CurrentPlayer.MovePiece(manager.SelectedPiece, tile);
                 manager.SelectedPiece = null;
                 // TODO: Check for if the piece stopped on a hidden event. If it did, go to the event state.
-                manager.StateMachine.ChangeState(StateType.EndTurn);
+                manager.StateMachine.ChangeState(StateType.DrawCard);
             }
             catch (SelectionException e)
             {
@@ -50,6 +60,9 @@ namespace States
         public override void Exit()
         {
             base.Exit();
+            
+            var manager = GameManager.Get();
+            manager.CancelMoveButton.clicked -= OnCancelClicked;
         }
     }
 }

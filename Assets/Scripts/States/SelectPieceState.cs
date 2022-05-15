@@ -11,6 +11,8 @@ namespace States
         {
             base.Enter();
             
+            var manager = GameManager.Get();
+            manager.InstructionText.text = "Make a move";
         }
         
         public override void Update()

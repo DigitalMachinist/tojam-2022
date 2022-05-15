@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Players;
 using UnityEngine;
 
 public class Hand : MonoBehaviour
@@ -26,14 +27,13 @@ public class Hand : MonoBehaviour
         DrawnCard.BackButton.SetActive(false);
         DrawnCard.Hide();
 
-        InitHand();
         RefreshHandCards();
     }
 
-    private void InitHand()
+    public void InitHand(PlayerColour colour)
     {
         HideBackButtons();
-        PopulateHand();
+        PopulateHand(colour);
     }
 
     public void ShowBackButtons()
@@ -56,14 +56,14 @@ public class Hand : MonoBehaviour
     /// Returns whether the new turn can start
     /// </summary>
     /// <returns></returns>
-    public void NewTurn()
+    public void NewTurn(PlayerColour colour)
     {
         bool fullHand = true;
         for (int i = 0; i < playerHand.Length; i++)
         {
             if (playerHand[i].HasCardBeenPlayed)
             {
-                playerHand[i].PopulateCardFields(Deck.instance.DrawCard());
+                playerHand[i].PopulateCardFields(Deck.instance.DrawCard(colour));
                 fullHand = false;
             }
         }
@@ -72,7 +72,7 @@ public class Hand : MonoBehaviour
 
         if (fullHand)
         {
-            DrawnCard.PopulateCardFields(Deck.instance.DrawCard());
+            DrawnCard.PopulateCardFields(Deck.instance.DrawCard(colour));
             DrawnCard.Show();
             ShowBackButtons();
         }
@@ -83,11 +83,11 @@ public class Hand : MonoBehaviour
 
 
 
-    private void PopulateHand()
+    private void PopulateHand(PlayerColour colour)
     {
         for (int i = 0; i < playerHand.Length; i++)
         {
-            playerHand[i].PopulateCardFields(Deck.instance.DrawCard());
+            playerHand[i].PopulateCardFields(Deck.instance.DrawCard(colour));
         }
     }
 

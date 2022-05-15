@@ -9,7 +9,12 @@ namespace States
             base.Enter();
 
             var manager = GameManager.Get();
-            manager.CurrentPlayerHand.NewTurn();
+            if (manager.TurnNumber >= manager.TurnPhase2)
+            {
+                // Only draw new cards after cards are in the game.
+                manager.CurrentPlayerHand.NewTurn(manager.CurrentPlayer.Colour);
+            }
+            
             manager.BeginOtherPlayerTurn();
             manager.StateMachine.ChangeState(StateType.BeginTurn);
         }

@@ -19,13 +19,12 @@ namespace States
             base.Enter();
             
             var manager = GameManager.Get();
+            manager.InstructionText.text = "Play a card";
             cards = new List<Card>(manager.CurrentPlayerHand.playerHand);
             foreach (var card in cards)
             {
                 card.Clicked += OnCardClicked;
             }
-            
-            // TODO: Hook up a listener for the cancel button
         }
         
         public override void Update()
@@ -41,8 +40,6 @@ namespace States
             {
                 card.Clicked -= OnCardClicked;
             }
-            
-            // TODO: Unhook listener for the cancel button
         }
     }
 }

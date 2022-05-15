@@ -6,19 +6,32 @@ namespace States
 {
     public class PlaceCardState : State
     {
+        private void OnCancelClicked()
+        {
+            var manager = GameManager.Get();
+            manager.SelectedCard = null;
+            manager.StateMachine.ChangeState(StateType.SelectCard);
+        }
+        
         public override void Enter()
         {
             base.Enter();
             
             var manager = GameManager.Get();
-            
+            manager.InstructionText.text = "Choose a space";
             // TODO: Make this display the current card.
             manager.PlaceCardDisplay.SetActive(true);
+            manager.CancelCardButton.clicked += OnCancelClicked;
         }
         
         public override void Update()
         {
             base.Update();
+
+            if (Input.GetKeyUp(KeyCode.Escape))
+            {
+                OnCancelClicked();
+            }
             
             var manager = GameManager.Get();
             Tile tile = manager.Board.MouseSelectTile();
@@ -47,6 +60,7 @@ namespace States
             var manager = GameManager.Get();
             manager.PlaceCardDisplay.SetActive(false);
             manager.SelectedPiece = null;
+            manager.CancelCardButton.clicked -= OnCancelClicked;
         }
     }
 }
