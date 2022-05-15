@@ -17,5 +17,6 @@ MonoBehaviour:
   whiteImage: {fileID: 21300000, guid: b58ecf0ed68fd884fac9d2f92c059dfa, type: 3}
   cardType: 0
   description: Little castle dude.
-  playerColour: 1
+  playerColour: 0
+  prefab: {fileID: 6619129110703224253, guid: 5259d4162453d28438926d590cf5e9ea, type: 3}
   probability: 0.4

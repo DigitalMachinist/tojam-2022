@@ -462,7 +462,7 @@ GameObject:
   - component: {fileID: 398822005}
   - component: {fileID: 398822004}
   - component: {fileID: 398822003}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Card 6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -640,7 +640,7 @@ GameObject:
   - component: {fileID: 480831632}
   - component: {fileID: 480831631}
   - component: {fileID: 480831630}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Card 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -738,7 +738,7 @@ GameObject:
   - component: {fileID: 524259899}
   - component: {fileID: 524259898}
   - component: {fileID: 524259897}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Card 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -913,7 +913,7 @@ GameObject:
   - component: {fileID: 663054355}
   - component: {fileID: 663054354}
   - component: {fileID: 663054353}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Card 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -999,6 +999,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 663054351}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &680634084 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2438936757128032242, guid: bde71d66f1cfe5d458e1e6f1a8faaba8, type: 3}
+  m_PrefabInstance: {fileID: 1867048813767125084}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &702171216
 GameObject:
   m_ObjectHideFlags: 0
@@ -1143,13 +1154,17 @@ MonoBehaviour:
   PlayerHandWhite: {fileID: 220493693}
   PlayerHandBlackCanvas: {fileID: 1694792744}
   PlayerHandWhiteCanvas: {fileID: 1770655235}
-  Deck: {fileID: 1274651212}
+  Deck: {fileID: 1274651214}
   PlaceCardDisplay: {fileID: 1867048813767125089}
+  PlaceCardDisplayCard: {fileID: 1980600363}
   ConfirmCardDialog: {fileID: 1867048813767125088}
+  ConfirmCardDialogCard: {fileID: 1112791678}
   ConfirmCardButton: {fileID: 835936786}
   CancelCardButton: {fileID: 189031168}
+  CancelPlaceButton: {fileID: 680634084}
   CancelMoveButton: {fileID: 368981782}
   DrawCardButton: {fileID: 337202785}
+  RestartGameButton: {fileID: 1611946723}
   PlayerTurnText: {fileID: 1867048813767125087}
   TurnNumberText: {fileID: 1867048813767125086}
   InstructionText: {fileID: 1867048813767125085}
@@ -1543,6 +1558,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3888843835142726673, guid: 36e4df1eb9da4d448b5003d4211a2857, type: 3}
   m_PrefabInstance: {fileID: 1104801289}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1112791678 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 685575828594550395, guid: bde71d66f1cfe5d458e1e6f1a8faaba8, type: 3}
+  m_PrefabInstance: {fileID: 1867048813767125084}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31bc938defcf97f4b8bc70594ccc2cde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1149115086
 GameObject:
   m_ObjectHideFlags: 0
@@ -1555,7 +1581,7 @@ GameObject:
   - component: {fileID: 1149115090}
   - component: {fileID: 1149115089}
   - component: {fileID: 1149115088}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Card 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1774,6 +1800,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24489095ff967a14fb53455db5188788, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TwistyCard: {fileID: 2137353989}
+  TwistyDegrees: 15
   deckSize: 30
   possibleCards:
   - {fileID: 11400000, guid: 1d3d7dbd08c5c2b40a294597282869ef, type: 2}
@@ -1967,6 +1995,17 @@ MonoBehaviour:
   PrefabBishop: {fileID: 1531602172504211327, guid: d9318641634a7df4b80c80b84bdecd7a, type: 3}
   PrefabQueen: {fileID: 1661569296973025010, guid: e3e7d34c07629fd448f9831afb641e98, type: 3}
   PrefabKing: {fileID: 7703464400942974335, guid: d98f6d4b585d96e4998aa03b3020781f, type: 3}
+--- !u!114 &1611946723 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6157758506030046173, guid: bde71d66f1cfe5d458e1e6f1a8faaba8, type: 3}
+  m_PrefabInstance: {fileID: 1867048813767125084}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1694792743
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2417,6 +2456,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8657821866267716884, guid: c71394de1c57f93408b378c790493311, type: 3}
   m_PrefabInstance: {fileID: 1694792743}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1980600363 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1561847258015089558, guid: bde71d66f1cfe5d458e1e6f1a8faaba8, type: 3}
+  m_PrefabInstance: {fileID: 1867048813767125084}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31bc938defcf97f4b8bc70594ccc2cde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1987470374
 GameObject:
   m_ObjectHideFlags: 0
@@ -2598,7 +2648,7 @@ GameObject:
   - component: {fileID: 2137353992}
   - component: {fileID: 2137353991}
   - component: {fileID: 2137353990}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Card 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2849,6 +2899,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 753033080}
     m_Modifications:
+    - target: {fileID: 453588806717987553, guid: bde71d66f1cfe5d458e1e6f1a8faaba8, type: 3}
+      propertyPath: m_Alpha
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1867048815468293892, guid: bde71d66f1cfe5d458e1e6f1a8faaba8, type: 3}
       propertyPath: m_Name
       value: OverlayCanvas
@@ -2936,6 +2990,10 @@ PrefabInstance:
     - target: {fileID: 1867048815468293893, guid: bde71d66f1cfe5d458e1e6f1a8faaba8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1901667787522473740, guid: bde71d66f1cfe5d458e1e6f1a8faaba8, type: 3}
+      propertyPath: m_Alpha
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bde71d66f1cfe5d458e1e6f1a8faaba8, type: 3}

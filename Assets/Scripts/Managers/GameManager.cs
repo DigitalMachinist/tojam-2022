@@ -19,13 +19,17 @@ namespace Managers
         public Hand PlayerHandWhite;
         public GameObject PlayerHandBlackCanvas;
         public GameObject PlayerHandWhiteCanvas;
-        public GameObject Deck;
+        public Deck Deck;
         public GameObject PlaceCardDisplay;
+        public Card PlaceCardDisplayCard;
         public GameObject ConfirmCardDialog;
+        public Card ConfirmCardDialogCard;
         public Button ConfirmCardButton;
         public Button CancelCardButton;
+        public Button CancelPlaceButton;
         public Button CancelMoveButton;
         public Button DrawCardButton;
+        public Button RestartGameButton;
         public TextMeshProUGUI PlayerTurnText;
         public TextMeshProUGUI TurnNumberText;
         public TextMeshProUGUI InstructionText;
@@ -68,14 +72,24 @@ namespace Managers
         {
             return colour == PlayerColour.Black ? PlayerHandBlack : PlayerHandWhite;
         }
-        
+
         void Start()
         {
+            StateMachine = new StateMachine();
+            Board = GetComponentInChildren<Chessboard>();
+            RestartGameButton.onClick.AddListener(Init);
+            Init();
+        }
+
+        void Init()
+        {
+            PlayerBlack.Reset();
+            PlayerWhite.Reset();
+            
             TilesToDestroy.Clear();
             BattleRoyaleProgress = 0;
             TurnNumber = 0;
             
-            Board = GetComponentInChildren<Chessboard>();
             BoardFactory.ConfigureInitialBoard(Board, PlayerBlack, PlayerWhite);
 
             PlayerHandBlackCanvas.gameObject.SetActive(false);
@@ -83,13 +97,16 @@ namespace Managers
             Deck.gameObject.SetActive(false);
             PlaceCardDisplay.gameObject.SetActive(false);
             ConfirmCardDialog.gameObject.SetActive(false);
-            CancelCardButton.gameObject.SetActive(false);
             ConfirmCardButton.gameObject.SetActive(false);
+            CancelCardButton.gameObject.SetActive(false);
+            CancelPlaceButton.gameObject.SetActive(false);
             CancelMoveButton.gameObject.SetActive(false);
             DrawCardButton.gameObject.SetActive(false);
             
             PlayerHandBlack.InitHand(PlayerBlack.Colour);
+            PlayerHandBlack.RefreshHandCards();
             PlayerHandWhite.InitHand(PlayerWhite.Colour);
+            PlayerHandWhite.RefreshHandCards();
             
             // TODO: Revisit this. This manager is likely to be the arbiter or turn advancement so it might not need to listen.
             PlayerBlack.TurnAdvanced += OnPlayerTurnAdvanced;
@@ -99,7 +116,6 @@ namespace Managers
             PlayerTurn = PlayerColour.Black;
             BeginOtherPlayerTurn();
 
-            StateMachine = new StateMachine();
             StateMachine.ChangeState(StateType.BeginTurn);
         }
 

@@ -70,12 +70,12 @@ public class Hand : MonoBehaviour
 
         //bool canTurnStart = !fullHand;
 
-        if (fullHand)
-        {
-            DrawnCard.PopulateCardFields(Deck.instance.DrawCard(colour));
-            DrawnCard.Show();
-            ShowBackButtons();
-        }
+        // if (fullHand)
+        // {
+        //     DrawnCard.PopulateCardFields(Deck.instance.DrawCard(colour));
+        //     DrawnCard.Show();
+        //     ShowBackButtons();
+        // }
 
         RefreshHandCards();
         // return canTurnStart;
@@ -99,6 +99,7 @@ public class Hand : MonoBehaviour
         }
 
         DrawnCard.DisplayCard();
+        DrawnCard.Hide();
     }
 
     public Card PlayCard(int handIndex)
