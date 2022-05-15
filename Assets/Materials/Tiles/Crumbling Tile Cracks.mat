@@ -10,14 +10,16 @@ Material:
   m_Name: Crumbling Tile Cracks
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_ValidKeywords:
+  - _ALPHATEST_ON
+  - _EMISSION
   - _PARALLAXMAP
-  - _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
   m_InvalidKeywords: []
-  m_LightmapFlags: 4
+  m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
+  m_CustomRenderQueue: 2450
+  stringTagMap:
+    RenderType: TransparentCutout
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
@@ -66,17 +68,17 @@ Material:
     m_Floats:
     - _BumpScale: 1
     - _ColorMask: 15
-    - _Cutoff: 0.5
+    - _Cutoff: 0.323
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _GlossMapScale: 0.15
-    - _Glossiness: 0.5
+    - _GlossMapScale: 0
+    - _Glossiness: 1
     - _GlossyReflections: 1
-    - _Metallic: 0.4
-    - _Mode: 0
+    - _Metallic: 0
+    - _Mode: 1
     - _OcclusionStrength: 1
-    - _Parallax: 0.0616
-    - _SmoothnessTextureChannel: 1
+    - _Parallax: 0.005
+    - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Stencil: 0
@@ -88,7 +90,7 @@ Material:
     - _UseUIAlphaClip: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0.84313726, g: 0.29239067, b: 0.2117647, a: 1}
-    - _EmissionColor: {r: 0.7830189, g: 0.033241354, b: 0.033241354, a: 1}
+    - _Color: {r: 0.3207547, g: 0.01966893, b: 0.01966893, a: 1}
+    - _EmissionColor: {r: 0.9811321, g: 0, b: 0.22413851, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
   m_BuildTextureStacks: []
