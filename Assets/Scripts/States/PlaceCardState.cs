@@ -59,7 +59,7 @@ namespace States
             
             var manager = GameManager.Get();
             manager.PlaceCardDisplay.SetActive(false);
-            manager.SelectedPiece = null;
+            manager.ClearSelectedPiece();
             manager.CancelCardButton.onClick.RemoveListener(OnCancelClicked);
         }
     }

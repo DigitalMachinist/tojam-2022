@@ -17,7 +17,7 @@ namespace States
         
         public virtual void Exit()
         {
-            Debug.Log($"State exit: {this.GetType().Name}");
+            // Debug.Log($"State exit: {this.GetType().Name}");
         }
     }
 }

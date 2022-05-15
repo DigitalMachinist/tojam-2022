@@ -45,8 +45,6 @@ namespace Managers
 
         public StateMachine StateMachine;
 
-        public int PlayerTurnNumber => Mathf.Max(PlayerBlack.TurnNumber, PlayerWhite.TurnNumber);
-
         public Player CurrentPlayer => GetPlayer(PlayerTurn);
         
         public Hand CurrentPlayerHand => GetPlayerHand(PlayerTurn);
@@ -89,6 +87,9 @@ namespace Managers
             ConfirmCardButton.gameObject.SetActive(false);
             CancelMoveButton.gameObject.SetActive(false);
             DrawCardButton.gameObject.SetActive(false);
+            
+            PlayerHandBlack.InitHand(PlayerBlack.Colour);
+            PlayerHandWhite.InitHand(PlayerWhite.Colour);
             
             // TODO: Revisit this. This manager is likely to be the arbiter or turn advancement so it might not need to listen.
             PlayerBlack.TurnAdvanced += OnPlayerTurnAdvanced;
@@ -202,15 +203,26 @@ namespace Managers
         {
             PlayerTurn = GetOtherColour();
             CurrentPlayer.AdvanceTurn();
+            TurnNumber = Mathf.Max(PlayerBlack.TurnNumber, PlayerWhite.TurnNumber);
             UpdateTurnInfo();
         }
 
         void UpdateTurnInfo()
         {
-                TurnNumberText.text = PlayerTurnNumber.ToString();
+            TurnNumberText.text = TurnNumber.ToString();
             PlayerTurnText.text = PlayerTurn == PlayerColour.Black
                 ? "Green's Turn"
                 : "Pink's Turn";
+        }
+
+        public void ClearSelectedCard()
+        {
+            SelectedCard = null;
+        }
+
+        public void ClearSelectedPiece()
+        {
+            SelectedPiece = null;
         }
 
         // This is the crappiest possible singleton because this has to exist in the scene already for it to work. lol
