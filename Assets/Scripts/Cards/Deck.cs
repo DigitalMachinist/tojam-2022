@@ -1,15 +1,61 @@
-using System.Collections;
 using System.Collections.Generic;
-using Players;
 using UnityEngine;
 
 public class Deck : MonoBehaviour
 {
     public static Deck instance;
 
+    public Transform Normal;
+    public Transform Apocalypse;
+    public Transform NormalTwistyCard;
+    public Transform ApocalypseTwistyCard;
+    public float TwistyDegrees = 15;
     public int deckSize;
     public CardScriptableObject[] possibleCards;
     private List<CardScriptableObject> deckCards;
+
+    public void SetNormal()
+    {
+        Normal.gameObject.SetActive(true);
+        Apocalypse.gameObject.SetActive(false);
+    }
+
+    public void SetApocalypse()
+    {
+        Normal.gameObject.SetActive(false);
+        Apocalypse.gameObject.SetActive(true);
+    }
+    
+    public void RenderReset()
+    {
+        NormalTwistyCard.transform.localEulerAngles = new Vector3(90, 0, 0);
+        ApocalypseTwistyCard.transform.localEulerAngles = new Vector3(90, 0, 0);
+    }
+    
+    public void RenderHovered()
+    {
+        NormalTwistyCard.transform.localEulerAngles = new Vector3(90, TwistyDegrees, 0);
+        ApocalypseTwistyCard.transform.localEulerAngles = new Vector3(90, TwistyDegrees, 0);
+    }
+    
+    public bool IsHoveringDeck()
+    {
+        int layerMask = LayerMask.GetMask("Cards");
+        Vector3 origin = Vector3.zero;
+        Vector3 direction = Vector3.zero;
+        if (Camera.main.orthographic)
+        {
+            origin = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0f));
+            direction = Camera.main.transform.forward;
+        }
+        else
+        {
+            origin = Camera.main.transform.position;
+            direction = Camera.main.ScreenPointToRay(Input.mousePosition).direction;
+        }
+
+        return Physics.Raycast(new Ray(origin, direction), 30, layerMask);
+    }
 
     private void Awake()
     {
@@ -20,7 +66,8 @@ public class Deck : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //deckCards = GenerateCards(deckSize);
+        SetNormal();
+        RenderReset();
     }
 
     // Update is called once per frame
@@ -49,13 +96,13 @@ public class Deck : MonoBehaviour
     }
 
 
-    public List<CardScriptableObject> DrawCards(int count, PlayerColour colour)
+    public List<CardScriptableObject> DrawCards(int count)
     {
         List<CardScriptableObject> tempCards = new List<CardScriptableObject>();
 
         for (int i = 0; i < count; i++)
         {
-            CardScriptableObject tempCard = DrawCard(colour);
+            CardScriptableObject tempCard = DrawCard();
 
             if (tempCard == null)
             {
@@ -69,7 +116,7 @@ public class Deck : MonoBehaviour
         return tempCards;
     }
 
-    public CardScriptableObject DrawCard(PlayerColour colour)
+    public CardScriptableObject DrawCard()
     {
         CardScriptableObject drawnCard = null;
 

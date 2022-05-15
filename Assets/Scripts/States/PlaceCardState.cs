@@ -9,7 +9,7 @@ namespace States
         private void OnCancelClicked()
         {
             var manager = GameManager.Get();
-            manager.SelectedCard = null;
+            manager.ClearSelectedCard();
             manager.StateMachine.ChangeState(StateType.SelectCard);
         }
         
@@ -19,9 +19,14 @@ namespace States
             
             var manager = GameManager.Get();
             manager.InstructionText.text = "Choose a space";
-            // TODO: Make this display the current card.
+            manager.PlaceCardDisplayCard.PopulateCardFields(manager.SelectedCard._cardSO, manager.CurrentPlayer.Colour);
+            manager.PlaceCardDisplayCard.DisplayCard();
+            manager.PlaceCardDisplayCard.Show();
             manager.PlaceCardDisplay.SetActive(true);
-            manager.CancelCardButton.onClick.AddListener(OnCancelClicked);
+            manager.ConfirmCardButton.gameObject.SetActive(false);
+            manager.CancelCardButton.gameObject.SetActive(false);
+            manager.CancelPlaceButton.gameObject.SetActive(true);
+            manager.CancelPlaceButton.onClick.AddListener(OnCancelClicked);
         }
         
         public override void Update()
@@ -49,7 +54,8 @@ namespace States
             
             Debug.Log($"Play {manager.SelectedCard.Title} at {tile.name}");
             manager.SelectedCard.Play();
-            // TODO: Need a factory to convert card type into a piece or a board effect to actually place something here.
+            manager.CurrentPlayer.PlaceCard(manager.SelectedCard._cardSO, tile);
+            manager.ClearSelectedCard();
             manager.StateMachine.ChangeState(StateType.SelectPiece);
         }
         
@@ -58,9 +64,12 @@ namespace States
             base.Exit();
             
             var manager = GameManager.Get();
-            manager.PlaceCardDisplay.SetActive(false);
             manager.ClearSelectedPiece();
-            manager.CancelCardButton.onClick.RemoveListener(OnCancelClicked);
+            manager.PlaceCardDisplay.SetActive(false);
+            manager.ConfirmCardButton.gameObject.SetActive(false);
+            manager.CancelCardButton.gameObject.SetActive(false);
+            manager.CancelPlaceButton.gameObject.SetActive(false);
+            manager.CancelPlaceButton.onClick.RemoveListener(OnCancelClicked);
         }
     }
 }

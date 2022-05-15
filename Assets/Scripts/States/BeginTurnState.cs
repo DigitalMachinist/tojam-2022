@@ -21,7 +21,7 @@ namespace States
                 // Go straight to piece selection in the early game.
                 manager.PlayerHandBlackCanvas.SetActive(false);
                 manager.PlayerHandWhiteCanvas.SetActive(false);
-                manager.Deck.SetActive(false);
+                manager.Deck.gameObject.SetActive(false);
                 
                 manager.StateMachine.ChangeState(StateType.SelectPiece);
             }
@@ -30,7 +30,7 @@ namespace States
                 // Once cards are in the game, go to card select next.
                 manager.PlayerHandBlackCanvas.SetActive(true);
                 manager.PlayerHandWhiteCanvas.SetActive(true);
-                manager.Deck.SetActive(true);
+                manager.Deck.gameObject.SetActive(true);
                 
                 manager.StateMachine.ChangeState(StateType.SelectCard);
             }

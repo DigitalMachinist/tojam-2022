@@ -8,7 +8,10 @@ namespace States
         {
             var manager = GameManager.Get();
             manager.CurrentPlayerHand.NewTurn(manager.CurrentPlayer.Colour);
-            manager.StateMachine.ChangeState(StateType.SelectPiece);
+            manager.CurrentPlayerHand.RefreshHandCards();
+            manager.CurrentPlayerHand.DrawnCard.Hide();
+            manager.DrawCardButton.gameObject.SetActive(true);
+            manager.StateMachine.ChangeState(StateType.EndTurn);
         }
         
         public override void Enter()
@@ -24,12 +27,23 @@ namespace States
             }
             
             manager.InstructionText.text = "Draw a card";
+            manager.DrawCardButton.gameObject.SetActive(true);
             manager.DrawCardButton.onClick.AddListener(OnDrawClicked);
         }
         
         public override void Update()
         {
             base.Update();
+            
+            var manager = GameManager.Get();
+            if (manager.Deck.IsHoveringDeck())
+            {
+                manager.Deck.RenderHovered();
+            }
+            else
+            {
+                manager.Deck.RenderReset();
+            }
         }
         
         public override void Exit()
@@ -37,6 +51,8 @@ namespace States
             base.Exit();
             
             var manager = GameManager.Get();
+            manager.Deck.RenderReset();
+            manager.DrawCardButton.gameObject.SetActive(false);
             manager.DrawCardButton.onClick.RemoveListener(OnDrawClicked);
         }
     }

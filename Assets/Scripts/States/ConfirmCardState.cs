@@ -14,7 +14,7 @@ namespace States
         private void OnCancelClicked()
         {
             var manager = GameManager.Get();
-            manager.SelectedCard = null;
+            manager.ClearSelectedCard();
             manager.StateMachine.ChangeState(StateType.SelectCard);
         }
         
@@ -24,8 +24,12 @@ namespace States
 
             var manager = GameManager.Get();
             manager.InstructionText.text = "Play a card";
-            // TODO: Make this display the current card.
             manager.ConfirmCardDialog.SetActive(true);
+            manager.ConfirmCardDialogCard.PopulateCardFields(manager.SelectedCard._cardSO, manager.CurrentPlayer.Colour);
+            manager.ConfirmCardDialogCard.DisplayCard();
+            manager.ConfirmCardDialogCard.Show();
+            manager.ConfirmCardButton.gameObject.SetActive(true);
+            manager.CancelCardButton.gameObject.SetActive(true);
             manager.ConfirmCardButton.onClick.AddListener(OnConfirmClicked);
             manager.CancelCardButton.onClick.AddListener(OnCancelClicked);
         }
@@ -46,6 +50,8 @@ namespace States
 
             var manager = GameManager.Get();
             manager.ConfirmCardDialog.SetActive(false);
+            manager.ConfirmCardButton.gameObject.SetActive(true);
+            manager.CancelCardButton.gameObject.SetActive(true);
             manager.ConfirmCardButton.onClick.RemoveListener(OnConfirmClicked);
             manager.CancelCardButton.onClick.RemoveListener(OnCancelClicked);
         }

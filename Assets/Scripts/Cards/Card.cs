@@ -72,13 +72,13 @@ public class Card : MonoBehaviour, IPointerClickHandler
     //    PopulateCardFields(cardSO);
     //}
 
-    public void PopulateCardFields( CardScriptableObject cardSO )
+    public void PopulateCardFields(CardScriptableObject cardSO, PlayerColour colour)
     {
         _cardSO = cardSO;
         title = cardSO.title;
         cardType = cardSO.cardType;
         description = cardSO.description;
-        playerColour = cardSO.playerColour;
+        playerColour = colour;
 
         if ( playerColour == PlayerColour.Black )
         {

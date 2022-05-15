@@ -56,7 +56,6 @@ namespace States
             }
             
             manager.ClearSelectedPiece();
-            manager.CancelMoveButton.gameObject.SetActive(true);
             // TODO: Check for if the piece stopped on a hidden event. If it did, go to the event state.
             manager.StateMachine.ChangeState(StateType.DrawCard);
         }
@@ -66,6 +65,7 @@ namespace States
             base.Exit();
             
             var manager = GameManager.Get();
+            manager.CancelMoveButton.gameObject.SetActive(false);
             manager.CancelMoveButton.onClick.RemoveListener(OnCancelClicked);
         }
     }

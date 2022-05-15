@@ -13,7 +13,7 @@ namespace Players
         public PlayerColour Colour;
         public List<Piece> Pieces;
         public List<Piece> TakenPieces;
-        public int TurnNumber = 1;
+        public int TurnNumber = 0;
 
         public bool HasLost => !HasPieces || !CanMove();
 
@@ -78,6 +78,17 @@ namespace Players
             }
             TurnNumber++;
             TurnAdvanced?.Invoke();
+        }
+
+        public void Reset()
+        {
+            foreach (var piece in Pieces)
+            {
+                Destroy(piece.gameObject);
+            }
+            Pieces.Clear();
+            TakenPieces.Clear();
+            TurnNumber = 0;
         }
     }
 }
