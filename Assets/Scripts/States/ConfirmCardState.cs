@@ -25,7 +25,7 @@ namespace States
             var manager = GameManager.Get();
             manager.InstructionText.text = "Play a card";
             manager.ConfirmCardDialog.SetActive(true);
-            manager.ConfirmCardDialogCard.PopulateCardFields(manager.SelectedCard._cardSO);
+            manager.ConfirmCardDialogCard.PopulateCardFields(manager.SelectedCard._cardSO, manager.CurrentPlayer.Colour);
             manager.ConfirmCardDialogCard.DisplayCard();
             manager.ConfirmCardDialogCard.Show();
             manager.ConfirmCardButton.gameObject.SetActive(true);

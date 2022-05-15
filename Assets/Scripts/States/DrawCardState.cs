@@ -11,7 +11,7 @@ namespace States
             manager.CurrentPlayerHand.RefreshHandCards();
             manager.CurrentPlayerHand.DrawnCard.Hide();
             manager.DrawCardButton.gameObject.SetActive(true);
-            manager.StateMachine.ChangeState(StateType.SelectPiece);
+            manager.StateMachine.ChangeState(StateType.EndTurn);
         }
         
         public override void Enter()
@@ -27,6 +27,7 @@ namespace States
             }
             
             manager.InstructionText.text = "Draw a card";
+            manager.DrawCardButton.gameObject.SetActive(true);
             manager.DrawCardButton.onClick.AddListener(OnDrawClicked);
         }
         

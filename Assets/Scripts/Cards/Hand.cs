@@ -1,13 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using Players;
 using UnityEngine;
 
 public class Hand : MonoBehaviour
 {
     //public int maxHandCards = 3;
-    
 
+    public PlayerColour PlayerColour;
     public Card[] playerHand;
 
   
@@ -30,10 +28,10 @@ public class Hand : MonoBehaviour
         RefreshHandCards();
     }
 
-    public void InitHand(PlayerColour colour)
+    public void InitHand()
     {
         HideBackButtons();
-        PopulateHand(colour);
+        PopulateHand();
     }
 
     public void ShowBackButtons()
@@ -63,7 +61,7 @@ public class Hand : MonoBehaviour
         {
             if (playerHand[i].HasCardBeenPlayed)
             {
-                playerHand[i].PopulateCardFields(Deck.instance.DrawCard(colour));
+                playerHand[i].PopulateCardFields(Deck.instance.DrawCard(), PlayerColour);
                 fullHand = false;
             }
         }
@@ -81,13 +79,11 @@ public class Hand : MonoBehaviour
         // return canTurnStart;
     }
 
-
-
-    private void PopulateHand(PlayerColour colour)
+    private void PopulateHand()
     {
         for (int i = 0; i < playerHand.Length; i++)
         {
-            playerHand[i].PopulateCardFields(Deck.instance.DrawCard(colour));
+            playerHand[i].PopulateCardFields(Deck.instance.DrawCard(), PlayerColour);
         }
     }
 
