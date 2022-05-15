@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &6619129110703224253
+--- !u!1 &2812984996008234927
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8369587557448799738}
-  - component: {fileID: -7088971313646236451}
+  - component: {fileID: 5224885407338045517}
+  - component: {fileID: 2384647875208672497}
   m_Layer: 0
-  m_Name: Goat
+  m_Name: Mine
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8369587557448799738
+--- !u!4 &5224885407338045517
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6619129110703224253}
+  m_GameObject: {fileID: 2812984996008234927}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -32,16 +32,16 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-7088971313646236451
+--- !u!114 &2384647875208672497
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6619129110703224253}
+  m_GameObject: {fileID: 2812984996008234927}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3bb1cf5ee9643342b7bf1815f751941, type: 3}
+  m_Script: {fileID: 11500000, guid: 7932997795edfcc40b22df0f10260d87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 0}
@@ -50,5 +50,5 @@ MonoBehaviour:
   HasMovedThisTurn: 0
   IsFinishedMoving: 0
   Content: {fileID: 0}
-  ContentPrefabBlack: {fileID: 4258706022199448077, guid: 2085b60f04503bc45a42ac7e1d13584d, type: 3}
-  ContentPrefabWhite: {fileID: 4258706022199448077, guid: c5deeea99aa81214889efcf7d62f289c, type: 3}
+  ContentPrefabBlack: {fileID: 4258706022199448077, guid: bb5394fad38136d44967ddeb83dcf80c, type: 3}
+  ContentPrefabWhite: {fileID: 4258706022199448077, guid: bb5394fad38136d44967ddeb83dcf80c, type: 3}

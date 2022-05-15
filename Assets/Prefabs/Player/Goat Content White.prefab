@@ -42,7 +42,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5756436836344803124}
   m_Layer: 0
-  m_Name: Goat Content Black
+  m_Name: Goat Content White
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -125,7 +125,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2410fee5c0e99824190907b0e5bdc364, type: 2}
+  - {fileID: 2100000, guid: 543615d5492bc704e87c57b4d7ec97b3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

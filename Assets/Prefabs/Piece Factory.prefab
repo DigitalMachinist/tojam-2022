@@ -50,3 +50,6 @@ MonoBehaviour:
   PrefabBishop: {fileID: 1531602172504211327, guid: d9318641634a7df4b80c80b84bdecd7a, type: 3}
   PrefabQueen: {fileID: 1661569296973025010, guid: e3e7d34c07629fd448f9831afb641e98, type: 3}
   PrefabKing: {fileID: 7703464400942974335, guid: d98f6d4b585d96e4998aa03b3020781f, type: 3}
+  PrefabGoat: {fileID: -7088971313646236451, guid: c5096808492d20e4d81cc8498c7f197b, type: 3}
+  PrefabCar: {fileID: -8916551422739685552, guid: 07cbad06bb3550147a1a9597c3951dfa, type: 3}
+  PrefabMine: {fileID: 2384647875208672497, guid: f661792106cefb0488a59a3eb50f3333, type: 3}
