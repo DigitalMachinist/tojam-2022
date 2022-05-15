@@ -6,7 +6,7 @@ using Players;
 using States;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 namespace Managers
 {
@@ -80,13 +80,24 @@ namespace Managers
             Board = GetComponentInChildren<Chessboard>();
             BoardFactory.ConfigureInitialBoard(Board, PlayerBlack, PlayerWhite);
 
-            PlayerTurn = PlayerColour.White;
-            PlayerWhite.AdvanceTurn();
-
+            PlayerHandBlackCanvas.gameObject.SetActive(false);
+            PlayerHandWhiteCanvas.gameObject.SetActive(false);
+            Deck.gameObject.SetActive(false);
+            PlaceCardDisplay.gameObject.SetActive(false);
+            ConfirmCardDialog.gameObject.SetActive(false);
+            CancelCardButton.gameObject.SetActive(false);
+            ConfirmCardButton.gameObject.SetActive(false);
+            CancelMoveButton.gameObject.SetActive(false);
+            DrawCardButton.gameObject.SetActive(false);
+            
             // TODO: Revisit this. This manager is likely to be the arbiter or turn advancement so it might not need to listen.
             PlayerBlack.TurnAdvanced += OnPlayerTurnAdvanced;
             PlayerWhite.TurnAdvanced += OnPlayerTurnAdvanced;
             
+            // To start on White's turn, we begin from Black and advance to the opposite player.
+            PlayerTurn = PlayerColour.Black;
+            BeginOtherPlayerTurn();
+
             StateMachine = new StateMachine();
             StateMachine.ChangeState(StateType.BeginTurn);
         }
@@ -98,34 +109,34 @@ namespace Managers
 
         private void OnPlayerTurnAdvanced()
         {
-            if (TurnNumber == PlayerTurnNumber)
-            {
-                return;
-            }
-
-            TurnNumber = PlayerTurnNumber;
-            
-            if (TurnNumber == 2)
-            {
-                // TODO: Big event to break out of pure chess
-                ComputeTilesToDestroy();
-            }
-            else if (TurnNumber == 5)
-            {
-                AdvanceBattleRoyaleProgress();
-            }
-            else if (TurnNumber == 6)
-            {
-                ComputeTilesToDestroy();
-            }
-            else if (TurnNumber == 8)
-            {
-                AdvanceBattleRoyaleProgress();
-            }
-            else if (TurnNumber == 9)
-            {
-                ComputeTilesToDestroy();
-            }
+            // if (TurnNumber == PlayerTurnNumber)
+            // {
+            //     return;
+            // }
+            //
+            // TurnNumber = PlayerTurnNumber;
+            //
+            // if (TurnNumber == 2)
+            // {
+            //     // TODO: Big event to break out of pure chess
+            //     ComputeTilesToDestroy();
+            // }
+            // else if (TurnNumber == 5)
+            // {
+            //     AdvanceBattleRoyaleProgress();
+            // }
+            // else if (TurnNumber == 6)
+            // {
+            //     ComputeTilesToDestroy();
+            // }
+            // else if (TurnNumber == 8)
+            // {
+            //     AdvanceBattleRoyaleProgress();
+            // }
+            // else if (TurnNumber == 9)
+            // {
+            //     ComputeTilesToDestroy();
+            // }
             // TODO: More turn handling for changing stuff that happens
         }
 
@@ -191,7 +202,12 @@ namespace Managers
         {
             PlayerTurn = GetOtherColour();
             CurrentPlayer.AdvanceTurn();
-            TurnNumberText.text = TurnNumber.ToString();
+            UpdateTurnInfo();
+        }
+
+        void UpdateTurnInfo()
+        {
+                TurnNumberText.text = PlayerTurnNumber.ToString();
             PlayerTurnText.text = PlayerTurn == PlayerColour.Black
                 ? "Green's Turn"
                 : "Pink's Turn";

@@ -20,10 +20,11 @@ namespace States
             {
                 // Only draw new cards after cards are in the game.
                 manager.StateMachine.ChangeState(StateType.EndTurn);
+                return;
             }
             
             manager.InstructionText.text = "Draw a card";
-            manager.DrawCardButton.clicked += OnDrawClicked;
+            manager.DrawCardButton.onClick.AddListener(OnDrawClicked);
         }
         
         public override void Update()
@@ -36,7 +37,7 @@ namespace States
             base.Exit();
             
             var manager = GameManager.Get();
-            manager.DrawCardButton.clicked -= OnDrawClicked;
+            manager.DrawCardButton.onClick.RemoveListener(OnDrawClicked);
         }
     }
 }

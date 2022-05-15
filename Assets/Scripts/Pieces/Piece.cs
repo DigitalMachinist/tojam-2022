@@ -30,7 +30,7 @@ namespace Pieces
             Tile.Piece = this;
             IsTaken = false;
             HasMovedThisTurn = false;
-            IsFinishedMoving = true;
+            IsFinishedMoving = false;
             transform.position = Tile.transform.position;
             Content = (player.Colour == PlayerColour.Black)
                 ? Instantiate(ContentPrefabBlack, transform, false)

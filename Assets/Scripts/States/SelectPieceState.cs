@@ -34,16 +34,22 @@ namespace States
                 return;
             }
 
+            if (tile.Piece == null)
+            {
+                return;
+            }
+
             Debug.Log(tile.name);
+            Debug.Log(tile.Piece);
             try
             {
                 manager.SelectedPiece = tile.Piece;
-                Debug.Log(manager.SelectedPiece);
                 manager.StateMachine.ChangeState(StateType.MovePiece);
             }
             catch (SelectionException e)
             {
                 Debug.LogException(e);
+                return;
             }
         }
         

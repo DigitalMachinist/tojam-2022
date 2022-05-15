@@ -26,8 +26,8 @@ namespace States
             manager.InstructionText.text = "Play a card";
             // TODO: Make this display the current card.
             manager.ConfirmCardDialog.SetActive(true);
-            manager.ConfirmCardButton.clicked += OnConfirmClicked;
-            manager.CancelCardButton.clicked += OnCancelClicked;
+            manager.ConfirmCardButton.onClick.AddListener(OnConfirmClicked);
+            manager.CancelCardButton.onClick.AddListener(OnCancelClicked);
         }
         
         public override void Update()
@@ -46,8 +46,8 @@ namespace States
 
             var manager = GameManager.Get();
             manager.ConfirmCardDialog.SetActive(false);
-            manager.ConfirmCardButton.clicked -= OnConfirmClicked;
-            manager.CancelCardButton.clicked -= OnCancelClicked;
+            manager.ConfirmCardButton.onClick.RemoveListener(OnConfirmClicked);
+            manager.CancelCardButton.onClick.RemoveListener(OnCancelClicked);
         }
     }
 }
