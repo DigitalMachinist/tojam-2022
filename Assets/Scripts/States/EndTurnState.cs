@@ -1,3 +1,4 @@
+using Board;
 using Managers;
 
 namespace States
@@ -19,6 +20,33 @@ namespace States
                 {
                     manager.BeginPhase( 3 );
                 }
+                
+                // Handle apocalypse progress
+                if (manager.CurrentPhase == 3)
+                {
+                    if (manager.ApocalypseTurnsLeft <= 0)
+                    {
+                        manager.DoApocalypseEvent();
+                    }
+                    
+                    // Clear the entire board's tile state.
+                    foreach (var tile in manager.Board.Tiles)
+                    {
+                        tile.TileState = tile.IsDestroyed
+                            ? Tile.TileStateTypes.Destroyed
+                            : Tile.TileStateTypes.Normal;
+                    }
+                    
+                    // Mark tiles that are crumbling as such.
+                    foreach (var tile in manager.ApocalypseTiles)
+                    {
+                        tile.TileState = Tile.TileStateTypes.Crumbling;
+                        tile.CrumblingState = (Tile.CrumblingStateTypes) manager.ApocalypseTurnsLeft;
+                    }
+                    
+                    manager.ApocalypseTurnsLeft--;
+                    return;
+                }
             }
 
             if ( manager.TurnNumber >= manager.TurnPhase2)
@@ -34,6 +62,13 @@ namespace States
         public override void Update()
         {
             base.Update();
+
+            var manager = GameManager.Get();
+            if (!manager.IsPlayingApocalypseEvent)
+            {
+                manager.BeginOtherPlayerTurn();
+                manager.StateMachine.ChangeState(StateType.BeginTurn);
+            }
         }
         
         public override void Exit()

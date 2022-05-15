@@ -25,7 +25,7 @@ namespace Board
                 Build();
             }
         }
-        
+            
         public void Destroy()
         {
             foreach (var tile in Tiles)

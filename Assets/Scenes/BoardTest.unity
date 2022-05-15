@@ -359,7 +359,7 @@ Transform:
   m_Children:
   - {fileID: 712645247}
   m_Father: {fileID: 753033080}
-  m_RootOrder: 9
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!114 &680634084 stripped
 MonoBehaviour:
@@ -486,14 +486,14 @@ Transform:
   m_Children:
   - {fileID: 1987470375}
   - {fileID: 381171193}
-  - {fileID: 2072746498}
   - {fileID: 853794048}
+  - {fileID: 2072746498}
   - {fileID: 1757161433}
   - {fileID: 1371458196}
   - {fileID: 2057979737}
+  - {fileID: 601751163}
   - {fileID: 1104801291}
   - {fileID: 419424692483743052}
-  - {fileID: 601751163}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -530,20 +530,23 @@ MonoBehaviour:
   PlayerTurnText: {fileID: 1867048813767125087}
   TurnNumberText: {fileID: 1867048813767125086}
   InstructionText: {fileID: 1867048813767125085}
-  TurnPhase2: 3
-  TurnPhase3: 10
-  TileBreakStep: 0.1
-  TileBreakForceMin: 0.1
-  TileBreakForceMax: 0.5
+  TurnPhase2: 2
+  TurnPhase3: 3
+  ApocalypseTurnStep: 1
+  TileBreakStep: 0.06
+  TileBreakForceMin: 2
+  TileBreakForceMax: 8
   PlayerTurn: 0
   TurnNumber: 0
-  BattleRoyaleProgress: 0
+  IsPlayingApocalypseEvent: 0
+  ApocalypseTurnsLeft: 0
+  ApocalypseProgress: 0
   SelectedPiece: {fileID: 0}
   SelectedCard: {fileID: 0}
   CurrentPhase: 1
   Winner: {fileID: 0}
   Board: {fileID: 0}
-  TilesToDestroy: []
+  ApocalypseTiles: []
 --- !u!114 &835936786 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1867048814729394569, guid: bde71d66f1cfe5d458e1e6f1a8faaba8, type: 3}
@@ -585,7 +588,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 753033080}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!108 &853794049
 Light:
@@ -863,7 +866,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9138399821148772617, guid: 4a194d6ead49deb47a1c7bdaf0c8db9b, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 9138399821148772617, guid: 4a194d6ead49deb47a1c7bdaf0c8db9b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1260,7 +1263,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4615223221908186749, guid: 830e288e408bee04eb6098a0d5c5016b, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4615223221908186749, guid: 830e288e408bee04eb6098a0d5c5016b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1742,7 +1745,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1867048815468293893, guid: bde71d66f1cfe5d458e1e6f1a8faaba8, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1867048815468293893, guid: bde71d66f1cfe5d458e1e6f1a8faaba8, type: 3}
       propertyPath: m_AnchorMax.x

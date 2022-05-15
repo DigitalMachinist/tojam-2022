@@ -110,6 +110,16 @@ namespace Pieces
 
                 return false;
             }
+
+            if (player.Colour == PlayerColour.White && tile.Row > 4 || player.Colour == PlayerColour.Black && tile.Row < 5)
+            {
+                if (throwExceptions)
+                {
+                    throw new PlacementException("Can't place into the other player's board area.");
+                }
+
+                return false;
+            }
             
             if (tile.IsDestroyed)
             {
@@ -246,6 +256,8 @@ namespace Pieces
             Tile.Piece = null;
             Tile = null;
             IsTaken = true;
+
+            Player.Pieces.Remove(this);
             
             // TODO: Animate the piece being destroyed somehow?
             // transform.position = Vector3.zero;
@@ -273,7 +285,7 @@ namespace Pieces
             foreach (var endTile in Tile.Board.Tiles)
             {
                 var direction = Tile.Board.GetDirection(Tile, endTile);
-                var distance = Tile.Board.GetDistance(Tile, endTile);
+                    var distance = Tile.Board.GetDistance(Tile, endTile);
                 if (ValidateMove(Player, Tile, endTile, direction, distance))
                 {
                     tiles.Add(endTile);

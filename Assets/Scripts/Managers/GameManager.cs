@@ -38,21 +38,25 @@ namespace Managers
         public TextMeshProUGUI InstructionText;
         public int TurnPhase2 = 3;
         public int TurnPhase3 = 10;
+        public int ApocalypseTurnStep = 3;
         public float TileBreakStep = 0.1f;
         public float TileBreakForceMin = 1f;
         public float TileBreakForceMax = 5f;
         
         public PlayerColour PlayerTurn;
         public int TurnNumber;
-        public int BattleRoyaleProgress = 0;
+        public bool IsPlayingApocalypseEvent;
+        public int ApocalypseTurnsLeft = 0;
+        public int ApocalypseProgress = 0;
         public Piece SelectedPiece;
         public Card SelectedCard;
         public int CurrentPhase = 1;
         public Player Winner;
         public Chessboard Board;
-        public List<Tile> TilesToDestroy;
+        public List<Tile> ApocalypseTiles;
 
         public StateMachine StateMachine;
+
 
         public Player CurrentPlayer => GetPlayer(PlayerTurn);
         
@@ -91,8 +95,8 @@ namespace Managers
             PlayerBlack.Reset();
             PlayerWhite.Reset();
             
-            TilesToDestroy.Clear();
-            BattleRoyaleProgress = 0;
+            ApocalypseTiles.Clear();
+            ApocalypseProgress = 0;
             TurnNumber = 0;
             
             BoardFactory.ConfigureInitialBoard(Board, PlayerBlack, PlayerWhite);
@@ -113,16 +117,24 @@ namespace Managers
             PlayerHandWhite.InitHand();
             PlayerHandWhite.RefreshHandCards();
             
-            // TODO: Revisit this. This manager is likely to be the arbiter or turn advancement so it might not need to listen.
-            PlayerBlack.TurnAdvanced += OnPlayerTurnAdvanced;
-            PlayerWhite.TurnAdvanced += OnPlayerTurnAdvanced;
-
-            BeginPhase( 1 );
+            BeginPhase(1);
+            
             // To start on White's turn, we begin from Black and advance to the opposite player.
             PlayerTurn = PlayerColour.Black;
             BeginOtherPlayerTurn();
+            
+            BeginApocalypseEventCountdown();
+            ComputeTilesToDestroy();
 
             StateMachine.ChangeState(StateType.BeginTurn);
+
+            // For testing battle royale
+            // foreach (var tile in ApocalypseTiles)
+            // {
+            //     tile.TileState = Tile.TileStateTypes.Crumbling;
+            //     tile.CrumblingState = Tile.CrumblingStateTypes.Level1;
+            // }
+            // DoApocalypseEvent();
         }
 
         void Update()
@@ -130,48 +142,17 @@ namespace Managers
             StateMachine?.Update();
         }
 
-        private void OnPlayerTurnAdvanced()
+        public void DoApocalypseEvent()
         {
-            // if (TurnNumber == PlayerTurnNumber)
-            // {
-            //     return;
-            // }
-            //
-            // TurnNumber = PlayerTurnNumber;
-            //
-            // if (TurnNumber == 2)
-            // {
-            //     // TODO: Big event to break out of pure chess
-            //     ComputeTilesToDestroy();
-            // }
-            // else if (TurnNumber == 5)
-            // {
-            //     AdvanceBattleRoyaleProgress();
-            // }
-            // else if (TurnNumber == 6)
-            // {
-            //     ComputeTilesToDestroy();
-            // }
-            // else if (TurnNumber == 8)
-            // {
-            //     AdvanceBattleRoyaleProgress();
-            // }
-            // else if (TurnNumber == 9)
-            // {
-            //     ComputeTilesToDestroy();
-            // }
-            // TODO: More turn handling for changing stuff that happens
+            
+            StartCoroutine(CoApocalypseEvent());
+            ApocalypseProgress++;
         }
 
-        private void AdvanceBattleRoyaleProgress()
+        private IEnumerator CoApocalypseEvent()
         {
-            BattleRoyaleProgress++;
-            StartCoroutine(CoAdvanceBattleRoyaleProgress());
-        }
-
-        private IEnumerator CoAdvanceBattleRoyaleProgress()
-        {
-            foreach (var tile in TilesToDestroy)
+            IsPlayingApocalypseEvent = true;
+            foreach (var tile in ApocalypseTiles)
             {
                 // Destroy tiles and kill pieces but don't place them into any player's taken pieces list.
                 tile.IsDestroyed = true;
@@ -188,36 +169,61 @@ namespace Managers
                 yield return new WaitForSeconds(TileBreakStep);
             }
 
-            yield return new WaitForSeconds(10);
+            yield return new WaitForSeconds(2);
             
-            foreach (var tile in TilesToDestroy)
+            foreach (var tile in ApocalypseTiles)
             {
-                tile.gameObject.SetActive(false);
+                var rigidbody = tile.GetComponent<Rigidbody>();
+                rigidbody.useGravity = false;
+                rigidbody.velocity = Vector3.zero;
+                // tile.gameObject.SetActive(false);
             }
+            
+            BeginApocalypseEventCountdown();
+            ComputeTilesToDestroy();
+            
+            // Clear the entire board's tile state.
+            foreach (var tile in Board.Tiles)
+            {
+                tile.TileState = tile.IsDestroyed
+                    ? Tile.TileStateTypes.Destroyed
+                    : Tile.TileStateTypes.Normal;
+            }
+            
+            // Mark tiles that are crumbling as such.
+            foreach (var tile in ApocalypseTiles)
+            {
+                tile.TileState = Tile.TileStateTypes.Crumbling;
+                tile.CrumblingState = (Tile.CrumblingStateTypes) ApocalypseTurnsLeft;
+                
+                yield return new WaitForSeconds(TileBreakStep);
+            }
+            
+            IsPlayingApocalypseEvent = false;
         }
 
-        private void ComputeTilesToDestroy()
+        public void ComputeTilesToDestroy()
         {
-            TilesToDestroy.Clear();
-            var colLowerBound = BattleRoyaleProgress + 1;
-            var colUpperBound = Board.Cols - BattleRoyaleProgress;
-            var rowLowerBound = BattleRoyaleProgress + 1;
-            var rowUpperBound = Board.Rows - BattleRoyaleProgress;
-            for (var col = colLowerBound; col <= colUpperBound; col++)
+            ApocalypseTiles.Clear();
+            var colLowerBound = ApocalypseProgress + 1;
+            var colUpperBound = Board.Cols - ApocalypseProgress;
+            var rowLowerBound = ApocalypseProgress + 1;
+            var rowUpperBound = Board.Rows - ApocalypseProgress;
+            for (var row = rowLowerBound; row <= rowUpperBound; row++)
             {
-                TilesToDestroy.Add(Board.GetTile(BattleRoyaleProgress, col));
+                ApocalypseTiles.Add(Board.GetTile(row, colUpperBound));
             }
-            for (var row = rowLowerBound + 1; row <= rowUpperBound; row++)
+            for (var col = colUpperBound - 1; col >= colLowerBound; col--)
             {
-                TilesToDestroy.Add(Board.GetTile(row, (Board.Rows - BattleRoyaleProgress)));
+                ApocalypseTiles.Add(Board.GetTile(rowUpperBound, col));
             }
-            for (var col = (colUpperBound - 1); col >= colLowerBound; col--)
+            for (var row = rowUpperBound - 1; row >= rowLowerBound; row--)
             {
-                TilesToDestroy.Add(Board.GetTile(BattleRoyaleProgress, col));
+                ApocalypseTiles.Add(Board.GetTile(row, colLowerBound));
             }
-            for (var row = (rowUpperBound - 1); row >= (rowLowerBound + 1); row--)
+            for (var col = colLowerBound + 1; col < colUpperBound; col++)
             {
-                TilesToDestroy.Add(Board.GetTile(row, (Board.Rows - BattleRoyaleProgress)));
+                ApocalypseTiles.Add(Board.GetTile(rowLowerBound, col));
             }
         }
 
@@ -250,7 +256,16 @@ namespace Managers
         public void BeginPhase(int number)
         {
             CurrentPhase = number;
+            if (CurrentPhase == 3)
+            {
+                BeginApocalypseEventCountdown();
+            }
             PhaseChanged?.Invoke( number );
+        }
+
+        public void BeginApocalypseEventCountdown()
+        {
+            ApocalypseTurnsLeft = ApocalypseTurnStep;
         }
 
         // This is the crappiest possible singleton because this has to exist in the scene already for it to work. lol
