@@ -1,5 +1,6 @@
 using System;
 using Exceptions;
+using Managers;
 using Pieces;
 using UnityEngine;
 
@@ -155,31 +156,6 @@ namespace Board
             SelectionState = debug_selection;
         }
 
-        // public void RenderReset()
-        // {
-        //     Debug.Log("TODO: Return tile to normal render mode.");
-        // }
-        //
-        // public void RenderMovable()
-        // {
-        //     Debug.Log("TODO: Render the tile highlighted as a valid move.");
-        // }
-        //
-        // public void RenderPlaceable()
-        // {
-        //     Debug.Log("TODO: Render the tile as a valid placement.");
-        // }
-        //
-        // public void RenderSelectable()
-        // {
-        //     Debug.Log("TODO: Render the tile as selectable.");
-        // }
-        //
-        // public void RenderSelected()
-        // {
-        //     Debug.Log("TODO: Render the tile as currently selected.");
-        // }
-
         public enum SelectionStateTypes
         {
             None,
@@ -200,6 +176,22 @@ namespace Board
             Level1,
             Level2,
             Level3
+        }
+
+        public void Destroy()
+        {
+            IsDestroyed = true;
+            if (Piece != null)
+            {
+                Piece.Take();
+            }
+            
+            var force = UnityEngine.Random.Range(GameManager.Get().TileBreakForceMin, GameManager.Get().TileBreakForceMax) * Vector3.up;
+            var rigidbody = GetComponent<Rigidbody>();
+            rigidbody.AddForce(force, ForceMode.Impulse);
+            rigidbody.useGravity = true;
+
+            GameManager.Get().Audio_BoardCrumble.Play();
         }
     }
 }

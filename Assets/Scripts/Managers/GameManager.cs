@@ -163,36 +163,41 @@ namespace Managers
             ApocalypseProgress++;
         }
 
+        public void DestroyTile(Tile tile)
+        {
+            tile.IsDestroyed = true;
+            if (tile.Piece != null)
+            {
+                tile.Piece.Take();
+            }
+            
+            var force = UnityEngine.Random.Range(TileBreakForceMin, TileBreakForceMax) * Vector3.up;
+            var rigidbody = tile.GetComponent<Rigidbody>();
+            rigidbody.AddForce(force, ForceMode.Impulse);
+            rigidbody.useGravity = true;
+
+            Audio_BoardCrumble.Play();
+        }
+
         private IEnumerator CoApocalypseEvent()
         {
             IsPlayingApocalypseEvent = true;
             foreach (var tile in ApocalypseTiles)
             {
                 // Destroy tiles and kill pieces but don't place them into any player's taken pieces list.
-                tile.IsDestroyed = true;
-                if (tile.Piece != null)
-                {
-                    tile.Piece.Take();
-                }
-                
-                var force = UnityEngine.Random.Range(TileBreakForceMin, TileBreakForceMax) * Vector3.up;
-                var rigidbody = tile.GetComponent<Rigidbody>();
-                rigidbody.AddForce(force, ForceMode.Impulse);
-                rigidbody.useGravity = true;
-
-                Audio_BoardCrumble.Play();
+                tile.Destroy();
                 yield return new WaitForSeconds(TileBreakStep);
             }
 
             yield return new WaitForSeconds(2);
             
-            foreach (var tile in ApocalypseTiles)
-            {
-                var rigidbody = tile.GetComponent<Rigidbody>();
-                rigidbody.useGravity = false;
-                rigidbody.velocity = Vector3.zero;
-                // tile.gameObject.SetActive(false);
-            }
+            // foreach (var tile in ApocalypseTiles)
+            // {
+            //     var rigidbody = tile.GetComponent<Rigidbody>();
+            //     rigidbody.useGravity = false;
+            //     rigidbody.velocity = Vector3.zero;
+            //     // tile.gameObject.SetActive(false);
+            // }
             
             BeginApocalypseEventCountdown();
             ComputeTilesToDestroy();

@@ -77,7 +77,7 @@ namespace Pieces
         
 
 
-        public override bool ValidateMove(Player player, Tile startTile, Tile endTile, Direction direction, int distance, bool throwExceptions = false)
+        public override bool ValidateMove(Player player, Tile startTile, Tile endTile, Direction direction, int distance, bool ignoreTurn = false, bool throwExceptions = false)
         {
             // Cars can move cardinally or diagonally.
             if (direction == Direction.None)
