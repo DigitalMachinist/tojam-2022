@@ -101,7 +101,6 @@ namespace UI
         {
 			if ( GameManager.Get().CurrentPhase == 2 )
 			{
-				Debug.Log( "Phase 2:" + logoTimmy.transform.localPosition );
 				Vector3 timmyTransform = logoTimmy.transform.localPosition;
 				//Do Timmy Tween
 				timmyScreen.alpha = 1;
@@ -117,7 +116,7 @@ namespace UI
 			}
 			else if ( GameManager.Get().CurrentPhase == 3 )
 			{
-				Debug.Log( "Phase 3:" + logoArmageddon.transform.localPosition );
+
 				Vector3 apocTransform = logoArmageddon.transform.localPosition;
 				//Do Armageddon Tween
 				apocScreen.alpha = 1;
