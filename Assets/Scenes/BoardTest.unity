@@ -185,6 +185,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4579e48aabf5c21448714cb4912cd111, type: 3}
+--- !u!82 &169718890 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 159617810447497195, guid: 830e288e408bee04eb6098a0d5c5016b, type: 3}
+  m_PrefabInstance: {fileID: 1757161432}
+  m_PrefabAsset: {fileID: 0}
 --- !u!82 &188931439 stripped
 AudioSource:
   m_CorrespondingSourceObject: {fileID: 7877281479844124559, guid: 830e288e408bee04eb6098a0d5c5016b, type: 3}
@@ -234,6 +239,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31bc938defcf97f4b8bc70594ccc2cde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!82 &309174612 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 6613472217964466933, guid: 830e288e408bee04eb6098a0d5c5016b, type: 3}
+  m_PrefabInstance: {fileID: 1757161432}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &337202785 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8062413625145577074, guid: bde71d66f1cfe5d458e1e6f1a8faaba8, type: 3}
@@ -554,6 +564,9 @@ MonoBehaviour:
   Winner: {fileID: 0}
   Board: {fileID: 0}
   TilesToDestroy: []
+  Audio_PieceSelect: {fileID: 169718890}
+  Audio_PieceDestroy: {fileID: 1083158915}
+  Audio_BoardCrumble: {fileID: 309174612}
 --- !u!114 &835936786 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1867048814729394569, guid: bde71d66f1cfe5d458e1e6f1a8faaba8, type: 3}
@@ -772,6 +785,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: beaf9654a18a96f4386171ea50f29f4a, type: 3}
+--- !u!82 &1083158915 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 2568801115454990374, guid: 830e288e408bee04eb6098a0d5c5016b, type: 3}
+  m_PrefabInstance: {fileID: 1757161432}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1104801289
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -54,6 +54,11 @@ namespace Managers
 
         public StateMachine StateMachine;
 
+        public AudioSource Audio_PieceSelect;
+        public AudioSource Audio_PieceDestroy;
+        public AudioSource Audio_BoardCrumble;
+
+
         public Player CurrentPlayer => GetPlayer(PlayerTurn);
         
         public Hand CurrentPlayerHand => GetPlayerHand(PlayerTurn);
@@ -184,7 +189,8 @@ namespace Managers
                 var rigidbody = tile.GetComponent<Rigidbody>();
                 rigidbody.AddForce(force, ForceMode.Impulse);
                 rigidbody.useGravity = true;
-                
+
+                Audio_BoardCrumble.Play();
                 yield return new WaitForSeconds(TileBreakStep);
             }
 
@@ -255,6 +261,7 @@ namespace Managers
 
         // This is the crappiest possible singleton because this has to exist in the scene already for it to work. lol
         private static GameManager instance;
+
         public static GameManager Get()
         {
             if (instance == null)
