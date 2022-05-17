@@ -23,7 +23,7 @@ namespace Pieces
             if (direction == Direction.NE || direction == Direction.NW)
             {
                 var passantTile = Tile.Board.GetTile(Tile, Direction.S, 1);
-                if (passantTile.Piece != null && passantTile.Piece is Pawn otherPawn && otherPawn.DoubleMoveTurnNumber >= (GameManager.Get().TurnNumber - 1))
+                if (passantTile.Piece != null && passantTile.Piece.Player != player && passantTile.Piece is Pawn otherPawn && otherPawn.DoubleMoveTurnNumber >= (GameManager.Get().TurnNumber - 1))
                 {
                     takenPieces.Add(passantTile.Piece);
                 }
@@ -31,7 +31,7 @@ namespace Pieces
             else if (direction == Direction.SE || direction == Direction.SW)
             {
                 var passantTile = Tile.Board.GetTile(Tile, Direction.N, 1);
-                if (passantTile.Piece != null && passantTile.Piece is Pawn otherPawn && otherPawn.DoubleMoveTurnNumber >= (GameManager.Get().TurnNumber - 1))
+                if (passantTile.Piece != null && passantTile.Piece.Player != player && passantTile.Piece is Pawn otherPawn && otherPawn.DoubleMoveTurnNumber >= (GameManager.Get().TurnNumber - 1))
                 {
                     takenPieces.Add(passantTile.Piece);
                 }
@@ -52,32 +52,56 @@ namespace Pieces
             if (player.Colour == PlayerColour.White && direction == Direction.N
                 || player.Colour == PlayerColour.Black && direction == Direction.S)
             {
-                if (NumMovesPerformed == 0 && distance > 2)
+                if (NumMovesPerformed == 0)
                 {
-                    if (throwExceptions)
+                    if (distance > 2)
                     {
-                        throw new MovementException("Pawns can only move 2 tiles on the first turn.");
-                    }
+                        if (throwExceptions)
+                        {
+                            throw new MovementException("Pawns can only move 2 tiles on the first turn.");
+                        }
 
-                    return false;
+                        return false;
+                    }
+                    else if (Tile.Board.GetTile(Tile, direction, 1).Piece != null)
+                    {
+                        if (throwExceptions)
+                        {
+                            throw new MovementException("Pawns can't move through other pieces.");
+                        }
+
+                        return false;
+                    }
+                    else if (endTile.Piece != null)
+                    {
+                        if (throwExceptions)
+                        {
+                            throw new MovementException("Pawns cannot attack while moving directly forward.");
+                        }
+
+                        return false;
+                    }
                 }
-                else if (NumMovesPerformed > 0 && distance > 1)
+                else if (NumMovesPerformed > 0)
                 {
-                    if (throwExceptions)
+                    if (distance > 1)
                     {
-                        throw new MovementException("Pawns can only move 1 tile at a time.");
-                    }
+                        if (throwExceptions)
+                        {
+                            throw new MovementException("Pawns can only move 1 tile at a time.");
+                        }
 
-                    return false;
-                }
-                else if (endTile.Piece != null)
-                {
-                    if (throwExceptions)
+                        return false;
+                    }
+                    else if (endTile.Piece != null)
                     {
-                        throw new MovementException("Pawns cannot attack while moving directly forward.");
-                    }
+                        if (throwExceptions)
+                        {
+                            throw new MovementException("Pawns cannot attack while moving directly forward.");
+                        }
 
-                    return false;
+                        return false;
+                    }
                 }
 
                 return true;
@@ -101,7 +125,7 @@ namespace Pieces
                     if (direction == Direction.NE || direction == Direction.SE)
                     {
                         var passantTile = Tile.Board.GetTile(Tile, Direction.E, 1);
-                        if (passantTile.Piece != null && passantTile.Piece is Pawn otherPawn && otherPawn.DoubleMoveTurnNumber >= (GameManager.Get().TurnNumber - 1))
+                        if (passantTile.Piece != null && passantTile.Piece.Player != player && passantTile.Piece is Pawn otherPawn && otherPawn.DoubleMoveTurnNumber >= (GameManager.Get().TurnNumber - 1))
                         {
                             return true;
                         }
@@ -109,7 +133,7 @@ namespace Pieces
                     else if (direction == Direction.NW || direction == Direction.SW)
                     {
                         var passantTile = Tile.Board.GetTile(Tile, Direction.W, 1);
-                        if (passantTile.Piece != null && passantTile.Piece is Pawn otherPawn && otherPawn.DoubleMoveTurnNumber >= (GameManager.Get().TurnNumber - 1))
+                        if (passantTile.Piece != null && passantTile.Piece.Player != player && passantTile.Piece is Pawn otherPawn && otherPawn.DoubleMoveTurnNumber >= (GameManager.Get().TurnNumber - 1))
                         {
                             return true;
                         }
