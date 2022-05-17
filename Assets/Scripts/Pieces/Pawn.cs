@@ -1,25 +1,45 @@
 using System.Collections.Generic;
 using Board;
 using Exceptions;
+using Managers;
 using Players;
 
 namespace Pieces
 {
     public class Pawn : Piece
     {
-        int thisPawnMoves = 0;
-
+        public int DoubleMoveTurnNumber;
+        
         public override List<Piece> Move(Player player, Tile endTile)
         {
+            var direction = Tile.Board.GetDirection(Tile, endTile);
+            var distance = Tile.Board.GetDistance(Tile, endTile);
+            if (distance == 2)
+            {
+                DoubleMoveTurnNumber = GameManager.Get().TurnNumber;
+            }
 
-            List < Piece > takenPieces = base.Move(player, endTile);
-
-            thisPawnMoves++;
+            var takenPieces = base.Move(player, endTile);
+            if (direction == Direction.NE || direction == Direction.NW)
+            {
+                var passantTile = Tile.Board.GetTile(Tile, Direction.S, 1);
+                if (passantTile.Piece != null && passantTile.Piece is Pawn otherPawn && otherPawn.DoubleMoveTurnNumber >= (GameManager.Get().TurnNumber - 1))
+                {
+                    takenPieces.Add(passantTile.Piece);
+                }
+            }
+            else if (direction == Direction.SE || direction == Direction.SW)
+            {
+                var passantTile = Tile.Board.GetTile(Tile, Direction.N, 1);
+                if (passantTile.Piece != null && passantTile.Piece is Pawn otherPawn && otherPawn.DoubleMoveTurnNumber >= (GameManager.Get().TurnNumber - 1))
+                {
+                    takenPieces.Add(passantTile.Piece);
+                }
+            }
 
             return takenPieces;
-
-
         }
+
         public override bool ValidateMove(Player player, Tile startTile, Tile endTile, Direction direction, int distance, bool ignoreTurn = false, bool throwExceptions = false)
         {
             var baseResult = base.ValidateMove(player, startTile, endTile, direction, distance, ignoreTurn, throwExceptions);
@@ -32,7 +52,7 @@ namespace Pieces
             if (player.Colour == PlayerColour.White && direction == Direction.N
                 || player.Colour == PlayerColour.Black && direction == Direction.S)
             {
-                if (thisPawnMoves == 0 && distance > 2)
+                if (NumMovesPerformed == 0 && distance > 2)
                 {
                     if (throwExceptions)
                     {
@@ -41,7 +61,7 @@ namespace Pieces
 
                     return false;
                 }
-                else if (thisPawnMoves > 0 && distance > 1)
+                else if (NumMovesPerformed > 0 && distance > 1)
                 {
                     if (throwExceptions)
                     {
@@ -78,6 +98,23 @@ namespace Pieces
                 }
                 else if (endTile.Piece == null)
                 {
+                    if (direction == Direction.NE || direction == Direction.SE)
+                    {
+                        var passantTile = Tile.Board.GetTile(Tile, Direction.E, 1);
+                        if (passantTile.Piece != null && passantTile.Piece is Pawn otherPawn && otherPawn.DoubleMoveTurnNumber >= (GameManager.Get().TurnNumber - 1))
+                        {
+                            return true;
+                        }
+                    }
+                    else if (direction == Direction.NW || direction == Direction.SW)
+                    {
+                        var passantTile = Tile.Board.GetTile(Tile, Direction.W, 1);
+                        if (passantTile.Piece != null && passantTile.Piece is Pawn otherPawn && otherPawn.DoubleMoveTurnNumber >= (GameManager.Get().TurnNumber - 1))
+                        {
+                            return true;
+                        }
+                    }
+
                     if (throwExceptions)
                     {
                         throw new MovementException("Pawns must be attacking to move diagonally.");

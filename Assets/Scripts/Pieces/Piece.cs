@@ -13,6 +13,7 @@ namespace Pieces
         public Player Player;
         public Tile Tile;
         public bool IsTaken;
+        public int NumMovesPerformed;
         public bool HasMovedThisTurn;
         public bool IsFinishedMoving;
         public GameObject Content;
@@ -93,6 +94,7 @@ namespace Pieces
             Tile = tile;
             Tile.Piece = this;
             IsTaken = false;
+            NumMovesPerformed = 0;
             HasMovedThisTurn = false;
             IsFinishedMoving = false;
             transform.position = Tile.transform.position;
@@ -167,6 +169,7 @@ namespace Pieces
             Tile = endTile;
             Tile.Piece = this;
             HasMovedThisTurn = true;
+            NumMovesPerformed++;
             
             // TODO: Tween this instead?
             transform.position = Tile.transform.position;
