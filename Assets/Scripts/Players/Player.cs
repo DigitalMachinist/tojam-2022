@@ -75,8 +75,8 @@ namespace Players
 
         public void PlacePiece(Piece piece, Tile tile, bool ignoreTurn = false)
         {
-            Pieces.Add(piece);
             piece.Place(this, tile, ignoreTurn);
+            Pieces.Add(piece);
         }
 
         public void MovePiece(Piece piece, Tile tile)

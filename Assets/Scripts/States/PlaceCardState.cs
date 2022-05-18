@@ -1,4 +1,5 @@
 using Board;
+using Exceptions;
 using Managers;
 using Pieces;
 using UnityEngine;
@@ -76,12 +77,19 @@ namespace States
             {
                 return;
             }
-            
-            Debug.Log($"Play {manager.SelectedCard.Title} at {hoveredTile.name}");
-            manager.SelectedCard.Play();
-            manager.CurrentPlayer.PlaceCard(manager.SelectedCard._cardSO, hoveredTile);
-            manager.ClearSelectedCard();
-            manager.StateMachine.ChangeState(StateType.SelectPiece);
+
+            try
+            {
+                Debug.Log($"Play {manager.SelectedCard.Title} at {hoveredTile.name}");
+                manager.CurrentPlayer.PlaceCard(manager.SelectedCard._cardSO, hoveredTile);
+                manager.SelectedCard.Play();
+                manager.ClearSelectedCard();
+                manager.StateMachine.ChangeState(StateType.SelectPiece);
+            }
+            catch (PlacementException e)
+            {
+                Debug.LogException(e);
+            }
         }
         
         public override void Exit()
