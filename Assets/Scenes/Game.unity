@@ -548,6 +548,7 @@ MonoBehaviour:
   DrawCardButton: {fileID: 337202785}
   RestartGameButton: {fileID: 1611946723}
   Background: {fileID: 969717643}
+  UiController: {fileID: 1888691190}
   PlayerTurnText: {fileID: 1867048813767125087}
   TurnNumberText: {fileID: 1867048813767125086}
   InstructionText: {fileID: 1867048813767125085}
@@ -556,10 +557,9 @@ MonoBehaviour:
   Audio_BoardCrumble: {fileID: 309174612}
   Audio_TimmyYess: {fileID: 1790687008}
   Audio_TimmyLaugh: {fileID: 1332136525}
-  UiController: {fileID: 1888691190}
   TurnPhase2: 3
   TurnPhase3: 6
-  ApocalypseTurnStep: 2
+  ApocalypseTurnDelay: 1
   TileBreakStep: 0.06
   TileBreakForceMin: 2
   TileBreakForceMax: 8
