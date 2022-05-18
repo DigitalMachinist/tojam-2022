@@ -10,14 +10,22 @@ public class MusicPlayer : MonoBehaviour
     public AudioSource phase3Music;
     public AudioSource phase3Music_loopable;
 
+    private int currentPhase;
+    
     void Start()
     {
+        currentPhase = GameManager.Get().CurrentPhase;
         GameManager.Get().PhaseChanged += OnPhaseChanged;
         phase1Music.Play();
     }
 
     void OnPhaseChanged(int number)
     {
+        if (number == currentPhase)
+        {
+            return;
+        }
+        
         if ( number == 2 )
         {
             PlayPhase2();
@@ -30,6 +38,8 @@ public class MusicPlayer : MonoBehaviour
         {
             RestartMusic();
         }
+
+        currentPhase = number;
     }
 
     public void PlayPhase2()

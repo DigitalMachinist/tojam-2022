@@ -1022,6 +1022,10 @@ PrefabInstance:
       propertyPath: m_Color.a
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4317760777708749736, guid: b190d79f83f69e549aa9df0ff300ca64, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4755277276858341642, guid: b190d79f83f69e549aa9df0ff300ca64, type: 3}
       propertyPath: m_Alpha
       value: 0
@@ -1029,6 +1033,14 @@ PrefabInstance:
     - target: {fileID: 5664099986895489827, guid: b190d79f83f69e549aa9df0ff300ca64, type: 3}
       propertyPath: m_Color.a
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5846128446199712687, guid: b190d79f83f69e549aa9df0ff300ca64, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5846128446280012293, guid: b190d79f83f69e549aa9df0ff300ca64, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5846128446493684589, guid: b190d79f83f69e549aa9df0ff300ca64, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1044,6 +1056,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5846128446493684589, guid: b190d79f83f69e549aa9df0ff300ca64, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5846128446793321777, guid: b190d79f83f69e549aa9df0ff300ca64, type: 3}
+      propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5846128446958120586, guid: b190d79f83f69e549aa9df0ff300ca64, type: 3}
@@ -1144,7 +1160,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5846128447076037897, guid: b190d79f83f69e549aa9df0ff300ca64, type: 3}
       propertyPath: playAgain.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Init
+      value: ResetGame
       objectReference: {fileID: 0}
     - target: {fileID: 5846128447076037897, guid: b190d79f83f69e549aa9df0ff300ca64, type: 3}
       propertyPath: pushPlay.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -1198,8 +1214,16 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5846128447941837567, guid: b190d79f83f69e549aa9df0ff300ca64, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6015204036040553797, guid: b190d79f83f69e549aa9df0ff300ca64, type: 3}
       propertyPath: m_Alpha
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7783363651080162578, guid: b190d79f83f69e549aa9df0ff300ca64, type: 3}
+      propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:

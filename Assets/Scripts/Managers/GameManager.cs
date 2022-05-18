@@ -8,8 +8,7 @@ using States;
 using TMPro;
 using UI;
 using UnityEngine;
-using UnityEngine.UIElements;
-using Button = UnityEngine.UI.Button;
+using UnityEngine.UI;
 
 namespace Managers
 {
@@ -89,15 +88,7 @@ namespace Managers
             return colour == PlayerColour.Black ? PlayerHandBlack : PlayerHandWhite;
         }
 
-        void Start()
-        {
-            StateMachine = new StateMachine();
-            Board = GetComponentInChildren<Chessboard>();
-            RestartGameButton.onClick.AddListener(ResetGame);
-            Init();
-        }
-
-        public void Init()
+        void Init()
         {
             PlayerHandBlackCanvas.gameObject.SetActive(false);
             PlayerHandWhiteCanvas.gameObject.SetActive(false);
@@ -109,7 +100,10 @@ namespace Managers
             CancelPlaceButton.gameObject.SetActive(false);
             CancelMoveButton.gameObject.SetActive(false);
             DrawCardButton.gameObject.SetActive(false);
-            
+        }
+
+        void PreStart()
+        {
             PlayerBlack.Reset();
             PlayerWhite.Reset();
             
@@ -118,39 +112,46 @@ namespace Managers
             TurnNumber = 0;
             
             BoardFactory.ConfigureInitialBoard(Board, PlayerBlack, PlayerWhite);
-
             PlayerHandBlack.InitHand();
             PlayerHandBlack.RefreshHandCards();
             PlayerHandWhite.InitHand();
             PlayerHandWhite.RefreshHandCards();
-            
             BeginPhase(1);
             
             // To start on White's turn, we begin from Black and advance to the opposite player.
             PlayerTurn = PlayerColour.Black;
             BeginOtherPlayerTurn();
-            
             BeginApocalypseEventCountdown();
             ComputeTilesToDestroy();
-
-            // For testing battle royale
-            // foreach (var tile in ApocalypseTiles)
-            // {
-            //     tile.TileState = Tile.TileStateTypes.Crumbling;
-            //     tile.CrumblingState = Tile.CrumblingStateTypes.Level1;
-            // }
-            // DoApocalypseEvent();
         }
 
         public void StartGame()
         {
+            PreStart();
+            StartCoroutine(CoStartGame());
+        }
+
+        private IEnumerator CoStartGame()
+        {
+            Audio_PieceSelect.Play();
+            yield return new WaitForSeconds(0.2f);
+            Audio_PieceSelect.mute = true;
             StateMachine.ChangeState(StateType.BeginTurn);
+            Audio_PieceSelect.mute = false;
         }
 
         public void ResetGame()
         {
             Init();
             StartGame();
+        }
+
+        void Start()
+        {
+            StateMachine = new StateMachine();
+            Board = GetComponentInChildren<Chessboard>();
+            RestartGameButton.onClick.AddListener(ResetGame);
+            Init();
         }
 
         void Update()
