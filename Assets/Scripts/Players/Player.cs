@@ -4,6 +4,7 @@ using Board;
 using Pieces;
 using UnityEngine;
 using Managers;
+using UnityEngine.Networking;
 
 namespace Players
 {
@@ -16,7 +17,7 @@ namespace Players
         public List<Piece> TakenPieces;
         public int TurnNumber = 0;
 
-        public bool HasLost => !HasPieces || !CanMove(true);
+        public bool HasLost => !HasPieces || !CanMove(true) || !CanPlace(true);
 
         public bool HasPieces => Pieces.Count != 0;
 
@@ -32,12 +33,39 @@ namespace Players
 
             return false;
         }
+
+        public bool CanPlace(bool ignoreTurn = true)
+        {
+            // This is hacky and really slow but it will have to do.
+            // I'm temporarily instantiating a piece for each card and hacking the temporary piece to have a reference
+            // to any tile (tile [1, 1] is arbitrary) and a reference to this player, because I don't want to place the
+            // piece on the board, but it needs these references to properly do placement validation.
+            foreach (var card in GameManager.Get().GetPlayerHand(Colour).playerHand)
+            {
+                var result = false;
+                var go = Instantiate(card._cardSO.prefab, transform, false);
+                var piece = go.GetComponent<Piece>();
+                piece.Player = this;
+                piece.Tile = GameManager.Get().Board.GetTile(1, 1);
+                if (piece.GetValidPlaces(ignoreTurn).Count > 0)
+                {
+                    Destroy(go);
+                    return true;
+                }
+                else
+                {
+                    Destroy(go);
+                }
+            }
+
+            return false;
+        }
         
         public void PlaceCard(CardScriptableObject cardObj, Tile tile, bool ignoreTurn = false)
         {
-            var instance = Instantiate(cardObj.prefab, tile.transform, false);
-            var piece = instance.GetComponent<Piece>();
-            if (instance.GetComponent<Piece>())
+            var go = Instantiate(cardObj.prefab, transform, false);
+            var piece = go.GetComponent<Piece>();
+            if (piece != null)
             {
                 PlacePiece(piece, tile, ignoreTurn);
             }

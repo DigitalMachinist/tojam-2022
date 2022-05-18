@@ -34,6 +34,7 @@ namespace Managers
         public Button CancelMoveButton;
         public Button DrawCardButton;
         public Button RestartGameButton;
+        public Background Background;
         public TextMeshProUGUI PlayerTurnText;
         public TextMeshProUGUI TurnNumberText;
         public TextMeshProUGUI InstructionText;

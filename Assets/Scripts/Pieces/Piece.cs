@@ -105,7 +105,7 @@ namespace Pieces
             GameManager.Get().Audio_PieceSelect.Play();
         }
 
-        public virtual bool ValidatePlace(Player player, Tile tile, bool ignoreTurn = false, bool throwExceptions = false)
+        public virtual bool ValidatePlace(Player player, Tile endTile, bool ignoreTurn = false, bool throwExceptions = false)
         {
             if (!ignoreTurn && GameManager.Get().PlayerTurn != player.Colour)
             {
@@ -117,7 +117,7 @@ namespace Pieces
                 return false;
             }
 
-            if (player.Colour == PlayerColour.White && tile.Row > 4 || player.Colour == PlayerColour.Black && tile.Row < 5)
+            if (player.Colour == PlayerColour.White && endTile.Row > 4 || player.Colour == PlayerColour.Black && endTile.Row < 5)
             {
                 if (throwExceptions)
                 {
@@ -127,7 +127,7 @@ namespace Pieces
                 return false;
             }
             
-            if (tile.IsDestroyed)
+            if (endTile.IsDestroyed)
             {
                 if (throwExceptions)
                 {
@@ -137,7 +137,7 @@ namespace Pieces
                 return false;
             }
 
-            if (tile.Piece != null)
+            if (endTile.Piece != null)
             {
                 if (throwExceptions)
                 {
@@ -291,11 +291,25 @@ namespace Pieces
         public virtual List<Tile> GetValidMoves(bool ignoreTurn = false)
         {
             var tiles = new List<Tile>();
-            foreach (var endTile in Tile.Board.Tiles)
+            foreach (var endTile in GameManager.Get().Board.Tiles)
             {
                 var direction = Tile.Board.GetDirection(Tile, endTile);
                 var distance = Tile.Board.GetDistance(Tile, endTile);
                 if (ValidateMove(Player, Tile, endTile, direction, distance, ignoreTurn))
+                {
+                    tiles.Add(endTile);
+                }
+            }
+
+            return tiles;
+        }
+
+        public virtual List<Tile> GetValidPlaces(bool ignoreTurn = false)
+        {
+            var tiles = new List<Tile>();
+            foreach (var endTile in GameManager.Get().Board.Tiles)
+            {
+                if (ValidatePlace(Player, endTile, ignoreTurn))
                 {
                     tiles.Add(endTile);
                 }

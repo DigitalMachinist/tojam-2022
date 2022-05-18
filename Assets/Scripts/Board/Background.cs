@@ -63,10 +63,8 @@ namespace Board
 			}
 		}
 
-		void ChangeBackground()
-        {
-			CurrentTurn = GameManager.Get().PlayerTurn;
-
+		public void SetPhase(int phase)
+		{
 			if( GameManager.Get().CurrentPhase == 2 )
             {
 				Crossfade = 0;
@@ -80,20 +78,26 @@ namespace Board
 			}
 		}
 
+		void ChangeBackground()
+        {
+			CurrentTurn = GameManager.Get().PlayerTurn;
+
+		}
+
 		private void Start()
 		{
 			// remove this if not needed.
 			Crossfade = 0f;
 			CurrentTurn = PlayerColour.White;
 
-			GameManager.Get().PlayerBlack.TurnAdvanced += ChangeBackground;
-			GameManager.Get().PlayerWhite.TurnAdvanced += ChangeBackground;
+			// GameManager.Get().PlayerBlack.TurnAdvanced += ChangeBackground;
+			// GameManager.Get().PlayerWhite.TurnAdvanced += ChangeBackground;
 		}
 
         private void OnDestroy()
         {
-			GameManager.Get().PlayerBlack.TurnAdvanced -= ChangeBackground;
-			GameManager.Get().PlayerWhite.TurnAdvanced -= ChangeBackground;
+			// GameManager.Get().PlayerBlack.TurnAdvanced -= ChangeBackground;
+			// GameManager.Get().PlayerWhite.TurnAdvanced -= ChangeBackground;
 		}
 
         private void Update()

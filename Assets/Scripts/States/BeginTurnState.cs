@@ -14,6 +14,8 @@ namespace States
                 return;
             }
             
+            manager.Background.SetPhase(manager.CurrentPhase);
+            
             if (manager.TurnNumber < manager.TurnPhase2)
             {
                 // Go straight to piece selection in the early game.
