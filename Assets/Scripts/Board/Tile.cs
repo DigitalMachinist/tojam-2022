@@ -191,7 +191,8 @@ namespace Board
             rigidbody.AddForce(force, ForceMode.Impulse);
             rigidbody.useGravity = true;
 
-            GameManager.Get().Audio_BoardCrumble.Play();
+            Instantiate(GameManager.Get().AudioPieceDestroyPrefab, transform);
+            // GameManager.Get().Audio_BoardCrumble.Play();
         }
     }
 }

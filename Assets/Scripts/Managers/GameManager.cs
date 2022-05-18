@@ -45,6 +45,7 @@ namespace Managers
         public AudioSource Audio_BoardCrumble;
         public AudioSource Audio_TimmyYess;
         public AudioSource Audio_TimmyLaugh;
+        public AudioSource AudioPieceDestroyPrefab;
         public int TurnPhase2 = 3;
         public int TurnPhase3 = 10;
         public int ApocalypseTurnDelay = 3;
