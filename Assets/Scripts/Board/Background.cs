@@ -73,7 +73,7 @@ namespace Board
 			{
 				LeanTween.value( 0f, 1f, 1f ).setEaseInBack().setOnUpdate( ( value ) => {
 					Crossfade = value;
-					Debug.Log( value );
+					// Debug.Log( value );
 				} );
 			}
 		}

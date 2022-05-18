@@ -8,6 +8,7 @@ using States;
 using TMPro;
 using UI;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Managers
@@ -35,6 +36,7 @@ namespace Managers
         public Button DrawCardButton;
         public Button RestartGameButton;
         public Background Background;
+        public UiController UiController;
         public TextMeshProUGUI PlayerTurnText;
         public TextMeshProUGUI TurnNumberText;
         public TextMeshProUGUI InstructionText;
@@ -43,10 +45,9 @@ namespace Managers
         public AudioSource Audio_BoardCrumble;
         public AudioSource Audio_TimmyYess;
         public AudioSource Audio_TimmyLaugh;
-        public UiController UiController;
         public int TurnPhase2 = 3;
         public int TurnPhase3 = 10;
-        public int ApocalypseTurnStep = 3;
+        public int ApocalypseTurnDelay = 3;
         public float TileBreakStep = 0.1f;
         public float TileBreakForceMin = 1f;
         public float TileBreakForceMax = 5f;
@@ -122,8 +123,6 @@ namespace Managers
             // To start on White's turn, we begin from Black and advance to the opposite player.
             PlayerTurn = PlayerColour.Black;
             BeginOtherPlayerTurn();
-            BeginApocalypseEventCountdown();
-            ComputeTilesToDestroy();
         }
 
         public void StartGame()
@@ -167,22 +166,6 @@ namespace Managers
             ApocalypseProgress++;
         }
 
-        public void DestroyTile(Tile tile)
-        {
-            tile.IsDestroyed = true;
-            if (tile.Piece != null)
-            {
-                tile.Piece.Take();
-            }
-            
-            var force = UnityEngine.Random.Range(TileBreakForceMin, TileBreakForceMax) * Vector3.up;
-            var rigidbody = tile.GetComponent<Rigidbody>();
-            rigidbody.AddForce(force, ForceMode.Impulse);
-            rigidbody.useGravity = true;
-
-            Audio_BoardCrumble.Play();
-        }
-
         private IEnumerator CoApocalypseEvent()
         {
             Audio_TimmyYess.Play();
@@ -195,14 +178,6 @@ namespace Managers
             }
 
             yield return new WaitForSeconds(2);
-            
-            // foreach (var tile in ApocalypseTiles)
-            // {
-            //     var rigidbody = tile.GetComponent<Rigidbody>();
-            //     rigidbody.useGravity = false;
-            //     rigidbody.velocity = Vector3.zero;
-            //     // tile.gameObject.SetActive(false);
-            // }
             
             BeginApocalypseEventCountdown();
             ComputeTilesToDestroy();
@@ -314,20 +289,22 @@ namespace Managers
             CurrentPhase = number;
             if ( CurrentPhase == 2 )
             {
-                BeginApocalypseEventCountdown();
                 Audio_TimmyYess.Play();
             }
             if (CurrentPhase == 3)
             {
                 BeginApocalypseEventCountdown();
+                ComputeTilesToDestroy();
                 Audio_TimmyLaugh.Play();
             }
+            UiController.SetPhase(CurrentPhase);
+            Background.SetPhase(CurrentPhase);
             PhaseChanged?.Invoke( number );
         }
 
         public void BeginApocalypseEventCountdown()
         {
-            ApocalypseTurnsLeft = ApocalypseTurnStep;
+            ApocalypseTurnsLeft = ApocalypseTurnDelay;
         }
 
         // This is the crappiest possible singleton because this has to exist in the scene already for it to work. lol

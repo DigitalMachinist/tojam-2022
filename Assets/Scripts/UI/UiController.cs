@@ -86,48 +86,41 @@ namespace UI
 			gameOverScreen.gameObject.SetActive(false);
 			titleScreen.gameObject.SetActive(false);
 			SetState( TitleScreen );
-
-			GameManager.Get().PlayerBlack.TurnAdvanced += ChangeLogo;
-			GameManager.Get().PlayerWhite.TurnAdvanced += ChangeLogo;			
 		}
 
-		private void OnDestroy()
-		{
-			GameManager.Get().PlayerBlack.TurnAdvanced -= ChangeLogo;
-			GameManager.Get().PlayerWhite.TurnAdvanced -= ChangeLogo;
-		}
-
-		void ChangeLogo()
+		public void SetPhase(int phase)
         {
-			if ( GameManager.Get().CurrentPhase == 2 )
+			if (phase == 2)
 			{
 				Vector3 timmyTransform = logoTimmy.transform.localPosition;
 				//Do Timmy Tween
 				timmyScreen.alpha = 1;
-				LeanTween.value( 980f, -120f, 1f )
+				LeanTween
+					.value(980f, -120f, 1f)
 					.setEaseInOutCubic()
-					.setOnUpdate( ( value ) => {
-					timmyTransform.y = value;
-					logoTimmy.transform.localPosition = timmyTransform;
-				} )
-					.setOnComplete( ( value ) => {
-						StartCoroutine( OnComplete( timmyScreen ) );
-					} );
+					.setOnUpdate(value => {
+						timmyTransform.y = value;
+						logoTimmy.transform.localPosition = timmyTransform;
+					})
+					.setOnComplete(value => {
+						StartCoroutine(OnComplete(timmyScreen));
+					});
 			}
-			else if ( GameManager.Get().CurrentPhase == 3 )
+			else if (phase  == 3)
 			{
 				Vector3 apocTransform = logoArmageddon.transform.localPosition;
 				//Do Armageddon Tween
 				apocScreen.alpha = 1;
-				LeanTween.value( 760f, 0f, 1f )
+				LeanTween
+					.value(760f, 0f, 1f)
 					.setEaseInOutCubic()
-					.setOnUpdate( ( value ) => {
-					apocTransform.y = value;
-					logoArmageddon.transform.localPosition = apocTransform;
-				} )
-					.setOnComplete( ( value ) => {
-						StartCoroutine( OnComplete( apocScreen ) );
-				} );
+					.setOnUpdate(value => {
+						apocTransform.y = value;
+						logoArmageddon.transform.localPosition = apocTransform;
+					})
+					.setOnComplete(value => {
+						StartCoroutine(OnComplete(apocScreen));
+					});
 			}
 		}
 
