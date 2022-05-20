@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab81c5912e3cfdc47a9f899294cfd2b2, type: 3}
   m_Name: Car
   m_EditorClassIdentifier: 
-  title: Car
+  title: Car with Hot Wheels
   blackImage: {fileID: 21300000, guid: 6f8101fb264985a4f9486d807e4aeffb, type: 3}
   whiteImage: {fileID: 21300000, guid: e74c592a40b12e1428111dad6cda88a7, type: 3}
   cardType: 0

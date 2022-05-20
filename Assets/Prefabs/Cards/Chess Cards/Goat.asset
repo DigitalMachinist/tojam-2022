@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab81c5912e3cfdc47a9f899294cfd2b2, type: 3}
   m_Name: Goat
   m_EditorClassIdentifier: 
-  title: Goat
+  title: Goat on a Pole
   blackImage: {fileID: 21300000, guid: 63c3a16a1d29e4c4ba1014d3e9e41fa9, type: 3}
   whiteImage: {fileID: 21300000, guid: f84c7ce733ae5e5438ae6d86186c9ccb, type: 3}
   cardType: 0
-  description: Obviously the G.O.A.T.
+  description: Obviously the G.O.A.T. Uses cutting edge, space age technology to
+    teleport anywhere on the board and capture any piece it lands on.
   playerColour: 0
   prefab: {fileID: 6619129110703224253, guid: c5096808492d20e4d81cc8498c7f197b, type: 3}
   probability: 0.477
