@@ -1,5 +1,4 @@
 using System;
-using Exceptions;
 using Managers;
 using Pieces;
 using UnityEngine;
@@ -15,11 +14,13 @@ namespace Board
         public bool IsDestroyed;
 
         [SerializeField] private bool debug;
+        [SerializeField] private bool debug_piece;
         [SerializeField] private bool debug_hovering;
         [SerializeField] private SelectionStateTypes debug_selection;
         [SerializeField] private TileStateTypes debug_tile;
         [SerializeField] private CrumblingStateTypes debug_crumbling;
         
+        [SerializeField] private GameObject pieceState;
         [SerializeField] private GameObject hoverState;
         [SerializeField] private GameObject availableState;
         [SerializeField] private GameObject selectedState;
@@ -28,6 +29,24 @@ namespace Board
         [SerializeField] private GameObject crumblingState1;
         [SerializeField] private GameObject crumblingState2;
         [SerializeField] private GameObject crumblingState3;
+        
+        private bool hasPiece;
+        /// <summary>
+        /// Update this to turn the piece present state on.
+        /// </summary>
+        public bool HasPiece
+        {
+            get => hasPiece;
+            set
+            {
+                if (hasPiece == value)
+                {
+                    return;
+                }
+                hasPiece = value;
+                pieceState.SetActive(hasPiece);
+            }
+        }
         
         private bool isHovering;
         /// <summary>
@@ -38,7 +57,10 @@ namespace Board
             get => isHovering;
             set
             {
-                if (isHovering == value) return;
+                if (isHovering == value)
+                {
+                    return;
+                }
                 isHovering = value;
                 hoverState.SetActive(isHovering);
             }
@@ -148,8 +170,12 @@ namespace Board
 
         private void Update()
         {
-            if (!debug) return;
+            if (!debug)
+            {
+                return;
+            }
 
+            HasPiece = debug_piece;
             IsHovering = debug_hovering;
             TileState = debug_tile;
             CrumblingState = debug_crumbling;
