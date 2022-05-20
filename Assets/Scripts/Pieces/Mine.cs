@@ -1,3 +1,4 @@
+using System;
 using Board;
 using Exceptions;
 using Pieces;
@@ -27,80 +28,41 @@ public class Mine : Piece
     
     public void Explode()
     {
-        //Debug.Log("GO BOOM");
+        ExplodeTake(Direction.N);
+        ExplodeTake(Direction.NE);
+        ExplodeTake(Direction.E);
+        ExplodeTake(Direction.SE);
+        ExplodeTake(Direction.S);
+        ExplodeTake(Direction.SW);
+        ExplodeTake(Direction.W);
+        ExplodeTake(Direction.NW);
+        Take();
+    }
+
+    private void ExplodeTake(Direction direction)
+    {
+        Tile tile;
+        
         try
         {
-            Tile.Board.GetTile(Tile, Direction.E, 1).Piece?.Take();
+            tile = Tile.Board.GetTile(Tile, direction, 1);
         }
-        catch
+        catch (IndexOutOfRangeException e)
         {
-            // ignored
+            return;
         }
-
-        try
+        
+        if (tile == null || tile.IsDestroyed)
         {
-            Tile.Board.GetTile(Tile, Direction.N, 1).Piece?.Take();
+            return;
         }
-        catch
+        
+        var piece = tile.Piece;
+        if (piece == null || piece.IsTaken)
         {
-            // ignored
+            return;
         }
-
-        try
-        {
-            Tile.Board.GetTile(Tile, Direction.NE, 1).Piece?.Take();
-        }
-        catch
-        {
-            // ignored
-        }
-
-        try
-        {
-            Tile.Board.GetTile(Tile, Direction.NW, 1).Piece?.Take();
-        }
-        catch
-        {
-            // ignored
-        }
-
-        try
-        {
-            Tile.Board.GetTile(Tile, Direction.S, 1).Piece?.Take();
-        }
-        catch
-        {
-            // ignored
-        }
-
-        try
-        {
-            Tile.Board.GetTile(Tile, Direction.SE, 1).Piece?.Take();
-        }
-        catch
-        {
-            // ignored
-        }
-
-        try
-        {
-            Tile.Board.GetTile(Tile, Direction.SW, 1).Piece?.Take();
-        }
-        catch
-        {
-            // ignored
-        }
-
-        try
-        {
-                Tile.Board.GetTile(Tile, Direction.W, 1).Piece?.Take();
-        }
-        catch
-        {
-            // ignored
-        }
-
-        // Player.TurnAdvanced -= Explode;
-        this.Take();
+        
+        piece.Take();
     }
 }
