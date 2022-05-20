@@ -263,6 +263,7 @@ namespace Pieces
         public void Take()
         {
             Tile.Piece = null;
+            Tile.HasPiece = false;
             Tile = null;
             IsTaken = true;
 

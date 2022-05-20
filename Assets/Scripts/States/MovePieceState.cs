@@ -103,6 +103,7 @@ namespace States
             // Clear all hover and selection states.
             foreach (var tile in manager.Board.Tiles)
             {
+                tile.HasPiece = tile.Piece != null;
                 tile.IsHovering = false;
                 tile.SelectionState = Tile.SelectionStateTypes.None;
             }

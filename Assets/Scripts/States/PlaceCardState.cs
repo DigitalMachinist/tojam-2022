@@ -83,7 +83,6 @@ namespace States
                 Debug.Log($"Play {manager.SelectedCard.Title} at {hoveredTile.name}");
                 manager.CurrentPlayer.PlaceCard(manager.SelectedCard._cardSO, hoveredTile);
                 manager.SelectedCard.Play();
-                manager.ClearSelectedCard();
                 manager.StateMachine.ChangeState(StateType.SelectPiece);
             }
             catch (PlacementException e)
@@ -97,6 +96,7 @@ namespace States
             base.Exit();
             
             var manager = GameManager.Get();
+            manager.ClearSelectedCard();
             manager.ClearSelectedPiece();
             manager.PlaceCardDisplay.SetActive(false);
             manager.ConfirmCardButton.gameObject.SetActive(false);
@@ -107,6 +107,7 @@ namespace States
             // Clear all selection states.
             foreach (var tile in manager.Board.Tiles)
             {
+                tile.HasPiece = tile.Piece != null;
                 tile.IsHovering = false;
                 tile.SelectionState = Tile.SelectionStateTypes.None;
             }

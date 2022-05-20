@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using Board;
 using Managers;
 using UnityEngine;
@@ -6,6 +8,8 @@ namespace States
 {
     public class BeginTurnState : State
     {
+        private ICollection<Mine> minesToExplode;
+        
         public override void Enter()
         {
             base.Enter();
@@ -54,7 +58,13 @@ namespace States
                     manager.ApocalypseTurnsLeft--;
                 }
             }
-            
+
+            minesToExplode = manager
+                .CurrentPlayer
+                .Pieces
+                .Select(piece => piece.GetComponent<Mine>())
+                .Where(mine => mine != null && !mine.IsTaken)
+                .ToList();
         }
         
         public override void Update()
@@ -65,6 +75,17 @@ namespace States
             if (manager.IsPlayingApocalypseEvent)
             {
                 return;
+            }
+
+            // Explode any mines placed last turn.
+            if (minesToExplode.Any())
+            {
+                foreach (var mine in minesToExplode)
+                {
+                    mine.Explode();
+                }
+
+                minesToExplode.Clear();
             }
             
             // This should only run once after the apocalypse event ends.
