@@ -31,11 +31,13 @@ namespace UI
 		[SerializeField] private float timmyLogoDelay;
 		[SerializeField] private Image logoTimmy;
 		[SerializeField] private Image logoSensible;
+		[SerializeField] private Transform targetTimmy;
 
 		[Header( "Timmy Logo" )]
 		[SerializeField] private CanvasGroup apocScreen;
 		[SerializeField] private float apocLogoDelay;
 		[SerializeField] private Image logoArmageddon;
+		[SerializeField] private Transform targetApoc;
 
 		[Header("GameOver")]
 		[SerializeField] private Button playAgainButton;
@@ -103,41 +105,37 @@ namespace UI
 		void BeginPhase2()
 		{
 			// Do Timmy Tween
-			Vector3 timmyTransform = logoTimmy.transform.localPosition;
 			timmyScreen.alpha = 1;
 			LeanTween
-				.value(980f, -120f, 1f)
-				.setEaseInOutCubic()
-				.setOnUpdate(value => {
-					timmyTransform.y = value;
-					logoTimmy.transform.localPosition = timmyTransform;
-				})
+				.move(logoTimmy.gameObject, targetTimmy, 1f)
+				.setEaseOutBounce()
 				.setOnComplete(value => {
-					StartCoroutine(OnComplete(timmyScreen));
+					LeanTween
+						.alphaCanvas(timmyScreen, 0f, 1f)
+						.setDelay(2f)
+						.setEaseOutBounce()
+						.setOnComplete(value => {
+							timmyScreen.gameObject.SetActive(false);
+						});
 				});
 		}
 
 		void BeginPhase3()
 		{
 			// Do Armageddon Tween
-			Vector3 apocTransform = logoArmageddon.transform.localPosition;
 			apocScreen.alpha = 1;
 			LeanTween
-				.value(760f, 0f, 1f)
-				.setEaseInOutCubic()
-				.setOnUpdate(value =>
-				{
-					apocTransform.y = value;
-					logoArmageddon.transform.localPosition = apocTransform;
-				})
-				.setOnComplete(value => { StartCoroutine(OnComplete(apocScreen)); });
-		}
-
-		IEnumerator OnComplete( CanvasGroup cg)
-        {
-			yield return new WaitForSeconds( 3f );
-			cg.alpha = 0f;
-			cg.gameObject.SetActive( false );
+				.move(logoArmageddon.gameObject, targetApoc, 1f)
+				.setEaseOutBounce()
+				.setOnComplete(value => {
+					LeanTween
+						.alphaCanvas(apocScreen, 0f, 1f)
+						.setDelay(2f)
+						.setEaseOutBounce()
+						.setOnComplete(value => {
+							apocScreen.gameObject.SetActive(false);
+						});
+				});
 		}
 
 		IEnumerator TitleScreen()
