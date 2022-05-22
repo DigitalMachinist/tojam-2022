@@ -62,6 +62,9 @@ namespace States
             
             foreach (var card in cards)
             {
+                var homeTarget = card.transform.parent.GetChild(0);
+                card.transform.position = homeTarget.position;
+                
                 card.Clicked -= OnCardClicked;
                 card.Hovered -= OnCardHovered;
                 card.Unhovered -= OnCardUnhovered;
