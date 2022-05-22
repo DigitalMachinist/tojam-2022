@@ -530,6 +530,7 @@ MonoBehaviour:
   InstructionText: {fileID: 1867048813767125085}
   Audio_PieceSelect: {fileID: 169718890}
   Audio_PieceDestroy: {fileID: 1083158915}
+  Audio_DinoRoar: {fileID: 1757161434}
   Audio_BoardCrumble: {fileID: 309174612}
   Audio_TimmyYess: {fileID: 1790687008}
   Audio_TimmyLaugh: {fileID: 1332136525}
@@ -989,6 +990,14 @@ PrefabInstance:
       propertyPath: ApocalypseTwistyCard
       value: 
       objectReference: {fileID: 1371458195}
+    - target: {fileID: 9138399821148772618, guid: 4a194d6ead49deb47a1c7bdaf0c8db9b, type: 3}
+      propertyPath: possibleCards.Array.size
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 9138399821148772618, guid: 4a194d6ead49deb47a1c7bdaf0c8db9b, type: 3}
+      propertyPath: possibleCards.Array.data[8]
+      value: 
+      objectReference: {fileID: 11400000, guid: dc36e2ffb1aeb964086da1a36b4fd8af, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4a194d6ead49deb47a1c7bdaf0c8db9b, type: 3}
 --- !u!114 &1371458194 stripped
@@ -1420,6 +1429,11 @@ PrefabInstance:
 --- !u!4 &1757161433 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4615223221908186749, guid: 830e288e408bee04eb6098a0d5c5016b, type: 3}
+  m_PrefabInstance: {fileID: 1757161432}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &1757161434 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 5574563940646507839, guid: 830e288e408bee04eb6098a0d5c5016b, type: 3}
   m_PrefabInstance: {fileID: 1757161432}
   m_PrefabAsset: {fileID: 0}
 --- !u!82 &1790687008 stripped

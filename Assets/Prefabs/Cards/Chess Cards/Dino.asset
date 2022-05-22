@@ -21,4 +21,4 @@ MonoBehaviour:
     radius.
   playerColour: 0
   prefab: {fileID: 6619129110703224253, guid: e7f8dbd6375abc841b7e9d5375ee08e8, type: 3}
-  probability: 0.575
+  probability: 0.482

@@ -45,6 +45,7 @@ namespace Managers
         public TextMeshProUGUI InstructionText;
         public AudioSource Audio_PieceSelect;
         public AudioSource Audio_PieceDestroy;
+        public AudioSource Audio_DinoRoar;
         public AudioSource Audio_BoardCrumble;
         public AudioSource Audio_TimmyYess;
         public AudioSource Audio_TimmyLaugh;

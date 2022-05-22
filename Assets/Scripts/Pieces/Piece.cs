@@ -262,12 +262,18 @@ namespace Pieces
 
         public void Take()
         {
-            Tile.Piece = null;
-            Tile.HasPiece = false;
-            Tile = null;
-            IsTaken = true;
+            if (Tile != null)
+            {
+                if(Tile.Piece != null)
+                    Tile.Piece = null;
 
-            Player.Pieces.Remove(this);
+                Tile.HasPiece = false;
+                Tile = null;
+                IsTaken = true;
+            }
+
+            if (Player.Pieces.Contains(this)) 
+                Player.Pieces.Remove(this);
             
             // TODO: Animate the piece being destroyed somehow?
             // transform.position = Vector3.zero;

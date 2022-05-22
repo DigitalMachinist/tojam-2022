@@ -3,6 +3,7 @@ using Exceptions;
 using Managers;
 using Pieces;
 using Players;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,62 +20,7 @@ public class Dino : Piece
         ValidateMove(player, Tile, endTile, direction, distance, false, true);
 
 
-        try
-        {
-            Tile.Board.GetTile(Tile, Direction.E, 1).Piece?.Take();
-        }
-        catch
-        {
-        }
-        try
-        {
-            Tile.Board.GetTile(Tile, Direction.N, 1).Piece?.Take();
-        }
-        catch
-        {
-        }
-        try
-        {
-            Tile.Board.GetTile(Tile, Direction.NE, 1).Piece?.Take();
-        }
-        catch
-        {
-        }
-        try
-        {
-            Tile.Board.GetTile(Tile, Direction.NW, 1).Piece?.Take();
-        }
-        catch
-        {
-        }
-        try
-        {
-            Tile.Board.GetTile(Tile, Direction.S, 1).Piece?.Take();
-        }
-        catch
-        {
-        }
-        try
-        {
-            Tile.Board.GetTile(Tile, Direction.SE, 1).Piece?.Take();
-        }
-        catch
-        {
-        }
-        try
-        {
-            Tile.Board.GetTile(Tile, Direction.SW, 1).Piece?.Take();
-        }
-        catch
-        {
-        }
-        try
-        {
-            Tile.Board.GetTile(Tile, Direction.W, 1).Piece?.Take();
-        }
-        catch
-        {
-        }
+        
 
 
         // Keep track of pieces to return as taken.
@@ -82,6 +28,7 @@ public class Dino : Piece
         if (endTile.Piece != null)
         {
             pieces.Add(endTile.Piece);
+            //tile.Destroy();
         }
 
         Tile.Piece = null;
@@ -94,9 +41,59 @@ public class Dino : Piece
 
         CalculateIsFinishedMoving();
 
-        GameManager.Get().Audio_PieceSelect.Play();
+        Stomp();
 
         return pieces;
+    }
+    public void Stomp()
+    {
+        bool destroyedAnyPiece = false;                                      
+        destroyedAnyPiece = StompTake(Direction.N)   || destroyedAnyPiece;
+        destroyedAnyPiece = StompTake(Direction.NE)  || destroyedAnyPiece;
+        destroyedAnyPiece = StompTake(Direction.E)   || destroyedAnyPiece;
+        destroyedAnyPiece = StompTake(Direction.SE)  || destroyedAnyPiece;
+        destroyedAnyPiece = StompTake(Direction.S)   || destroyedAnyPiece;
+        destroyedAnyPiece = StompTake(Direction.SW)  || destroyedAnyPiece;
+        destroyedAnyPiece = StompTake(Direction.W)   || destroyedAnyPiece;
+        destroyedAnyPiece =  StompTake(Direction.NW) || destroyedAnyPiece;
+
+        if (destroyedAnyPiece)
+        {
+            Debug.Log("Dino stomped a piece.");
+            Tile.Destroy();
+            Take();
+            GameManager.Get().Audio_DinoRoar.Play();
+        }
+    }
+
+    private bool StompTake(Direction direction)
+    {
+        Tile tile;
+
+        try
+        {
+            tile = Tile.Board.GetTile(Tile, direction, 1);
+        }
+        catch (IndexOutOfRangeException e)
+        {
+            return false;
+        }
+
+        if (tile == null || tile.IsDestroyed)
+        {
+            return false;
+        }
+
+        var piece = tile.Piece;
+        if (piece == null || piece.IsTaken)
+        {
+            return false;
+        }
+
+        piece.Take();
+        tile.Destroy();
+
+        return true;
     }
 
     public override bool ValidateMove(Player player, Tile startTile, Tile endTile, Direction direction, int distance, bool ignoreTurn, bool throwExceptions = false)
