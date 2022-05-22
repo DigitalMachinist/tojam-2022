@@ -1,6 +1,7 @@
 using System;
 using Board;
 using Exceptions;
+using Managers;
 using Pieces;
 using Players;
 
@@ -14,6 +15,42 @@ public class Mine : Piece
         }
 
         return false;
+    }
+
+    public override bool ValidatePlace(Player player, Tile endTile, bool ignoreTurn = false, bool throwExceptions = false)
+    {
+        if (!ignoreTurn && GameManager.Get().PlayerTurn != player.Colour)
+        {
+            if (throwExceptions)
+            {
+                throw new PlacementException("Can't place a piece when it isn't your turn.");
+            }
+
+            return false;
+        }
+
+
+        if (endTile.IsDestroyed)
+        {
+            if (throwExceptions)
+            {
+                throw new PlacementException("Can't place onto a destroyed tile.");
+            }
+
+            return false;
+        }
+
+        if (endTile.Piece != null)
+        {
+            if (throwExceptions)
+            {
+                throw new PlacementException("Can't place onto the same space as another piece.");
+            }
+
+            return false;
+        }
+
+        return true;
     }
 
     public override bool ValidateMove(Player player, Tile startTile, Tile endTile, Direction direction, int distance, bool ignoreTurn = false, bool throwExceptions = false)
