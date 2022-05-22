@@ -44,6 +44,7 @@ namespace States
 
             GameManager.Deck.Hovered += OnDeckHovered;
             GameManager.Deck.Unhovered += OnDeckUnhovered;
+            
             GameManager.Deck.AnimateDeckTwisty(1f);
         }
         

@@ -300,6 +300,7 @@ namespace Managers
             {
                 BeginApocalypseEventCountdown();
                 ComputeTilesToDestroy();
+                Deck.SetApocalypse();
                 Audio_TimmyLaugh.Play();
             }
             UiController.SetPhase(CurrentPhase);

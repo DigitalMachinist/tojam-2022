@@ -39,6 +39,8 @@ public class Deck : MonoBehaviour
     
     public void RenderReset()
     {
+        IsHovering = false;
+        
         NormalWhiteTwistyCard.gameObject.SetActive( false );
         ApocalypseWhiteTwistyCard.gameObject.SetActive( false );
         NormalBlackTwistyCard.gameObject.SetActive( false );
@@ -49,46 +51,7 @@ public class Deck : MonoBehaviour
         NormalBlackTwistyCard.transform.localEulerAngles = new Vector3( 90, 0, 0 );
         ApocalypseBlackTwistyCard.transform.localEulerAngles = new Vector3( 90, 0, 0 );
     }
-
-    public void RenderPlayer()
-    {
-        RenderReset();
-
-        if ( GameManager.Get().PlayerTurn == Players.PlayerColour.White )
-        {
-            NormalWhiteTwistyCard.gameObject.SetActive( true );
-            ApocalypseWhiteTwistyCard.gameObject.SetActive( true );
-        }
-        else
-        {
-            NormalBlackTwistyCard.gameObject.SetActive( true );
-            ApocalypseBlackTwistyCard.gameObject.SetActive( true );
-        }
-    }
-    public void RenderHovered()
-    {
-        NormalWhiteTwistyCard.gameObject.SetActive( false );
-        ApocalypseWhiteTwistyCard.gameObject.SetActive( false );
-        NormalBlackTwistyCard.gameObject.SetActive( false );
-        ApocalypseBlackTwistyCard.gameObject.SetActive( false );
-
-        NormalWhiteTwistyCard.transform.localEulerAngles = new Vector3(90, TwistyDegrees, 0);
-        ApocalypseWhiteTwistyCard.transform.localEulerAngles = new Vector3(90, TwistyDegrees, 0);
-        NormalBlackTwistyCard.transform.localEulerAngles = new Vector3( 90, TwistyDegrees, 0 );
-        ApocalypseBlackTwistyCard.transform.localEulerAngles = new Vector3( 90, TwistyDegrees, 0 );
-
-        if ( GameManager.Get().PlayerTurn == Players.PlayerColour.White )
-        {
-            NormalWhiteTwistyCard.gameObject.SetActive( true );
-            ApocalypseWhiteTwistyCard.gameObject.SetActive( true );
-        }
-        else
-        {
-            NormalBlackTwistyCard.gameObject.SetActive( true );
-            ApocalypseBlackTwistyCard.gameObject.SetActive( true );
-        }
-    }
-
+    
     public void AnimateDeckNonTwisty(float duration)
     {
         if (GameManager.Get().PlayerTurn == PlayerColour.Black)
