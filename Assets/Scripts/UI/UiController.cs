@@ -92,36 +92,45 @@ namespace UI
         {
 			if (phase == 2)
 			{
-				Vector3 timmyTransform = logoTimmy.transform.localPosition;
-				//Do Timmy Tween
-				timmyScreen.alpha = 1;
-				LeanTween
-					.value(980f, -120f, 1f)
-					.setEaseInOutCubic()
-					.setOnUpdate(value => {
-						timmyTransform.y = value;
-						logoTimmy.transform.localPosition = timmyTransform;
-					})
-					.setOnComplete(value => {
-						StartCoroutine(OnComplete(timmyScreen));
-					});
+				BeginPhase2();
 			}
-			else if (phase  == 3)
+			else if (phase == 3)
 			{
-				Vector3 apocTransform = logoArmageddon.transform.localPosition;
-				//Do Armageddon Tween
-				apocScreen.alpha = 1;
-				LeanTween
-					.value(760f, 0f, 1f)
-					.setEaseInOutCubic()
-					.setOnUpdate(value => {
-						apocTransform.y = value;
-						logoArmageddon.transform.localPosition = apocTransform;
-					})
-					.setOnComplete(value => {
-						StartCoroutine(OnComplete(apocScreen));
-					});
+				BeginPhase3();
 			}
+		}
+
+		void BeginPhase2()
+		{
+			// Do Timmy Tween
+			Vector3 timmyTransform = logoTimmy.transform.localPosition;
+			timmyScreen.alpha = 1;
+			LeanTween
+				.value(980f, -120f, 1f)
+				.setEaseInOutCubic()
+				.setOnUpdate(value => {
+					timmyTransform.y = value;
+					logoTimmy.transform.localPosition = timmyTransform;
+				})
+				.setOnComplete(value => {
+					StartCoroutine(OnComplete(timmyScreen));
+				});
+		}
+
+		void BeginPhase3()
+		{
+			// Do Armageddon Tween
+			Vector3 apocTransform = logoArmageddon.transform.localPosition;
+			apocScreen.alpha = 1;
+			LeanTween
+				.value(760f, 0f, 1f)
+				.setEaseInOutCubic()
+				.setOnUpdate(value =>
+				{
+					apocTransform.y = value;
+					logoArmageddon.transform.localPosition = apocTransform;
+				})
+				.setOnComplete(value => { StartCoroutine(OnComplete(apocScreen)); });
 		}
 
 		IEnumerator OnComplete( CanvasGroup cg)

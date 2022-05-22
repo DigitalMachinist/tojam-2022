@@ -5,6 +5,10 @@ namespace States
 {
     public class ConfirmCardState : State
     {
+        public ConfirmCardState(GameManager gameManager) : base(gameManager)
+        {
+        }
+        
         private void OnConfirmClicked()
         {
             var manager = GameManager.Get();

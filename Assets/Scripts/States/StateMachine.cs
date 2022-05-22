@@ -20,21 +20,22 @@ namespace States
         public EndTurnState EndTurn;
         public GameOverState GameOver;
 
-        public StateMachine()
+        public StateMachine(GameManager gameManager)
         {
+            GameManager = gameManager;
             CurrentStateType = StateType.None;
             State = null;
             
-            BeginTurn = new BeginTurnState();
-            SelectCard = new SelectCardState();
-            ConfirmCard = new ConfirmCardState();
-            PlaceCard = new PlaceCardState();
-            SelectPiece = new SelectPieceState();
-            MovePiece = new MovePieceState();
-            Event = new EventState();
-            DrawCard = new DrawCardState();
-            EndTurn = new EndTurnState();
-            GameOver = new GameOverState();
+            BeginTurn = new BeginTurnState(gameManager);
+            SelectCard = new SelectCardState(gameManager);
+            ConfirmCard = new ConfirmCardState(gameManager);
+            PlaceCard = new PlaceCardState(gameManager);
+            SelectPiece = new SelectPieceState(gameManager);
+            MovePiece = new MovePieceState(gameManager);
+            Event = new EventState(gameManager);
+            DrawCard = new DrawCardState(gameManager);
+            EndTurn = new EndTurnState(gameManager);
+            GameOver = new GameOverState(gameManager);
         }
 
         public void Update()

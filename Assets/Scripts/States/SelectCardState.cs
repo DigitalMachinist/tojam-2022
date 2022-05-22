@@ -7,23 +7,47 @@ namespace States
     {
         private List<Card> cards;
         
+        public SelectCardState(GameManager gameManager) : base(gameManager)
+        {
+        }
+        
         private void OnCardClicked(Card card)
         {
-            var manager = GameManager.Get();
-            manager.SelectedCard = card;
-            manager.StateMachine.ChangeState(StateType.ConfirmCard);
+            GameManager.SelectedCard = card;
+            GameManager.StateMachine.ChangeState(StateType.ConfirmCard);
+        }
+        
+        private void OnCardHovered(Card card)
+        {
+            // The hover target *MUST* be the 1st child in the hierarchy.
+            var hoverTarget = card.transform.parent.GetChild(1);
+
+            LeanTween
+                .move(card.gameObject, hoverTarget, 0.2f)
+                .setEaseInOutCubic();
+        }
+        
+        private void OnCardUnhovered(Card card)
+        {
+            // The home target *MUST* be the 0th child in the hierarchy.
+            var homeTarget = card.transform.parent.GetChild(0);
+
+            LeanTween
+                .move(card.gameObject, homeTarget, 0.2f)
+                .setEaseInOutCubic();
         }
         
         public override void Enter()
         {
             base.Enter();
             
-            var manager = GameManager.Get();
-            manager.InstructionText.text = "Play a card";
-            cards = new List<Card>(manager.CurrentPlayerHand.playerHand);
+            GameManager.InstructionText.text = "Play a card";
+            cards = new List<Card>(GameManager.CurrentPlayerHand.playerHand);
             foreach (var card in cards)
             {
                 card.Clicked += OnCardClicked;
+                card.Hovered += OnCardHovered;
+                card.Unhovered += OnCardUnhovered;
             }
         }
         
@@ -39,6 +63,8 @@ namespace States
             foreach (var card in cards)
             {
                 card.Clicked -= OnCardClicked;
+                card.Hovered -= OnCardHovered;
+                card.Unhovered -= OnCardUnhovered;
             }
         }
     }

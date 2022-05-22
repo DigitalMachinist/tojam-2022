@@ -9,6 +9,10 @@ namespace States
     public class BeginTurnState : State
     {
         private ICollection<Mine> minesToExplode;
+
+        public BeginTurnState(GameManager gameManager) : base(gameManager)
+        {
+        }
         
         public override void Enter()
         {

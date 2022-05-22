@@ -1,7 +1,13 @@
+using Managers;
+
 namespace States
 {
     public class EventState : State
     {
+        public EventState(GameManager gameManager) : base(gameManager)
+        {
+        }
+        
         public override void Enter()
         {
             base.Enter();

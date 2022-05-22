@@ -1,11 +1,17 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Managers;
+using Players;
+using Random = UnityEngine.Random;
 
 public class Deck : MonoBehaviour
 {
     public static Deck instance;
 
+    public event Action Hovered; 
+    public event Action Unhovered;
+    
     public Transform Normal;
     public Transform Apocalypse;
     public Transform NormalWhiteTwistyCard;
@@ -17,6 +23,8 @@ public class Deck : MonoBehaviour
     public CardScriptableObject[] possibleCards;
     private List<CardScriptableObject> deckCards;
 
+    public bool IsHovering { get; private set; }
+    
     public void SetNormal()
     {
         Normal.gameObject.SetActive(true);
@@ -80,6 +88,62 @@ public class Deck : MonoBehaviour
             ApocalypseBlackTwistyCard.gameObject.SetActive( true );
         }
     }
+
+    public void AnimateDeckNonTwisty(float duration)
+    {
+        if (GameManager.Get().PlayerTurn == PlayerColour.Black)
+        {
+            NormalBlackTwistyCard.gameObject.SetActive(true);
+            LeanTween
+                .rotateY(NormalBlackTwistyCard.gameObject, 0f, duration)
+                .setEaseOutCubic();
+
+            ApocalypseBlackTwistyCard.gameObject.SetActive(true);
+            LeanTween
+                .rotateY(ApocalypseBlackTwistyCard.gameObject, 0f, duration)
+                .setEaseOutCubic();
+        }
+        else
+        {
+            NormalWhiteTwistyCard.gameObject.SetActive(true);
+            LeanTween
+                .rotateY(NormalWhiteTwistyCard.gameObject, 0f, duration)
+                .setEaseOutCubic();
+
+            ApocalypseWhiteTwistyCard.gameObject.SetActive(true);
+            LeanTween
+                .rotateY(ApocalypseWhiteTwistyCard.gameObject, 0f, duration)
+                .setEaseOutCubic();
+        }
+    }
+
+    public void AnimateDeckTwisty(float duration)
+    {
+        if (GameManager.Get().PlayerTurn == PlayerColour.Black)
+        {
+            NormalBlackTwistyCard.gameObject.SetActive(true);
+            LeanTween
+                .rotateY(NormalBlackTwistyCard.gameObject, TwistyDegrees, duration)
+                .setEaseOutCubic();
+            
+            ApocalypseBlackTwistyCard.gameObject.SetActive(true);
+            LeanTween
+                .rotateY(ApocalypseBlackTwistyCard.gameObject, TwistyDegrees, duration)
+                .setEaseOutCubic();
+        }
+        else
+        {
+            NormalWhiteTwistyCard.gameObject.SetActive(true);
+            LeanTween
+                .rotateY(NormalWhiteTwistyCard.gameObject, TwistyDegrees, duration)
+                .setEaseOutCubic();
+            
+            ApocalypseWhiteTwistyCard.gameObject.SetActive(true);
+            LeanTween
+                .rotateY(ApocalypseWhiteTwistyCard.gameObject, TwistyDegrees, duration)
+                .setEaseOutCubic();
+        }
+    }
     
     public bool IsHoveringDeck()
     {
@@ -116,7 +180,17 @@ public class Deck : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        var isHovering = IsHoveringDeck();
+        if (!IsHovering && isHovering)
+        {
+            IsHovering = true;
+            Hovered?.Invoke();
+        }
+        else if (IsHovering && !isHovering)
+        {
+            IsHovering = false;
+            Unhovered?.Invoke();
+        }
     }
 
     private List<CardScriptableObject> GenerateCards(int numberOfCardsToGenerate)

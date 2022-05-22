@@ -3,13 +3,16 @@ using Exceptions;
 using Managers;
 using Pieces;
 using UnityEngine;
-using UnityEngine.Timeline;
 
 namespace States
 {
     public class PlaceCardState : State
     {
         private Piece tempPiece;
+        
+        public PlaceCardState(GameManager gameManager) : base(gameManager)
+        {
+        }
         
         private void OnCancelClicked()
         {

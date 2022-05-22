@@ -22,8 +22,11 @@ namespace Managers
         public Player PlayerWhite;
         public Hand PlayerHandBlack;
         public Hand PlayerHandWhite;
+        public Transform PlayerHandBlackCanvasTarget;
+        public Transform PlayerHandWhiteCanvasTarget;
         public GameObject PlayerHandBlackCanvas;
         public GameObject PlayerHandWhiteCanvas;
+        public Transform DeckTarget;
         public Deck Deck;
         public GameObject PlaceCardDisplay;
         public Card PlaceCardDisplayCard;
@@ -149,7 +152,7 @@ namespace Managers
 
         void Start()
         {
-            StateMachine = new StateMachine();
+            StateMachine = new StateMachine(this);
             Board = GetComponentInChildren<Chessboard>();
             RestartGameButton.onClick.AddListener(ResetGame);
             Init();
@@ -291,6 +294,7 @@ namespace Managers
             if ( CurrentPhase == 2 )
             {
                 Audio_TimmyYess.Play();
+                IntroduceDeckbuilderTween();
             }
             if (CurrentPhase == 3)
             {
@@ -301,6 +305,22 @@ namespace Managers
             UiController.SetPhase(CurrentPhase);
             Background.SetPhase(CurrentPhase);
             PhaseChanged?.Invoke( number );
+        }
+
+        private void IntroduceDeckbuilderTween()
+        {
+            PlayerHandBlackCanvas.gameObject.SetActive(true);
+            PlayerHandWhiteCanvas.gameObject.SetActive(true);
+            Deck.gameObject.SetActive(true);
+            LeanTween
+                .move(PlayerHandBlackCanvas.gameObject, PlayerHandBlackCanvasTarget, 0.5f)
+                .setEaseInOutCubic();
+            LeanTween
+                .move(PlayerHandWhiteCanvas.gameObject, PlayerHandWhiteCanvasTarget, 0.5f)
+                .setEaseInOutCubic();
+            LeanTween
+                .move(Deck.gameObject, DeckTarget, 0.5f)
+                .setEaseInOutCubic();
         }
 
         public void BeginApocalypseEventCountdown()
