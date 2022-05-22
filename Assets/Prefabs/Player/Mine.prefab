@@ -47,8 +47,10 @@ MonoBehaviour:
   Player: {fileID: 0}
   Tile: {fileID: 0}
   IsTaken: 0
+  NumMovesPerformed: 0
   HasMovedThisTurn: 0
   IsFinishedMoving: 0
   Content: {fileID: 0}
   ContentPrefabBlack: {fileID: 4258706022199448077, guid: bb5394fad38136d44967ddeb83dcf80c, type: 3}
   ContentPrefabWhite: {fileID: 4258706022199448077, guid: bb5394fad38136d44967ddeb83dcf80c, type: 3}
+  explosion: {fileID: 6923291084292430744, guid: d17646cde7f6e304f8687c498d4cf7a5, type: 3}

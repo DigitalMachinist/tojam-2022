@@ -4,9 +4,12 @@ using Exceptions;
 using Managers;
 using Pieces;
 using Players;
+using UnityEngine;
 
 public class Mine : Piece
 {
+    public GameObject explosion;
+
     public override bool ValidateSelect(Player player, bool ignoreTurn = false, bool throwExceptions = false)
     {
         if (throwExceptions)
@@ -73,7 +76,9 @@ public class Mine : Piece
         ExplodeTake(Direction.SW);
         ExplodeTake(Direction.W);
         ExplodeTake(Direction.NW);
+        Instantiate(explosion, transform.position, explosion.transform.rotation);
         Take();
+        GameManager.Get().Audio_PieceDestroy.Play();
     }
 
     private void ExplodeTake(Direction direction)
