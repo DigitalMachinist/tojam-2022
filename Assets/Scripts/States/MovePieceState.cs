@@ -7,6 +7,10 @@ namespace States
 {
     public class MovePieceState : State
     {
+        public MovePieceState(GameManager gameManager) : base(gameManager)
+        {
+        }
+        
         private void OnCancelClicked()
         {
             var manager = GameManager.Get();

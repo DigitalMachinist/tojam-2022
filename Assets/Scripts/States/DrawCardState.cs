@@ -4,56 +4,65 @@ namespace States
 {
     public class DrawCardState : State
     {
+        public DrawCardState(GameManager gameManager) : base(gameManager)
+        {
+        }
+        
         private void OnDrawClicked()
         {
-            var manager = GameManager.Get();
-            manager.CurrentPlayerHand.NewTurn(manager.CurrentPlayer.Colour);
-            manager.CurrentPlayerHand.RefreshHandCards();
-            manager.CurrentPlayerHand.DrawnCard.Hide();
-            manager.DrawCardButton.gameObject.SetActive(true);
-            manager.StateMachine.ChangeState(StateType.EndTurn);
+            GameManager.CurrentPlayerHand.NewTurn(GameManager.CurrentPlayer.Colour);
+            GameManager.CurrentPlayerHand.RefreshHandCards();
+            GameManager.CurrentPlayerHand.DrawnCard.Hide();
+            GameManager.DrawCardButton.gameObject.SetActive(true);
+            GameManager.StateMachine.ChangeState(StateType.EndTurn);
+        }
+
+        private void OnDeckHovered()
+        {
+            GameManager.Deck.AnimateDeckNonTwisty(0.5f);
+        }
+
+        private void OnDeckUnhovered()
+        {
+            GameManager.Deck.AnimateDeckTwisty(0.5f);
         }
         
         public override void Enter()
         {
             base.Enter();
             
-            var manager = GameManager.Get();
-            if (manager.TurnNumber < manager.TurnPhase2)
+            if (GameManager.TurnNumber < GameManager.TurnPhase2)
             {
                 // Only draw new cards after cards are in the game.
-                manager.StateMachine.ChangeState(StateType.EndTurn);
+                GameManager.StateMachine.ChangeState(StateType.EndTurn);
                 return;
             }
             
-            manager.InstructionText.text = "Draw a card";
-            manager.DrawCardButton.gameObject.SetActive(true);
-            manager.DrawCardButton.onClick.AddListener(OnDrawClicked);
+            GameManager.InstructionText.text = "Draw a card";
+            GameManager.DrawCardButton.gameObject.SetActive(true);
+            GameManager.DrawCardButton.onClick.AddListener(OnDrawClicked);
+
+            GameManager.Deck.Hovered += OnDeckHovered;
+            GameManager.Deck.Unhovered += OnDeckUnhovered;
+            
+            GameManager.Deck.AnimateDeckTwisty(1f);
         }
         
         public override void Update()
         {
             base.Update();
-            
-            var manager = GameManager.Get();
-            if (manager.Deck.IsHoveringDeck())
-            {
-                manager.Deck.RenderHovered();
-            }
-            else
-            {
-                manager.Deck.RenderPlayer();
-            }
         }
         
         public override void Exit()
         {
             base.Exit();
             
-            var manager = GameManager.Get();
-            manager.Deck.RenderReset();
-            manager.DrawCardButton.gameObject.SetActive(false);
-            manager.DrawCardButton.onClick.RemoveListener(OnDrawClicked);
+            GameManager.Deck.RenderReset();
+            GameManager.DrawCardButton.gameObject.SetActive(false);
+            GameManager.DrawCardButton.onClick.RemoveListener(OnDrawClicked);
+            
+            GameManager.Deck.Hovered -= OnDeckHovered;
+            GameManager.Deck.Unhovered -= OnDeckUnhovered;
         }
     }
 }

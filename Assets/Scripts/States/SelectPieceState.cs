@@ -7,6 +7,10 @@ namespace States
 {
     public class SelectPieceState : State
     {
+        public SelectPieceState(GameManager gameManager) : base(gameManager)
+        {
+        }
+        
         public override void Enter()
         {
             base.Enter();

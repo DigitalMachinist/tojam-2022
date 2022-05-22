@@ -31,11 +31,13 @@ namespace UI
 		[SerializeField] private float timmyLogoDelay;
 		[SerializeField] private Image logoTimmy;
 		[SerializeField] private Image logoSensible;
+		[SerializeField] private Transform targetTimmy;
 
 		[Header( "Timmy Logo" )]
 		[SerializeField] private CanvasGroup apocScreen;
 		[SerializeField] private float apocLogoDelay;
 		[SerializeField] private Image logoArmageddon;
+		[SerializeField] private Transform targetApoc;
 
 		[Header("GameOver")]
 		[SerializeField] private Button playAgainButton;
@@ -92,43 +94,48 @@ namespace UI
         {
 			if (phase == 2)
 			{
-				Vector3 timmyTransform = logoTimmy.transform.localPosition;
-				//Do Timmy Tween
-				timmyScreen.alpha = 1;
-				LeanTween
-					.value(980f, -120f, 1f)
-					.setEaseInOutCubic()
-					.setOnUpdate(value => {
-						timmyTransform.y = value;
-						logoTimmy.transform.localPosition = timmyTransform;
-					})
-					.setOnComplete(value => {
-						StartCoroutine(OnComplete(timmyScreen));
-					});
+				BeginPhase2();
 			}
-			else if (phase  == 3)
+			else if (phase == 3)
 			{
-				Vector3 apocTransform = logoArmageddon.transform.localPosition;
-				//Do Armageddon Tween
-				apocScreen.alpha = 1;
-				LeanTween
-					.value(760f, 0f, 1f)
-					.setEaseInOutCubic()
-					.setOnUpdate(value => {
-						apocTransform.y = value;
-						logoArmageddon.transform.localPosition = apocTransform;
-					})
-					.setOnComplete(value => {
-						StartCoroutine(OnComplete(apocScreen));
-					});
+				BeginPhase3();
 			}
 		}
 
-		IEnumerator OnComplete( CanvasGroup cg)
-        {
-			yield return new WaitForSeconds( 3f );
-			cg.alpha = 0f;
-			cg.gameObject.SetActive( false );
+		void BeginPhase2()
+		{
+			// Do Timmy Tween
+			timmyScreen.alpha = 1;
+			LeanTween
+				.move(logoTimmy.gameObject, targetTimmy, 1f)
+				.setEaseOutBounce()
+				.setOnComplete(value => {
+					LeanTween
+						.alphaCanvas(timmyScreen, 0f, 1f)
+						.setDelay(2f)
+						.setEaseOutBounce()
+						.setOnComplete(value => {
+							timmyScreen.gameObject.SetActive(false);
+						});
+				});
+		}
+
+		void BeginPhase3()
+		{
+			// Do Armageddon Tween
+			apocScreen.alpha = 1;
+			LeanTween
+				.move(logoArmageddon.gameObject, targetApoc, 1f)
+				.setEaseOutBounce()
+				.setOnComplete(value => {
+					LeanTween
+						.alphaCanvas(apocScreen, 0f, 1f)
+						.setDelay(2f)
+						.setEaseOutBounce()
+						.setOnComplete(value => {
+							apocScreen.gameObject.SetActive(false);
+						});
+				});
 		}
 
 		IEnumerator TitleScreen()

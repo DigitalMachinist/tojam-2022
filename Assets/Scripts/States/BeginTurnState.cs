@@ -9,39 +9,42 @@ namespace States
     public class BeginTurnState : State
     {
         private ICollection<Mine> minesToExplode;
+
+        public BeginTurnState(GameManager gameManager) : base(gameManager)
+        {
+        }
         
         public override void Enter()
         {
             base.Enter();
 
-            var manager = GameManager.Get();
-            if (manager.CheckGameOverCondition())
+            if (GameManager.CheckGameOverCondition())
             {
                 return;
             }
             
-            if (manager.CurrentPlayer.Colour == Players.PlayerColour.White)
+            if (GameManager.CurrentPlayer.Colour == Players.PlayerColour.White)
             {
-                if (manager.TurnNumber == manager.TurnPhase2)
+                if (GameManager.TurnNumber == GameManager.TurnPhase2)
                 {
-                    manager.BeginPhase(2);
+                    GameManager.BeginPhase(2);
                 }
-                else if (manager.TurnNumber == manager.TurnPhase3)
+                else if (GameManager.TurnNumber == GameManager.TurnPhase3)
                 {
-                    manager.BeginPhase(3);
+                    GameManager.BeginPhase(3);
                 }
                 
                 // Handle apocalypse progress
-                if (manager.CurrentPhase == 3)
+                if (GameManager.CurrentPhase == 3)
                 {
-                    if (manager.ApocalypseTurnsLeft <= 0)
+                    if (GameManager.ApocalypseTurnsLeft <= 0)
                     {
-                        manager.DoApocalypseEvent();
+                        GameManager.DoApocalypseEvent();
                         return;
                     }
                     
                     // Clear the entire board's tile state.
-                    foreach (var tile in manager.Board.Tiles)
+                    foreach (var tile in GameManager.Board.Tiles)
                     {
                         tile.TileState = tile.IsDestroyed
                             ? Tile.TileStateTypes.Destroyed
@@ -49,17 +52,17 @@ namespace States
                     }
                     
                     // Mark tiles that are crumbling as such.
-                    foreach (var tile in manager.ApocalypseTiles)
+                    foreach (var tile in GameManager.ApocalypseTiles)
                     {
                         tile.TileState = Tile.TileStateTypes.Crumbling;
-                        tile.CrumblingState = (Tile.CrumblingStateTypes) Mathf.Max(0, 2 - manager.ApocalypseTurnsLeft);
+                        tile.CrumblingState = (Tile.CrumblingStateTypes) Mathf.Max(0, 2 - GameManager.ApocalypseTurnsLeft);
                     }
                     
-                    manager.ApocalypseTurnsLeft--;
+                    GameManager.ApocalypseTurnsLeft--;
                 }
             }
 
-            minesToExplode = manager
+            minesToExplode = GameManager
                 .CurrentPlayer
                 .Pieces
                 .Select(piece => piece.GetComponent<Mine>())
@@ -71,8 +74,7 @@ namespace States
         {
             base.Update();
 
-            var manager = GameManager.Get();
-            if (manager.IsPlayingApocalypseEvent)
+            if (GameManager.IsPlayingApocalypseEvent)
             {
                 return;
             }
@@ -89,23 +91,23 @@ namespace States
             }
             
             // This should only run once after the apocalypse event ends.
-            if (manager.TurnNumber < manager.TurnPhase2)
+            if (GameManager.TurnNumber < GameManager.TurnPhase2)
             {
                 // Go straight to piece selection in the early game.
-                manager.PlayerHandBlackCanvas.SetActive(false);
-                manager.PlayerHandWhiteCanvas.SetActive(false);
-                manager.Deck.gameObject.SetActive(false);
+                GameManager.PlayerHandBlackCanvas.SetActive(false);
+                GameManager.PlayerHandWhiteCanvas.SetActive(false);
+                GameManager.Deck.gameObject.SetActive(false);
                 
-                manager.StateMachine.ChangeState(StateType.SelectPiece);
+                GameManager.StateMachine.ChangeState(StateType.SelectPiece);
             }
             else
             {
                 // Once cards are in the game, go to card select next.
-                manager.PlayerHandBlackCanvas.SetActive(true);
-                manager.PlayerHandWhiteCanvas.SetActive(true);
-                manager.Deck.gameObject.SetActive(true);
+                GameManager.PlayerHandBlackCanvas.SetActive(true);
+                GameManager.PlayerHandWhiteCanvas.SetActive(true);
+                GameManager.Deck.gameObject.SetActive(true);
                 
-                manager.StateMachine.ChangeState(StateType.SelectCard);
+                GameManager.StateMachine.ChangeState(StateType.SelectCard);
             }
         }
         

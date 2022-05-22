@@ -14,7 +14,7 @@ public enum CardType
 //this class will probably be used to create game objects later
 
                     //not sure this needs to be a monobevaviour? We can add it back in no prob if so
-public class Card : MonoBehaviour, IPointerClickHandler
+public class Card : MonoBehaviour
 {
     public event Action<Card> Clicked;
     public event Action<Card> Hovered;
@@ -36,6 +36,7 @@ public class Card : MonoBehaviour, IPointerClickHandler
     public Image BlackEffect;
 
     private bool hasCardBeenPlayed = false;
+    private bool isHovered = false;
 
     public bool HasCardBeenPlayed
     {
@@ -59,13 +60,25 @@ public class Card : MonoBehaviour, IPointerClickHandler
     private void Awake()
     {
         cg = GetComponent<CanvasGroup>();
-        ourHand = GetComponentInParent<Hand>();
+        eventTrigger = GetComponent<EventTrigger>();
+
+        AddPointerEventListener(EventTriggerType.PointerClick, OnPointerClick);
+        AddPointerEventListener(EventTriggerType.PointerEnter, OnPointerEnter);
+        AddPointerEventListener(EventTriggerType.PointerExit, OnPointerExit);
     }
 
-    // private void Start()
-    // {
-    //     eventTrigger = GetComponent<EventTrigger>();
-    // }
+    private void AddPointerEventListener(EventTriggerType type, Action<PointerEventData> callback)
+    {
+        var entry = new EventTrigger.Entry();
+        entry.eventID = type;
+        entry.callback.AddListener(data => callback((PointerEventData) data));
+        eventTrigger.triggers.Add(entry);
+    }
+
+    private void Start()
+    {
+        ourHand = GetComponentInParent<Hand>();
+    }
 
     //public Card(CardScriptableObject cardSO)
     //{
@@ -157,13 +170,25 @@ public class Card : MonoBehaviour, IPointerClickHandler
         Clicked?.Invoke(this);
     }
 
-    // public void OnPointerEnter(PointerEventData eventData)
-    // {
-    //     Hovered?.Invoke(this);
-    // }
-    //
-    // public void OnPointerExit(PointerEventData eventData)
-    // {
-    //     Unhovered?.Invoke(this);
-    // }
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (isHovered)
+        {
+            return;
+        }
+
+        isHovered = true;
+        Hovered?.Invoke(this);
+    }
+    
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (!isHovered)
+        {
+            return;
+        }
+
+        isHovered = false;
+        Unhovered?.Invoke(this);
+    }
 }
