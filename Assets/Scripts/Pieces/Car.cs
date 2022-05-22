@@ -83,10 +83,9 @@ namespace Pieces
             // TODO: Tween this instead?
             transform.position = Tile.transform.position;
 
-            this.Take();
 
             CalculateIsFinishedMoving();
-
+            Take();
             //Tile.Piece = null;
             return pieces;
         }

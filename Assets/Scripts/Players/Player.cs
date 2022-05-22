@@ -88,7 +88,8 @@ namespace Players
                 TakePiece(takenPiece);
             }
 
-            tile.Piece = piece;
+            if(piece.isActiveAndEnabled)
+                tile.Piece = piece;
         }
         
         public void TakePiece(Piece piece)
