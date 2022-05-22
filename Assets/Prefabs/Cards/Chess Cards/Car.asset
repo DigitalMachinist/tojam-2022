@@ -20,4 +20,4 @@ MonoBehaviour:
     all pieces in its way, friend or foe.  I just hope it can stop in time...
   playerColour: 0
   prefab: {fileID: 2812984996008234927, guid: 07cbad06bb3550147a1a9597c3951dfa, type: 3}
-  probability: 0
+  probability: 0.504

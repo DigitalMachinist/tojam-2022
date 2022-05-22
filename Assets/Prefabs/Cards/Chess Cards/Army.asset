@@ -20,4 +20,4 @@ MonoBehaviour:
     direction.
   playerColour: 0
   prefab: {fileID: 3017665149853108886, guid: 5ede543f2d3e6c14f87796bce6c9587a, type: 3}
-  probability: 0.542
+  probability: 0.53
