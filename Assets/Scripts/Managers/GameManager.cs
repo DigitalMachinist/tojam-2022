@@ -8,7 +8,6 @@ using States;
 using TMPro;
 using UI;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Managers
@@ -35,14 +34,20 @@ namespace Managers
         public Button ConfirmCardButton;
         public Button CancelCardButton;
         public Button CancelPlaceButton;
+        public Button CancelMoveButtonSensible;
         public Button CancelMoveButton;
         public Button DrawCardButton;
         public Button RestartGameButton;
         public Background Background;
         public UiController UiController;
+        public TextMeshProUGUI PlayerTurnTextSensible;
         public TextMeshProUGUI PlayerTurnText;
+        public TextMeshProUGUI TurnNumberTextSensible;
         public TextMeshProUGUI TurnNumberText;
         public TextMeshProUGUI InstructionText;
+        public TextMeshProUGUI ObjectiveTextSensible;
+        public TextMeshProUGUI ObjectiveTextNormal;
+        public TextMeshProUGUI ObjectiveTextArmageddon;
         public AudioSource Audio_PieceSelect;
         public AudioSource Audio_PieceDestroy;
         public AudioSource Audio_DinoRoar;
@@ -99,6 +104,8 @@ namespace Managers
 
         void Init()
         {
+            UiController.gameObject.SetActive(true);
+            Background.gameObject.SetActive(false);
             PlayerHandBlackCanvas.gameObject.SetActive(false);
             PlayerHandWhiteCanvas.gameObject.SetActive(false);
             Deck.gameObject.SetActive(false);
@@ -107,8 +114,17 @@ namespace Managers
             ConfirmCardButton.gameObject.SetActive(false);
             CancelCardButton.gameObject.SetActive(false);
             CancelPlaceButton.gameObject.SetActive(false);
+            CancelMoveButtonSensible.gameObject.SetActive(false);
             CancelMoveButton.gameObject.SetActive(false);
             DrawCardButton.gameObject.SetActive(false);
+            ObjectiveTextSensible.gameObject.SetActive(true);
+            ObjectiveTextNormal.gameObject.SetActive(false);
+            ObjectiveTextArmageddon.gameObject.SetActive(false);
+            InstructionText.gameObject.SetActive(false);
+            PlayerTurnTextSensible.gameObject.SetActive(true);
+            PlayerTurnText.gameObject.SetActive(false);
+            TurnNumberTextSensible.gameObject.SetActive(true);
+            TurnNumberText.gameObject.SetActive(false);
         }
 
         void PreStart()
@@ -279,10 +295,11 @@ namespace Managers
 
         public void UpdateTurnInfo()
         {
+            TurnNumberTextSensible.text = TurnNumber.ToString();
             TurnNumberText.text = TurnNumber.ToString();
             if (CurrentPhase == 1)
             {
-                PlayerTurnText.text = PlayerTurn == PlayerColour.Black
+                PlayerTurnTextSensible.text = PlayerTurn == PlayerColour.Black
                     ? "Black's Turn"
                     : "White's Turn";
             }
@@ -319,6 +336,14 @@ namespace Managers
                 Audio_TimmyYess.Play();
                 IntroduceDeckbuilderTween();
                 Background.gameObject.SetActive(true);
+                ObjectiveTextSensible.gameObject.SetActive(false);
+                ObjectiveTextNormal.gameObject.SetActive(true);
+                ObjectiveTextArmageddon.gameObject.SetActive(false);
+                InstructionText.gameObject.SetActive(true);
+                PlayerTurnTextSensible.gameObject.SetActive(false);
+                PlayerTurnText.gameObject.SetActive(true);
+                TurnNumberTextSensible.gameObject.SetActive(false);
+                TurnNumberText.gameObject.SetActive(true);
                 foreach (var tile in Board.Tiles)
                 {
                     tile.IsSensible = false;
@@ -330,6 +355,9 @@ namespace Managers
                 ComputeTilesToDestroy();
                 Deck.SetApocalypse();
                 Audio_TimmyLaugh.Play();
+                ObjectiveTextSensible.gameObject.SetActive(false);
+                ObjectiveTextNormal.gameObject.SetActive(false);
+                ObjectiveTextArmageddon.gameObject.SetActive(true);
             }
             UiController.SetPhase(CurrentPhase);
             Background.SetPhase(CurrentPhase);

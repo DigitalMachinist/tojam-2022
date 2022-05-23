@@ -20,4 +20,4 @@ MonoBehaviour:
     Use them to fulfill your ambitions.
   playerColour: 0
   prefab: {fileID: 2812984996008234927, guid: 71d9a629eb2d9c44eb83415beb997270, type: 3}
-  probability: 0.6
+  probability: 0

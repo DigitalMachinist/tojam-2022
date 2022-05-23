@@ -24,8 +24,19 @@ namespace States
             
             var manager = GameManager.Get();
             manager.InstructionText.text = "Make a move";
-            manager.CancelMoveButton.gameObject.SetActive(true);
-            manager.CancelMoveButton.onClick.AddListener(OnCancelClicked);
+            if (GameManager.CurrentPhase == 1)
+            {
+                manager.CancelMoveButton.gameObject.SetActive(false);
+                manager.CancelMoveButtonSensible.gameObject.SetActive(true);
+                manager.CancelMoveButtonSensible.onClick.AddListener(OnCancelClicked);
+            }
+            else
+            {
+                manager.CancelMoveButton.gameObject.SetActive(true);
+                manager.CancelMoveButtonSensible.gameObject.SetActive(false);
+                manager.CancelMoveButton.onClick.AddListener(OnCancelClicked);
+            }
+
             
             // Clear all hover and selection states.
             foreach (var tile in manager.Board.Tiles)
@@ -103,6 +114,8 @@ namespace States
             var manager = GameManager.Get();
             manager.CancelMoveButton.gameObject.SetActive(false);
             manager.CancelMoveButton.onClick.RemoveListener(OnCancelClicked);
+            manager.CancelMoveButtonSensible.gameObject.SetActive(false);
+            manager.CancelMoveButtonSensible.onClick.RemoveListener(OnCancelClicked);
             
             // Clear all hover and selection states.
             foreach (var tile in manager.Board.Tiles)

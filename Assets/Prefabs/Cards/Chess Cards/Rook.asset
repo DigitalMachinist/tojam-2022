@@ -21,4 +21,4 @@ MonoBehaviour:
     so mobile?
   playerColour: 0
   prefab: {fileID: 6619129110703224253, guid: 5259d4162453d28438926d590cf5e9ea, type: 3}
-  probability: 0.4
+  probability: 0.2

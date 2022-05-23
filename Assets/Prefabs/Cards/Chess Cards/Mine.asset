@@ -21,4 +21,4 @@ MonoBehaviour:
     in the explosion will not make it out alive.  '
   playerColour: 0
   prefab: {fileID: 2812984996008234927, guid: f661792106cefb0488a59a3eb50f3333, type: 3}
-  probability: 0.413
+  probability: 0.2

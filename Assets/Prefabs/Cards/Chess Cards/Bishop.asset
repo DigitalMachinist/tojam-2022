@@ -20,4 +20,4 @@ MonoBehaviour:
     Can move diagonally an unlimited number of squares.
   playerColour: 0
   prefab: {fileID: 1738160681152368840, guid: d9318641634a7df4b80c80b84bdecd7a, type: 3}
-  probability: 0.4
+  probability: 0.2

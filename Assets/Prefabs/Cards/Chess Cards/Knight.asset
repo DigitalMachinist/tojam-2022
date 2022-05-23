@@ -20,4 +20,4 @@ MonoBehaviour:
     little L shape ONLY.
   playerColour: 0
   prefab: {fileID: 7114569492548819172, guid: 6191e7d0e82350348a19a6556479f674, type: 3}
-  probability: 0.3
+  probability: 0.2
