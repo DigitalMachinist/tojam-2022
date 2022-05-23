@@ -68,6 +68,8 @@ namespace States
                 .Select(piece => piece.GetComponent<Mine>())
                 .Where(mine => mine != null && !mine.IsTaken)
                 .ToList();
+            
+            GameManager.UpdateTurnInfo();
         }
         
         public override void Update()
@@ -98,6 +100,8 @@ namespace States
                 GameManager.PlayerHandWhiteCanvas.SetActive(false);
                 GameManager.Deck.gameObject.SetActive(false);
                 
+                GameManager.UpdateTurnInfo();
+                
                 GameManager.StateMachine.ChangeState(StateType.SelectPiece);
             }
             else
@@ -106,6 +110,8 @@ namespace States
                 GameManager.PlayerHandBlackCanvas.SetActive(true);
                 GameManager.PlayerHandWhiteCanvas.SetActive(true);
                 GameManager.Deck.gameObject.SetActive(true);
+                
+                GameManager.UpdateTurnInfo();
                 
                 GameManager.StateMachine.ChangeState(StateType.SelectCard);
             }

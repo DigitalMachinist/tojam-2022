@@ -541,6 +541,8 @@ MonoBehaviour:
   TileBreakStep: 0.06
   TileBreakForceMin: 2
   TileBreakForceMax: 8
+  Pink: {r: 1, g: 0, b: 1, a: 1}
+  Green: {r: 0, g: 1, b: 0, a: 1}
   PlayerTurn: 0
   TurnNumber: 0
   IsPlayingApocalypseEvent: 0
@@ -1376,6 +1378,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 753033080}
     m_Modifications:
+    - target: {fileID: 688930803578870252, guid: 830e288e408bee04eb6098a0d5c5016b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4615223221908186748, guid: 830e288e408bee04eb6098a0d5c5016b, type: 3}
       propertyPath: m_Name
       value: Main Camera

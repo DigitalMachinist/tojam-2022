@@ -56,6 +56,8 @@ namespace Managers
         public float TileBreakStep = 0.1f;
         public float TileBreakForceMin = 1f;
         public float TileBreakForceMax = 5f;
+        public Color Pink = Color.magenta;
+        public Color Green = Color.green;
         
         public PlayerColour PlayerTurn;
         public int TurnNumber;
@@ -273,15 +275,30 @@ namespace Managers
             PlayerTurn = GetOtherColour();
             CurrentPlayer.AdvanceTurn();
             TurnNumber = Mathf.Max(PlayerBlack.TurnNumber, PlayerWhite.TurnNumber);
-            UpdateTurnInfo();
         }
 
-        void UpdateTurnInfo()
+        public void UpdateTurnInfo()
         {
             TurnNumberText.text = TurnNumber.ToString();
-            PlayerTurnText.text = PlayerTurn == PlayerColour.Black
-                ? "Green's Turn"
-                : "Pink's Turn";
+            if (CurrentPhase == 1)
+            {
+                PlayerTurnText.text = PlayerTurn == PlayerColour.Black
+                    ? "Black's Turn"
+                    : "White's Turn";
+            }
+            else
+            {
+                if (PlayerTurn == PlayerColour.Black)
+                {
+                    PlayerTurnText.text = "Green's Turn";
+                    PlayerTurnText.color = Green;
+                }
+                else
+                {
+                    PlayerTurnText.text = "Pink's Turn";
+                    PlayerTurnText.color = Pink;
+                }
+            }
         }
 
         public void ClearSelectedCard()
@@ -301,6 +318,7 @@ namespace Managers
             {
                 Audio_TimmyYess.Play();
                 IntroduceDeckbuilderTween();
+                Background.gameObject.SetActive(true);
                 foreach (var tile in Board.Tiles)
                 {
                     tile.IsSensible = false;
