@@ -111,6 +111,11 @@ namespace Managers
 
         void PreStart()
         {
+            foreach (var tile in Board.Tiles)
+            {
+                tile.IsSensible = true;
+            }
+            
             PlayerBlack.Reset();
             PlayerWhite.Reset();
             
@@ -296,6 +301,10 @@ namespace Managers
             {
                 Audio_TimmyYess.Play();
                 IntroduceDeckbuilderTween();
+                foreach (var tile in Board.Tiles)
+                {
+                    tile.IsSensible = false;
+                }
             }
             if (CurrentPhase == 3)
             {

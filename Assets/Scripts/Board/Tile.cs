@@ -20,6 +20,7 @@ namespace Board
         [SerializeField] private TileStateTypes debug_tile;
         [SerializeField] private CrumblingStateTypes debug_crumbling;
         
+        [SerializeField] private GameObject sensibleState;
         [SerializeField] private GameObject pieceState;
         [SerializeField] private GameObject hoverState;
         [SerializeField] private GameObject availableState;
@@ -29,6 +30,24 @@ namespace Board
         [SerializeField] private GameObject crumblingState1;
         [SerializeField] private GameObject crumblingState2;
         [SerializeField] private GameObject crumblingState3;
+        
+        private bool isSensible = true;
+        /// <summary>
+        /// Update this to appear "sensible" or not.
+        /// </summary>
+        public bool IsSensible
+        {
+            get => isSensible;
+            set
+            {
+                if (isSensible == value)
+                {
+                    return;
+                }
+                isSensible = value;
+                sensibleState.SetActive(isSensible);
+            }
+        }
         
         private bool hasPiece;
         /// <summary>
@@ -75,8 +94,15 @@ namespace Board
             get => selectionState;
             set
             {
-                if (selectionState == value) return;
+                if (selectionState == value)
+                {
+                    return;
+                }
                 selectionState = value;
+                if (IsSensible)
+                {
+                    selectionState = SelectionStateTypes.None;
+                }
                 switch (selectionState)
                 {
                     // judge me not.
