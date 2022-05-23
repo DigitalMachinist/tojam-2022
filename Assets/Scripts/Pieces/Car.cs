@@ -31,7 +31,14 @@ namespace Pieces
                 try
                 {
                     var tile = Tile.Board.GetTile(Tile, direction, i);
-                    newTile = tile;
+                    if (tile.IsDestroyed)
+                    {
+                        bob = true;
+                    }
+                    else
+                    {
+                        newTile = tile;
+                    }
                 }
                 catch (IndexOutOfRangeException e)
                 {

@@ -110,6 +110,7 @@ namespace UI
 				.move(logoTimmy.gameObject, targetTimmy, 1f)
 				.setEaseOutBounce()
 				.setOnComplete(value => {
+					LeanTween.cancel(timmyScreen.gameObject);
 					LeanTween
 						.alphaCanvas(timmyScreen, 0f, 1f)
 						.setDelay(2f)
@@ -128,6 +129,7 @@ namespace UI
 				.move(logoArmageddon.gameObject, targetApoc, 1f)
 				.setEaseOutBounce()
 				.setOnComplete(value => {
+					LeanTween.cancel(apocScreen.gameObject);
 					LeanTween
 						.alphaCanvas(apocScreen, 0f, 1f)
 						.setDelay(2f)
