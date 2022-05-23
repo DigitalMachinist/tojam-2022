@@ -57,11 +57,13 @@ public class Deck : MonoBehaviour
         if (GameManager.Get().PlayerTurn == PlayerColour.Black)
         {
             NormalBlackTwistyCard.gameObject.SetActive(true);
+            LeanTween.cancel(NormalBlackTwistyCard.gameObject);
             LeanTween
                 .rotateY(NormalBlackTwistyCard.gameObject, 0f, duration)
                 .setEaseOutCubic();
 
             ApocalypseBlackTwistyCard.gameObject.SetActive(true);
+            LeanTween.cancel(ApocalypseBlackTwistyCard.gameObject);
             LeanTween
                 .rotateY(ApocalypseBlackTwistyCard.gameObject, 0f, duration)
                 .setEaseOutCubic();
@@ -69,11 +71,13 @@ public class Deck : MonoBehaviour
         else
         {
             NormalWhiteTwistyCard.gameObject.SetActive(true);
+            LeanTween.cancel(NormalWhiteTwistyCard.gameObject);
             LeanTween
                 .rotateY(NormalWhiteTwistyCard.gameObject, 0f, duration)
                 .setEaseOutCubic();
 
             ApocalypseWhiteTwistyCard.gameObject.SetActive(true);
+            LeanTween.cancel(ApocalypseWhiteTwistyCard.gameObject);
             LeanTween
                 .rotateY(ApocalypseWhiteTwistyCard.gameObject, 0f, duration)
                 .setEaseOutCubic();

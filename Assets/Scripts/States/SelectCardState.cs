@@ -22,6 +22,7 @@ namespace States
             // The hover target *MUST* be the 1st child in the hierarchy.
             var hoverTarget = card.transform.parent.GetChild(1);
 
+            LeanTween.cancel(card.gameObject);
             LeanTween
                 .move(card.gameObject, hoverTarget, 0.2f)
                 .setEaseInOutCubic();
@@ -32,6 +33,7 @@ namespace States
             // The home target *MUST* be the 0th child in the hierarchy.
             var homeTarget = card.transform.parent.GetChild(0);
 
+            LeanTween.cancel(card.gameObject);
             LeanTween
                 .move(card.gameObject, homeTarget, 0.2f)
                 .setEaseInOutCubic();
